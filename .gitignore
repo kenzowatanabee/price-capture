@@ -1,5 +1,9 @@
+.env
+
 /.vscode
 /venv
 
 results.csv
 results.json
+clean_up.py
+initial_dataset.csv

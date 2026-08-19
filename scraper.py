@@ -267,7 +267,7 @@ def process_task(args):
     ean = product["ean"]
 
     # Generate timestamp in YYYY-MM-DD HH:MM format
-    fetched_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+    fetched_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     record = {
         "fetched_at": fetched_at,
@@ -334,13 +334,13 @@ def main():
         writer = csv.DictWriter(
             f,
             fieldnames=[
-                "fetched_at",
                 "ean",
                 "desc_sku",
                 "store",
                 "status",
                 "price_brl",
                 "found_name",
+                "fetched_at",
                 "message",
             ],
         )
