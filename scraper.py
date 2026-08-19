@@ -1,6 +1,7 @@
 import os, re, sys, csv, json, time
 from curl_cffi import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
 
 def find_true_products_array(data):
     """Recursively search the JSON tree to find the TRUE products array for Next.js endpoints."""
@@ -265,20 +266,28 @@ def process_task(args):
     store_name = store["name"]
     ean = product["ean"]
 
+    # Generate timestamp in YYYY-MM-DD HH:MM format
+    fetched_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+
     record = {
+        "fetched_at": fetched_at,
         "ean": ean,
         "desc_sku": product["desc_sku"],
         "store": store_name,
         "status": res.get("status"),
         "price_brl": res.get("price_brl"),
         "found_name": res.get("product_name"),
-        "message": res.get("message")
+        "message": res.get("message"),
     }
 
     # Thread-safe console log
     if res["status"] == "Success":
-        p_val = res['price_brl']
-        price_str = f"R$ {float(p_val):.2f}" if isinstance(p_val, (int, float)) else f"R$ {p_val}"
+        p_val = res["price_brl"]
+        price_str = (
+            f"R$ {float(p_val):.2f}"
+            if isinstance(p_val, (int, float))
+            else f"R$ {p_val}"
+        )
         print(f"✅ [{ean}] {store_name.ljust(22)}: {price_str.ljust(12)}")
     elif res["status"] == "Not Found":
         print(f"❌ [{ean}] {store_name.ljust(22)}: {res['message']}")
@@ -320,8 +329,21 @@ def main():
     with open("results.json", "w", encoding="utf-8") as f:
         json.dump(all_results, f, ensure_ascii=False, indent=2)
 
+    # Save to CSV output
     with open("results.csv", "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["ean", "desc_sku", "store", "status", "price_brl", "found_name", "message"])
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "fetched_at",
+                "ean",
+                "desc_sku",
+                "store",
+                "status",
+                "price_brl",
+                "found_name",
+                "message",
+            ],
+        )
         writer.writeheader()
         writer.writerows(all_results)
 
