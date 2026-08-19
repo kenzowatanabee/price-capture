@@ -1,0 +1,42 @@
+name: Price Scraper Run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *' # Runs daily at 08:00 UTC
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.8'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Price Scraper
+        env:
+          PRODUCTS_FILE: 'data/products.csv'
+          STORES_FILE: 'data/stores.csv'
+          MAX_WORKERS: '10'
+        run: |
+          python scraper.py
+
+      - name: Upload Scraped Results
+        uses: actions/upload-artifact@v4
+        if: always() # Uploads results even if some stores fail or time out
+        with:
+          name: scrape-results
+          path: |
+            results.json
+            results.csv
+          retention-days: 7

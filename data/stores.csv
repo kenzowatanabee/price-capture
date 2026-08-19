@@ -1,11 +1,12 @@
-store_id,type
-Drogasil,RD_NEXTJS
-Droga Raia,RD_NEXTJS
-Drogaria São Paulo,B2C_REST
-Drogarias Pacheco,B2C_REST
-Pague Menos,B2C_REST
-Farmácias São João,B2C_REST
-Drogal,B2C_REST
-Drogaria Venancio,B2C_REST
-Drogaria Catarinense,B2C_REST
-Farmácia Indiana,B2C_REST
+store_id,type,domain,enabled
+Drogasil,RD_NEXTJS,https://www.drogasil.com.br,true
+Droga Raia,RD_NEXTJS,https://www.drogaraia.com.br,true
+Drogaria Araujo,VTEX_IO_HTML,https://www.araujo.com.br,false
+Drogaria São Paulo,B2C_REST,https://www.drogariasaopaulo.com.br,true
+Drogarias Pacheco,B2C_REST,https://www.drogariaspacheco.com.br,true
+Pague Menos,B2C_REST,https://www.paguemenos.com.br,true
+Farmácias São João,B2C_REST,https://www.saojoaofarmacias.com.br,true
+Drogal,B2C_REST,https://www.drogal.com.br,true
+Drogaria Venancio,B2C_REST,https://www.drogariavenancio.com.br,true
+Drogaria Catarinense,B2C_REST,https://www.drogariacatarinense.com.br,true
+Farmácia Indiana,B2C_REST,https://www.farmaciaindiana.com.br,true
