@@ -3,10 +3,10 @@ name: Price Scraper Run
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 12 * * *' # Runs daily at 08:00 UTC
+    - cron: '0 15 * * *' # Runs daily at 08:00 UTC
 
 jobs:
-  scrape:
+  scrape-and-upload:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12.8'
+          python-version: '3.11'
 
       - name: Install Dependencies
         run: |
@@ -31,9 +31,17 @@ jobs:
         run: |
           python scraper.py
 
-      - name: Upload Scraped Results
+      - name: Upload Results to Domo
+        env:
+          client_id: ${{ secrets.DOMO_CLIENT_ID }}
+          secret_id: ${{ secrets.DOMO_CLIENT_SECRET }}
+          dataset_id: ${{ secrets.DOMO_DATASET_ID }}
+        run: |
+          python upload_to_domo.py
+
+      - name: Upload Scraped Results (Artifact Backup)
         uses: actions/upload-artifact@v4
-        if: always() # Uploads results even if some stores fail or time out
+        if: always() # Ensures logs/artifacts uploaded even if scraping or domo upload partially fails
         with:
           name: scrape-results
           path: |
