@@ -2,8 +2,11 @@ import os, re, sys, csv, json, time
 from curl_cffi import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from schema import CSV_COLUMNS
+
+BRT = ZoneInfo("America/Sao_Paulo")
 
 def find_true_products_array(data):
     """Recursively search the JSON tree to find the TRUE products array for Next.js endpoints."""
@@ -268,8 +271,8 @@ def process_task(args):
     store_name = store["name"]
     ean = product["ean"]
 
-    # Generate timestamp in YYYY-MM-DD HH:MM format
-    fetched_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Timestamp in Brasilia time (YYYY-MM-DD HH:MM:SS), regardless of the runner's timezone
+    fetched_at = datetime.now(BRT).strftime("%Y-%m-%d %H:%M:%S")
 
     record = {
         "fetched_at": fetched_at,
