@@ -17,6 +17,9 @@ TIMEOUT = (10, 20)  # (connect_timeout, read_timeout)
 
 # Politeness towards each store: at most N requests in flight per domain, and a small
 # random delay (up to REQUEST_JITTER seconds) before each one.
+RETRY_STATUSES = {429, 503}  # rate limited / temporarily unavailable
+MAX_RETRY_AFTER = 30  # never wait longer than this (seconds) on a Retry-After header
+
 PER_STORE_CONCURRENCY = int(os.environ.get("PER_STORE_CONCURRENCY", 2))
 REQUEST_JITTER = float(os.environ.get("REQUEST_JITTER", 0.3))
 
@@ -70,8 +73,8 @@ def _session_for(domain):
 
 def fetch(url, max_retries=2):
     """
-    GETs a URL, retrying timeouts (curl 28) and unexpected exceptions with
-    linear backoff. Returns (response, None) on success or (None, error_result).
+    GETs a URL, retrying timeouts (curl 28), unexpected exceptions and 429/503
+    responses (honouring Retry-After) with backoff. Returns (response, None) on success or (None, error_result).
     """
     domain = urlsplit(url).netloc
     # The slot is held across retries and their backoff, so a struggling store gets less traffic.
@@ -81,10 +84,24 @@ def fetch(url, max_retries=2):
         return _fetch_with_retries(_session_for(domain), url, max_retries)
 
 
+def _retry_delay(response, attempt):
+    """Seconds to wait before retrying a 429/503: the Retry-After header (in seconds) if sane, else linear backoff."""
+    headers = getattr(response, "headers", None) or {}
+    try:
+        delay = float(headers.get("Retry-After"))
+    except (TypeError, ValueError):
+        return 2 * (attempt + 1)
+    return min(max(delay, 0), MAX_RETRY_AFTER)
+
+
 def _fetch_with_retries(session, url, max_retries):
     for attempt in range(max_retries + 1):
         try:
-            return session.get(url), None
+            response = session.get(url)
+            if response.status_code in RETRY_STATUSES and attempt < max_retries:
+                time.sleep(_retry_delay(response, attempt))
+                continue
+            return response, None
         except requests.errors.RequestsError as e:
             # curl error 28 = operation timed out
             if e.code == 28 and attempt < max_retries:
