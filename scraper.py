@@ -3,6 +3,8 @@ from curl_cffi import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
+from schema import CSV_COLUMNS
+
 def find_true_products_array(data):
     """Recursively search the JSON tree to find the TRUE products array for Next.js endpoints."""
     if isinstance(data, dict):
@@ -333,16 +335,7 @@ def main():
     with open("results.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(
             f,
-            fieldnames=[
-                "ean",
-                "desc_sku",
-                "store",
-                "status",
-                "price_brl",
-                "found_name",
-                "fetched_at",
-                "message",
-            ],
+            fieldnames=CSV_COLUMNS,
         )
         writer.writeheader()
         writer.writerows(all_results)

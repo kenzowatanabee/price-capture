@@ -4,6 +4,8 @@ import pandas as pd
 from dotenv import load_dotenv
 from pydomo import Domo
 
+from schema import CSV_COLUMNS
+
 # Load local .env file if executing locally
 load_dotenv()
 
@@ -41,10 +43,17 @@ def main():
             client_id=client_id, client_secret=secret_id, api_host="api.domo.com"
         )
 
-        # Load scraped results
-        df = pd.read_csv(csv_file)
+        # Load scraped results (as text so EANs keep any leading zeros)
+        df = pd.read_csv(csv_file, dtype=str)
 
-        # Import payload into Domo (Replacing existing rows)
+        # The import is positional (no header), so the column order must match Domo
+        if list(df.columns) != CSV_COLUMNS:
+            print(
+                f"❌ [ERROR] Column mismatch. Expected {CSV_COLUMNS}, got {list(df.columns)}."
+            )
+            sys.exit(1)
+
+        # Append payload to the Domo dataset (existing rows are kept)
         client.datasets.data_import(
             dataset_id,
             df.to_csv(index=False, header=False),
