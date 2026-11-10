@@ -22,7 +22,8 @@ def build_result(found_name, price, product, available=None, extra=None):
     Common tail of every parser: an in-stock positive price is a success, otherwise 'Not Found'.
     `available` is True/False when the payload says so and None when unknown (treated as available).
     `extra` carries the descriptive columns (list_price, available, seller, url); they are kept on
-    every outcome for a product that was found, while price_brl is only set on success.
+    every outcome for a product that was found, while price_brl is only set on success. The
+    matched product's name is likewise kept on every outcome for a found product.
     """
     if price is None:
         result = not_found("NO_PRICE", "product found, but no price available")
@@ -37,6 +38,9 @@ def build_result(found_name, price, product, available=None, extra=None):
             "product_name": found_name or product.get("desc_sku", "Produto Encontrado"),
             "price_brl": price,
         }
+    # Keep the matched product's name on rows without a price too, so a wrong match can be audited.
+    if found_name and result["status"] != "Success":
+        result["product_name"] = found_name
     result.update(extra or {})
     return result
 

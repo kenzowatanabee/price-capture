@@ -493,3 +493,37 @@ def test_dead_store_warning_includes_the_most_common_error_text(capsys, monkeypa
     out = capsys.readouterr().out
     assert "Most common: NETWORK: curl 60: SSL certificate problem (4x)" in out
     assert "::warning::Dead:" in out and "curl 60" in out.split("::warning::")[1]
+
+
+# ---------- found_name is kept on non-success rows so mismatches can be audited ----------
+
+def test_rd_product_without_price_keeps_the_matched_product_name(monkeypatch):
+    html = next_html([{"sku": "1", "name": "Creme Dental Outro 90g", "is1P": True}])  # no priceService
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Not Found", "NO_PRICE")
+    assert res["product_name"] == "Creme Dental Outro 90g"
+
+
+def test_out_of_stock_and_zero_price_rows_keep_the_product_name(monkeypatch):
+    for payload, code in [
+        (vtex_sellers_payload(seller(9.0, AvailableQuantity=0)), "OUT_OF_STOCK"),
+        (vtex_payload(0), "ZERO_PRICE"),
+    ]:
+        patch_get(monkeypatch, lambda *a, _p=payload, **k: FakeResponse(payload=_p))
+        res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+        assert message_code(res) == code and res["product_name"] == "Produto X"
+
+
+def test_not_listed_rows_have_no_product_name(monkeypatch):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=[]))
+    assert "product_name" not in scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+
+
+def test_process_task_writes_the_name_of_a_priceless_match_to_found_name(monkeypatch):
+    monkeypatch.setattr(
+        runner, "scrape_store_product",
+        lambda store, product: {"status": "Not Found", "message": "NO_PRICE: x", "product_name": "Algum Produto"},
+    )
+    rec = runner.process_task((make_store("RD_NEXTJS", "Drogasil"), PRODUCT, "r"))
+    assert rec["found_name"] == "Algum Produto" and rec["price_brl"] is None
