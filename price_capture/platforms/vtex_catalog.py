@@ -1,4 +1,5 @@
 from price_capture.platforms.base import Platform, build_result, vtex_offer
+from price_capture.results import not_found
 
 
 class VtexCatalog(Platform):
@@ -8,12 +9,9 @@ class VtexCatalog(Platform):
         return f"{domain}/api/catalog_system/pub/products/search?fq=alternateIds_Ean:{ean}"
 
     def parse(self, response, product):
-        found_name = None
-        price = None
-        available = True
         data = response.json()
-        if data and len(data) > 0:
-            p = data[0]
-            found_name = p.get("productName")
-            price, available = vtex_offer(p)
-        return build_result(found_name, price, product, available)
+        if not data:
+            return not_found("NOT_LISTED", "store returned no product")
+        p = data[0]
+        price, available = vtex_offer(p)
+        return build_result(p.get("productName"), price, product, available)

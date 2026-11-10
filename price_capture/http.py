@@ -4,6 +4,8 @@ import time
 
 from curl_cffi import requests
 
+from price_capture.results import error
+
 # TLS verification is on by default; set VERIFY_SSL=false only to work around a store with a broken certificate
 VERIFY_SSL = os.environ.get("VERIFY_SSL", "true").strip().lower() not in ("0", "false", "no")
 
@@ -47,10 +49,10 @@ def fetch(url, max_retries=2):
                 time.sleep(2 * (attempt + 1))  # Waits 2s, then 4s
                 continue
             if e.code == 28:
-                return None, {"status": "Error", "message": "Connection Timed Out (curl 28)"}
-            return None, {"status": "Error", "message": f"Request failed (curl {int(e.code)}): {str(e)[:60]}"}
+                return None, error("TIMEOUT", "connection timed out (curl 28)")
+            return None, error("NETWORK", f"curl {int(e.code)}: {str(e)[:60]}")
         except Exception as e:
             if attempt < max_retries:
                 time.sleep(2 * (attempt + 1))
                 continue
-            return None, {"status": "Error", "message": f"Exception: {str(e)[:40]}"}
+            return None, error("NETWORK", f"exception: {str(e)[:40]}")

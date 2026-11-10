@@ -1,4 +1,5 @@
 from price_capture.platforms.base import Platform, build_result, vtex_offer
+from price_capture.results import not_found
 
 
 class VtexIntelligentSearch(Platform):
@@ -8,12 +9,9 @@ class VtexIntelligentSearch(Platform):
         return f"{domain}/_v/api/intelligent-search/product_search/v2/?query={ean}&sc=1&page=1&count=1&sort=&hideUnavailableItems=false"
 
     def parse(self, response, product):
-        found_name = None
-        price = None
-        available = True
         data = response.json()
-        if data and data.get("products"):
-            p = data["products"][0]
-            found_name = p.get("productName")
-            price, available = vtex_offer(p)
-        return build_result(found_name, price, product, available)
+        if not data or not data.get("products"):
+            return not_found("NOT_LISTED", "store returned no product")
+        p = data["products"][0]
+        price, available = vtex_offer(p)
+        return build_result(p.get("productName"), price, product, available)

@@ -1,5 +1,6 @@
 from price_capture.platforms.base import Platform, build_result, next_js_product
 from price_capture.platforms.embedded_state import extract_state_from_html
+from price_capture.results import not_found
 
 
 class RdNextJs(Platform):
@@ -9,9 +10,12 @@ class RdNextJs(Platform):
         return f"{domain}/search?w={ean}&search-type=direct"
 
     def parse(self, response, product):
-        found_name = None
-        price = None
-        state, state_type = extract_state_from_html(response.text)
-        if state and state_type == "NEXT_JS":
-            found_name, price = next_js_product(state)
+        html = response.text
+        state, state_type = extract_state_from_html(html)
+        if not state or state_type != "NEXT_JS":
+            return not_found("NO_STATE", f"no embedded state in page ({len(html)} bytes)")
+        picked = next_js_product(state)
+        if picked is None:
+            return not_found("NOT_LISTED", "store returned no product")
+        found_name, price = picked
         return build_result(found_name, price, product)

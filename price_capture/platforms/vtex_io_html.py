@@ -1,5 +1,6 @@
 from price_capture.platforms.base import Platform, build_result, next_js_product
 from price_capture.platforms.embedded_state import extract_state_from_html
+from price_capture.results import error, not_found
 
 
 class VtexIoHtml(Platform):
@@ -11,11 +12,11 @@ class VtexIoHtml(Platform):
     def parse(self, response, product):
         html = response.text
         if any(w in html.lower() for w in ["cloudflare", "challenge-running", "just a moment"]):
-            return {"status": "Error", "message": "Blocked by WAF / Cloudflare"}
+            return error("BLOCKED", "WAF / Cloudflare challenge")
 
         state, state_type = extract_state_from_html(html)
         if not state:
-            return {"status": "Not Found", "message": f"HTML bytes: {len(html)}"}
+            return not_found("NO_STATE", f"no embedded state in page ({len(html)} bytes)")
 
         found_name = None
         price = None
@@ -30,5 +31,8 @@ class VtexIoHtml(Platform):
                             if price is None or offer_price < price:
                                 price = offer_price
         elif state_type == "NEXT_JS":
-            found_name, price = next_js_product(state)
+            picked = next_js_product(state)
+            if picked is None:
+                return not_found("NOT_LISTED", "store returned no product")
+            found_name, price = picked
         return build_result(found_name, price, product)

@@ -48,7 +48,7 @@ def test_vtex_io_html_without_state_is_not_found(monkeypatch):
         {"name": "S", "type": "VTEX_IO_HTML", "domain": "https://x.test"}, PRODUCT
     )
     assert res["status"] == "Not Found"
-    assert res["message"].startswith("HTML bytes:")
+    assert res["message"].startswith("NO_STATE:")
 
 
 def test_unknown_store_type_uses_legacy_vtex_api(monkeypatch):
@@ -68,7 +68,7 @@ def test_unknown_store_type_uses_legacy_vtex_api(monkeypatch):
 
 def test_missing_domain_is_an_error():
     res = scrape.scrape_store_product({"name": "S", "type": "B2C_REST", "domain": ""}, PRODUCT)
-    assert res == {"status": "Error", "message": "Domain URL not configured"}
+    assert res == {"status": "Error", "message": "CONFIG: domain URL not configured"}
 
 
 def test_request_urls_per_platform(monkeypatch):

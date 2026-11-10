@@ -127,10 +127,11 @@ def test_b2c_rest_success(monkeypatch):
     assert res == {"status": "Success", "product_name": "Produto X", "price_brl": 12.9}
 
 
-def test_b2c_rest_empty_result_is_not_found(monkeypatch):
+def test_b2c_rest_empty_result_is_not_listed(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=[]))
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert res["status"] == "Not Found"
+    assert res["message"].startswith("NOT_LISTED:")
 
 
 def test_carrefour_intelligent_search_success(monkeypatch):
@@ -155,7 +156,7 @@ def test_rd_nextjs_prefers_first_party_seller(monkeypatch):
 def test_http_error_status(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(status_code=403))
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
-    assert res == {"status": "Error", "message": "HTTP 403"}
+    assert res == {"status": "Error", "message": "HTTP_ERROR: 403"}
 
 
 def test_timeout_is_retried_then_succeeds(monkeypatch, no_sleep):
@@ -179,7 +180,7 @@ def test_timeout_gives_up_after_retries(monkeypatch, no_sleep):
 
     patch_get(monkeypatch, handler)
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
-    assert res == {"status": "Error", "message": "Connection Timed Out (curl 28)"}
+    assert res == {"status": "Error", "message": "TIMEOUT: connection timed out (curl 28)"}
 
 
 def test_non_timeout_curl_error_is_not_retried_and_reports_code(monkeypatch, no_sleep):
@@ -193,13 +194,13 @@ def test_non_timeout_curl_error_is_not_retried_and_reports_code(monkeypatch, no_
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert calls["n"] == 1
     assert res["status"] == "Error"
-    assert "curl 60" in res["message"]
+    assert res["message"].startswith("NETWORK: curl 60")
 
 
 def test_waf_block_detected_for_vtex_io_html(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(text="<html>Just a moment...</html>"))
     res = scrape.scrape_store_product(make_store("VTEX_IO_HTML"), PRODUCT)
-    assert res == {"status": "Error", "message": "Blocked by WAF / Cloudflare"}
+    assert res == {"status": "Error", "message": "BLOCKED: WAF / Cloudflare challenge"}
 
 
 # ---------- process_task / summary ----------
@@ -295,3 +296,54 @@ def test_vtex_in_stock_offer_is_a_success(monkeypatch):
     payload = vtex_sellers_payload(seller(15.0, default=True, AvailableQuantity=5, IsAvailable=True))
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
     assert scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)["status"] == "Success"
+
+
+# ---------- reason codes ----------
+
+def message_code(res):
+    return res["message"].split(":", 1)[0]
+
+
+def test_carrefour_empty_result_is_not_listed(monkeypatch):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload={"products": []}))
+    res = scrape.scrape_store_product(make_store("CARREFOUR_INTELLIGENT_SEARCH"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Not Found", "NOT_LISTED")
+
+
+def test_rd_page_without_products_is_not_listed(monkeypatch):
+    state = {"props": {"pageProps": {"data": {"products": []}}}}
+    html = '<script id="__NEXT_DATA__" type="application/json">' + json.dumps(state) + "</script>"
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Not Found", "NOT_LISTED")
+
+
+def test_rd_page_without_embedded_state_is_flagged(monkeypatch):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text="<html>layout changed</html>"))
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Not Found", "NO_STATE")
+
+
+@pytest.mark.parametrize(
+    "payload, code",
+    [
+        (vtex_payload(0), "ZERO_PRICE"),
+        ([{"productName": "X", "items": []}], "NO_PRICE"),
+        (vtex_sellers_payload(seller(9.0, AvailableQuantity=0)), "OUT_OF_STOCK"),
+    ],
+)
+def test_not_found_reason_codes(monkeypatch, payload, code):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Not Found", code)
+
+
+def test_unparseable_json_is_a_parse_error(monkeypatch):
+    def bad_json():
+        raise ValueError("Expecting value")
+
+    resp = FakeResponse(text="<html>blocked</html>")
+    resp.json = bad_json
+    patch_get(monkeypatch, lambda *a, **k: resp)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Error", "PARSE_ERROR")
