@@ -31,7 +31,7 @@ python upload_to_domo.py   # appends results.csv to the Domo dataset
 | `MAX_WORKERS` | scraper | `10` | Concurrent requests |
 | `MIN_SUCCESS_RATE` | scraper | `0.2` | The run exits non-zero (so nothing is uploaded) if fewer than this share of requests return a price. Catches a silently broken parser |
 | `MAX_ERROR_RATE` | scraper | `0.5` | ...or if more than this share are `Error` (blocked, timeouts, parse failures). `Not Found` does not count as an error |
-| `VERIFY_SSL` | scraper | `true` | Set to `false` only to work around a store with a broken certificate |
+| `VERIFY_SSL` | scraper | `true` | Global kill switch: `false` disables TLS verification for **every** store. Prefer the per-store `verify_ssl` column in `stores.csv` |
 | `PER_STORE_CONCURRENCY` | scraper | `2` | Max simultaneous requests to the same store |
 | `REQUEST_JITTER` | scraper | `0.3` | Random delay (0 to N seconds) before each request |
 | `IMPERSONATE` | scraper | `chrome142` | Browser fingerprint curl_cffi impersonates; its User-Agent and `sec-ch-ua` headers come with it |
@@ -64,7 +64,7 @@ tests/                      unit tests (mocked HTTP)
 
 **`data/products.csv`** has the columns `ean,desc_sku`. Spaces and dashes in the EAN are stripped.
 
-**`data/stores.csv`** has the columns `store_id,type,domain,enabled`. Set `enabled` to `false` to skip a store. The `type` selects the scraping strategy:
+**`data/stores.csv`** has the columns `store_id,type,domain,enabled,verify_ssl`. Set `enabled` to `false` to skip a store. `verify_ssl` is optional (default `true`); set it to `false` for a single store whose certificate chain cannot be verified (the run log announces every store that has it off). The `type` selects the scraping strategy:
 
 | `type` | Platform | Method |
 |---|---|---|
