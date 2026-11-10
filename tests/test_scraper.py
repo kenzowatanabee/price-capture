@@ -5,6 +5,7 @@ import pytest
 from curl_cffi import requests as cffi_requests
 
 import scraper
+from price_capture import config
 
 
 class FakeResponse:
@@ -45,7 +46,7 @@ def patch_get(monkeypatch, handler):
 # ---------- helpers ----------
 
 def test_clean_ean_strips_spaces_and_dashes():
-    assert scraper.clean_ean(" 7509-5460 60781 ") == "7509546060781"
+    assert config.clean_ean(" 7509-5460 60781 ") == "7509546060781"
 
 
 def test_find_true_products_array_skips_lists_without_sku():
@@ -89,7 +90,7 @@ def test_extract_state_none():
 def test_load_products_cleans_and_skips_empty(tmp_path):
     f = tmp_path / "products.csv"
     f.write_text("ean,desc_sku\n7509-546 060781, Creme \n,sem ean\n", encoding="utf-8")
-    assert scraper.load_products(str(f)) == [
+    assert config.load_products(str(f)) == [
         {"ean": "7509546060781", "desc_sku": "Creme"}
     ]
 
@@ -103,13 +104,13 @@ def test_load_stores_respects_enabled_flag(tmp_path):
         "C,B2C_REST,https://c.test,yes\n",
         encoding="utf-8",
     )
-    assert [s["name"] for s in scraper.load_stores(str(f))] == ["A", "C"]
+    assert [s["name"] for s in config.load_stores(str(f))] == ["A", "C"]
 
 
 def test_load_stores_enabled_defaults_to_true_without_column(tmp_path):
     f = tmp_path / "stores.csv"
     f.write_text("store_id,type,domain\nA,B2C_REST,https://a.test\n", encoding="utf-8")
-    assert len(scraper.load_stores(str(f))) == 1
+    assert len(config.load_stores(str(f))) == 1
 
 
 # ---------- scrape_store_product ----------
