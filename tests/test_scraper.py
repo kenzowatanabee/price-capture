@@ -360,3 +360,52 @@ def test_unparseable_json_is_a_parse_error(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: resp)
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert (res["status"], message_code(res)) == ("Error", "PARSE_ERROR")
+
+
+# ---------- run health gate ----------
+
+def rows(success=0, not_found=0, error=0, store="A"):
+    return (
+        [{"store": store, "status": "Success", "message": None}] * success
+        + [{"store": store, "status": "Not Found", "message": "NOT_LISTED: x"}] * not_found
+        + [{"store": store, "status": "Error", "message": "HTTP_ERROR: 403"}] * error
+    )
+
+
+def test_gate_passes_when_many_skus_are_legitimately_not_listed():
+    # 40% found, 60% not listed, no errors: a coverage gap, not a blocked scraper.
+    results = rows(success=40, not_found=60)
+    assert runner.evaluate_run(results, 100, min_success_rate=0.2, max_error_rate=0.5) == []
+
+
+def test_gate_fails_on_high_error_rate():
+    results = rows(success=30, not_found=10, error=60)
+    problems = runner.evaluate_run(results, 100, min_success_rate=0.2, max_error_rate=0.5)
+    assert len(problems) == 1 and "error rate 60%" in problems[0]
+
+
+def test_gate_fails_when_almost_nothing_is_found_even_without_errors():
+    # A silently broken parser shows up as everything "Not Found".
+    results = rows(success=5, not_found=95)
+    problems = runner.evaluate_run(results, 100, min_success_rate=0.2, max_error_rate=0.5)
+    assert len(problems) == 1 and "success rate 5%" in problems[0]
+
+
+def test_gate_counts_crashed_workers_as_errors():
+    results = rows(success=40, not_found=10)  # 50 of 100 expected results never arrived
+    problems = runner.evaluate_run(results, 100, min_success_rate=0.2, max_error_rate=0.4)
+    assert len(problems) == 1 and "error rate 50%" in problems[0]
+
+
+def test_gate_fails_with_no_requests():
+    assert runner.evaluate_run([], 0, 0.2, 0.5) != []
+
+
+def test_summary_lists_reasons_and_flags_stores_with_no_successes(capsys, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    results = rows(success=3, store="Good") + rows(not_found=2, error=1, store="Bad")
+    runner.summarize_results(results, 6)
+    out = capsys.readouterr().out
+    assert "NOT_LISTED: 2" in out and "HTTP_ERROR: 1" in out
+    assert "::warning::Bad" in out
+    assert "::warning::Good" not in out

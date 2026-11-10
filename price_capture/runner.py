@@ -3,6 +3,7 @@ import csv
 import json
 import os
 import sys
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -52,23 +53,67 @@ def process_task(args):
     return record
 
 
+def reason_code(result):
+    """The CODE of a "CODE: detail" message, or OTHER."""
+    message = result.get("message") or ""
+    return message.split(":", 1)[0] if ":" in message else "OTHER"
+
+
 def summarize_results(results, expected_total):
-    """Prints a per-store success summary and returns the overall success rate."""
+    """Prints per-store success and the reasons for non-successes; returns the overall success rate."""
     per_store = {}
+    reasons = Counter()
     for r in results:
         stats = per_store.setdefault(r["store"], [0, 0])
         stats[1] += 1
         if r["status"] == "Success":
             stats[0] += 1
+        else:
+            reasons[reason_code(r)] += 1
 
     print("\nPer-store success:")
     for store, (ok, total) in sorted(per_store.items()):
         print(f"  {store.ljust(22)}: {ok}/{total}")
+        if ok == 0:
+            warning = f"{store}: no successful prices ({total} requests). Blocked or layout changed?"
+            print(f"  ⚠️ {warning}")
+            if os.environ.get("GITHUB_ACTIONS") == "true":
+                print(f"::warning::{warning}")
+
+    if reasons:
+        print("\nNon-success reasons:")
+        for code, count in reasons.most_common():
+            print(f"  {code}: {count}")
 
     successes = sum(ok for ok, _ in per_store.values())
     rate = successes / expected_total if expected_total else 0.0
     print(f"Overall: {successes}/{expected_total} ({rate:.0%})")
     return rate
+
+
+def evaluate_run(results, expected_total, min_success_rate, max_error_rate):
+    """
+    Returns a list of problems; empty means the run looks healthy.
+
+    "Not Found" rows are a coverage gap, not a failure, so they only matter through the
+    success-rate floor (which catches a silently broken parser). Errors (network, blocked,
+    parse) and results that never arrived (crashed workers) count against the error rate.
+    """
+    if not expected_total:
+        return ["no requests were made"]
+
+    successes = sum(1 for r in results if r["status"] == "Success")
+    not_found = sum(1 for r in results if r["status"] == "Not Found")
+    errors = expected_total - successes - not_found
+
+    problems = []
+    error_rate = errors / expected_total
+    if error_rate > max_error_rate:
+        problems.append(f"error rate {error_rate:.0%} is above the allowed {max_error_rate:.0%}")
+    success_rate = successes / expected_total
+    if success_rate < min_success_rate:
+        problems.append(f"success rate {success_rate:.0%} is below the required {min_success_rate:.0%}")
+    return problems
 
 
 def main():
@@ -119,10 +164,17 @@ def main():
 
     print(f"\nScraping complete. Total requests processed: {len(all_results)}")
 
-    # Fail the run (and so skip the Domo upload) if too many requests failed,
-    # e.g. when a WAF starts blocking the runner.
-    min_rate = float(os.environ.get("MIN_SUCCESS_RATE", 0.5))
-    rate = summarize_results(all_results, len(tasks))
-    if rate < min_rate:
-        print(f"❌ Success rate {rate:.0%} is below the required {min_rate:.0%}. Failing the run.")
+    # Fail the run (and so skip the Domo upload) if the data looks broken,
+    # e.g. when a WAF starts blocking the runner or a parser stops matching.
+    summarize_results(all_results, len(tasks))
+    problems = evaluate_run(
+        all_results,
+        len(tasks),
+        min_success_rate=float(os.environ.get("MIN_SUCCESS_RATE", 0.2)),
+        max_error_rate=float(os.environ.get("MAX_ERROR_RATE", 0.5)),
+    )
+    if problems:
+        for problem in problems:
+            print(f"❌ {problem}")
+        print("Failing the run.")
         sys.exit(1)

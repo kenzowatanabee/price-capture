@@ -29,7 +29,8 @@ python upload_to_domo.py   # appends results.csv to the Domo dataset
 | `PRODUCTS_FILE` | scraper | `data/products.csv` | Product list |
 | `STORES_FILE` | scraper | `data/stores.csv` | Store list |
 | `MAX_WORKERS` | scraper | `10` | Concurrent requests |
-| `MIN_SUCCESS_RATE` | scraper | `0.5` | The run exits non-zero (so nothing is uploaded) if fewer than this share of requests succeed |
+| `MIN_SUCCESS_RATE` | scraper | `0.2` | The run exits non-zero (so nothing is uploaded) if fewer than this share of requests return a price. Catches a silently broken parser |
+| `MAX_ERROR_RATE` | scraper | `0.5` | ...or if more than this share are `Error` (blocked, timeouts, parse failures). `Not Found` does not count as an error |
 | `VERIFY_SSL` | scraper | `true` | Set to `false` only to work around a store with a broken certificate |
 | `client_id` / `DOMO_CLIENT_ID` | uploader | | Domo API client id |
 | `secret_id` / `DOMO_CLIENT_SECRET` | uploader | | Domo API secret |
