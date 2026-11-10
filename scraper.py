@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from schema import CSV_COLUMNS
+from price_capture.schema import CSV_COLUMNS
 
 BRT = ZoneInfo("America/Sao_Paulo")
 

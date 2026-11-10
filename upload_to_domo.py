@@ -4,7 +4,7 @@ import pandas as pd
 from dotenv import load_dotenv
 from pydomo import Domo
 
-from schema import CSV_COLUMNS
+from price_capture.schema import CSV_COLUMNS
 
 # Load local .env file if executing locally
 load_dotenv()
