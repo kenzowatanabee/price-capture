@@ -32,23 +32,30 @@ python upload_to_domo.py   # appends results.csv to the Domo dataset
 | `MIN_SUCCESS_RATE` | scraper | `0.2` | The run exits non-zero (so nothing is uploaded) if fewer than this share of requests return a price. Catches a silently broken parser |
 | `MAX_ERROR_RATE` | scraper | `0.5` | ...or if more than this share are `Error` (blocked, timeouts, parse failures). `Not Found` does not count as an error |
 | `VERIFY_SSL` | scraper | `true` | Set to `false` only to work around a store with a broken certificate |
+| `PER_STORE_CONCURRENCY` | scraper | `2` | Max simultaneous requests to the same store |
+| `REQUEST_JITTER` | scraper | `0.3` | Random delay (0 to N seconds) before each request |
+| `IMPERSONATE` | scraper | `chrome142` | Browser fingerprint curl_cffi impersonates; its User-Agent and `sec-ch-ua` headers come with it |
+| `RUN_ID` | scraper | | Overrides the generated `run_id` (default: `gh-<run>-<attempt>` on GitHub Actions, else `local-<timestamp>`) |
 | `client_id` / `DOMO_CLIENT_ID` | uploader | | Domo API client id |
 | `secret_id` / `DOMO_CLIENT_SECRET` | uploader | | Domo API secret |
 | `dataset_id` / `DOMO_DATASET_ID` | uploader | | Target Domo dataset |
 
-Locally, the uploader also reads these from a `.env` file (git-ignored).
+Locally, the uploader and `update_domo_schema.py` also read the Domo variables from a `.env` file (git-ignored). Copy `.env.example` to `.env` and fill it in.
 
 ## Code layout
 
 ```
 scraper.py                  entry point (python scraper.py)
-upload_to_domo.py           Domo uploader
+upload_to_domo.py           Domo uploader (refuses to run if the dataset schema does not match)
+update_domo_schema.py       local script that updates the Domo dataset schema (see below)
 price_capture/
   runner.py                 task matrix, threading, output files, success-rate gate
   scrape.py                 one (store, product) request
-  http.py                   fetch with browser impersonation, timeouts, retries
+  http.py                   sessions, browser impersonation, per-store limits, retries (incl. 429/503)
+  results.py                result dicts with reason codes
   config.py                 CSV loaders
-  schema.py                 output column order (shared with the uploader)
+  schema.py                 output columns, order and Domo types (single source of truth)
+  domo_schema.py            compares/plans the Domo schema against schema.py
   platforms/                one class per store architecture + registry
 tests/                      unit tests (mocked HTTP)
 ```
@@ -70,11 +77,27 @@ To add a store, append a row with an existing `type`. To support a new platform,
 
 ## Output and the Domo dataset
 
-Columns, in order (defined once in `schema.py`):
+Columns, in order (defined once in `price_capture/schema.py`):
 
-`ean, desc_sku, store, status, price_brl, found_name, fetched_at, message`
+| # | Column | Domo type | Notes |
+|---|---|---|---|
+| 1 | `ean` | STRING | |
+| 2 | `desc_sku` | STRING | From `products.csv` |
+| 3 | `store` | STRING | |
+| 4 | `status` | STRING | `Success`, `Not Found` or `Error` |
+| 5 | `price_brl` | DOUBLE | Selling price. Only set when `status = Success` |
+| 6 | `found_name` | STRING | Product name as the store lists it |
+| 7 | `fetched_at` | STRING | Brasília time, `YYYY-MM-DD HH:MM:SS` |
+| 8 | `message` | STRING | Reason code and detail for non-successes |
+| 9 | `list_price` | DOUBLE | Store's list ("from") price, when reported |
+| 10 | `available` | STRING | `true` / `false`, empty when the store does not say |
+| 11 | `seller` | STRING | Seller name |
+| 12 | `url` | STRING | Product page |
+| 13 | `run_id` | STRING | Same value for every row of one scraper run |
 
-- The Domo import is **positional (no header row)**, so this order must match the Domo dataset. The uploader refuses to upload if `results.csv` doesn't match `schema.py`.
+Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` stores. They are empty for `RD_NEXTJS` and `VTEX_IO_HTML` stores, because those payload fields have not been mapped yet. They are also filled on `OUT_OF_STOCK` and `ZERO_PRICE` rows, since they describe the product, while `price_brl` stays empty.
+
+- The Domo import is **positional (no header row)**, so this order must match the Domo dataset. The uploader refuses to upload if `results.csv` doesn't match `schema.py`, or if the Domo dataset has a different number of columns.
 - The upload uses **APPEND**. Every run adds rows, so running the workflow twice in a day (for example a manual dispatch on top of the schedule) duplicates that day's rows. Deduplicate downstream on `(ean, store, date(fetched_at))` if that matters.
 - `fetched_at` is in **Brasília time** (`America/Sao_Paulo`), formatted `YYYY-MM-DD HH:MM:SS`.
 - **Every attempted request produces a row**, including failures. `status` is one of `Success`, `Not Found` or `Error`, and `price_brl` is empty unless it is `Success`.
@@ -85,11 +108,24 @@ Columns, in order (defined once in `schema.py`):
   |---|---|
   | `Not Found` | `NOT_LISTED` (store returned no product), `OUT_OF_STOCK`, `ZERO_PRICE` (store reports a price of 0), `NO_PRICE`, `NO_STATE` (page had no embedded product data, which may mean the layout changed) |
   | `Error` | `TIMEOUT`, `NETWORK`, `HTTP_ERROR` (e.g. `HTTP_ERROR: 403`), `BLOCKED`, `PARSE_ERROR`, `CONFIG` |
- Filter on `status = 'Success'` for price analysis. The other rows are useful for tracking store coverage and blocking.
+
+  Filter on `status = 'Success'` for price analysis. The other rows are useful for tracking store coverage and blocking.
+
+### Updating the Domo dataset schema
+
+When columns are added to `schema.py`, the Domo dataset must be updated **before** the next upload; until then the uploader stops with an error and sends nothing.
+
+```bash
+cp .env.example .env                        # fill in DOMO_CLIENT_ID, DOMO_CLIENT_SECRET, DOMO_DATASET_ID
+python update_domo_schema.py                # dry run: shows current vs proposed schema
+python update_domo_schema.py --apply        # saves a backup of the dataset definition, updates, then re-reads to verify
+```
+
+By default existing columns keep their names and types (so existing data and dashboards are untouched) and the missing ones are appended. `--rename-existing` replaces the whole schema with the one in `schema.py`. The script never drops columns, and refuses a dataset that has more columns than the scraper writes.
 
 ## Automation
 
-`.github/workflows/scraper.yml` runs the scraper and the Domo upload daily at 15:00 UTC (12:00 Brasília) and on manual dispatch. If the success rate falls below `MIN_SUCCESS_RATE`, the scraper step fails and the upload is skipped. `results.csv` and `results.json` are kept as a build artifact for 7 days.
+`.github/workflows/scraper.yml` runs the scraper and the Domo upload daily at 15:00 UTC (12:00 Brasília) and on manual dispatch. If the run looks broken (error rate above `MAX_ERROR_RATE`, or success rate below `MIN_SUCCESS_RATE`), the scraper step fails and the upload is skipped. A store with no successful prices at all shows up as a warning annotation on the run. `results.csv` and `results.json` are kept as a build artifact for 7 days.
 
 Required repository secrets: `DOMO_CLIENT_ID`, `DOMO_CLIENT_SECRET`, `DOMO_DATASET_ID`.
 
