@@ -13,5 +13,5 @@ class VtexCatalog(Platform):
         if not data:
             return not_found("NOT_LISTED", "store returned no product")
         p = data[0]
-        price, available = vtex_offer(p)
-        return build_result(p.get("productName"), price, product, available)
+        offer = vtex_offer(p, getattr(response, "url", ""))
+        return build_result(p.get("productName"), offer.price, product, offer.available, offer.extra)

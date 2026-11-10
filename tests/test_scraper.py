@@ -409,3 +409,58 @@ def test_summary_lists_reasons_and_flags_stores_with_no_successes(capsys, monkey
     assert "NOT_LISTED: 2" in out and "HTTP_ERROR: 1" in out
     assert "::warning::Bad" in out
     assert "::warning::Good" not in out
+
+
+# ---------- extra columns (VTEX payloads) ----------
+
+def rich_payload(**offer_extra):
+    s = {
+        "sellerName": "Drogaria Teste",
+        "sellerDefault": True,
+        "commertialOffer": {"Price": 12.9, "ListPrice": 15.9, **offer_extra},
+    }
+    return [{"productName": "Produto X", "link": "https://loja.test/produto-x/p", "items": [{"sellers": [s]}]}]
+
+
+def test_vtex_success_includes_list_price_seller_url_and_availability(monkeypatch):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=rich_payload(AvailableQuantity=7)))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res == {
+        "status": "Success",
+        "product_name": "Produto X",
+        "price_brl": 12.9,
+        "list_price": 15.9,
+        "available": "true",
+        "seller": "Drogaria Teste",
+        "url": "https://loja.test/produto-x/p",
+    }
+
+
+def test_vtex_availability_is_left_empty_when_the_payload_does_not_say(monkeypatch):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=rich_payload()))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["status"] == "Success" and "available" not in res
+
+
+def test_out_of_stock_row_keeps_the_descriptive_columns_but_no_price(monkeypatch):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=rich_payload(AvailableQuantity=0)))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["status"] == "Not Found" and "price_brl" not in res
+    assert (res["available"], res["seller"], res["list_price"]) == ("false", "Drogaria Teste", 15.9)
+
+
+def test_list_price_of_zero_is_dropped(monkeypatch):
+    payload = rich_payload()
+    payload[0]["items"][0]["sellers"][0]["commertialOffer"]["ListPrice"] = 0
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    assert "list_price" not in scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+
+
+def test_relative_product_link_is_resolved_against_the_request_url(monkeypatch):
+    payload = {"products": rich_payload()}
+    payload["products"][0]["link"] = "/produto-x/p"
+    resp = FakeResponse(payload=payload)
+    resp.url = "https://carrefour.test/_v/api/intelligent-search/product_search/v2/?query=1"
+    patch_get(monkeypatch, lambda *a, **k: resp)
+    res = scrape.scrape_store_product(make_store("CARREFOUR_INTELLIGENT_SEARCH"), PRODUCT)
+    assert res["url"] == "https://carrefour.test/produto-x/p"
