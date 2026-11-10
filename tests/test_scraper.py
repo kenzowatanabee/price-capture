@@ -6,6 +6,7 @@ from curl_cffi import requests as cffi_requests
 
 import scraper
 from price_capture import config
+from price_capture.platforms import embedded_state
 
 
 class FakeResponse:
@@ -54,16 +55,16 @@ def test_find_true_products_array_skips_lists_without_sku():
         "products": [{"name": "banner"}],
         "nested": {"products": [{"sku": "1", "name": "real"}]},
     }
-    assert scraper.find_true_products_array(data) == [{"sku": "1", "name": "real"}]
+    assert embedded_state.find_true_products_array(data) == [{"sku": "1", "name": "real"}]
 
 
 def test_find_true_products_array_none_when_missing():
-    assert scraper.find_true_products_array({"a": [1, 2, {"b": 3}]}) is None
+    assert embedded_state.find_true_products_array({"a": [1, 2, {"b": 3}]}) is None
 
 
 def test_extract_state_next_js():
     html = next_html([{"sku": "1"}])
-    state, kind = scraper.extract_state_from_html(html)
+    state, kind = embedded_state.extract_state_from_html(html)
     assert kind == "NEXT_JS"
     assert state["props"]["pageProps"]["data"]["products"] == [{"sku": "1"}]
 
@@ -73,16 +74,16 @@ def test_extract_state_vtex_template():
         '<template data-type="json" data-varname="__STATE__">'
         '<script>{"a": 1}</script></template>'
     )
-    assert scraper.extract_state_from_html(html) == ({"a": 1}, "VTEX_IO")
+    assert embedded_state.extract_state_from_html(html) == ({"a": 1}, "VTEX_IO")
 
 
 def test_extract_state_vtex_window_state():
     html = '<script>window.__STATE__ = {"a": 2};</script>'
-    assert scraper.extract_state_from_html(html) == ({"a": 2}, "VTEX_IO")
+    assert embedded_state.extract_state_from_html(html) == ({"a": 2}, "VTEX_IO")
 
 
 def test_extract_state_none():
-    assert scraper.extract_state_from_html("<html></html>") == (None, None)
+    assert embedded_state.extract_state_from_html("<html></html>") == (None, None)
 
 
 # ---------- csv loaders ----------
