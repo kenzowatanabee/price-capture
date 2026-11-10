@@ -79,3 +79,38 @@ Non-success reasons:
   NOT_LISTED: 15
   OUT_OF_STOCK: 8
 Overall: 519/750 (69%)
+
+---
+
+Scraping complete. Total requests processed: 750
+
+Per-store success:
+  Droga Raia            : 45/75
+      NO_PRICE: 30
+  Drogal                : 71/75
+      OUT_OF_STOCK: 3
+      NOT_LISTED: 1
+  Drogaria Catarinense  : 64/75
+      NOT_LISTED: 10
+      OUT_OF_STOCK: 1
+  Drogaria São Paulo    : 74/75
+      NOT_LISTED: 1
+  Drogaria Venancio     : 75/75
+  Drogarias Pacheco     : 73/75
+      OUT_OF_STOCK: 1
+      NOT_LISTED: 1
+  Drogasil              : 45/75
+      NO_PRICE: 30
+  Farmácia Indiana      : 74/75
+      OUT_OF_STOCK: 1
+  Farmácias São João    : 70/75
+      NOT_LISTED: 5
+  Pague Menos           : 69/75
+      OUT_OF_STOCK: 3
+      NOT_LISTED: 3
+
+Non-success reasons:
+  NO_PRICE: 60
+  NOT_LISTED: 21
+  OUT_OF_STOCK: 9
+Overall: 660/750 (88%)
