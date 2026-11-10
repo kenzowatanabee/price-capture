@@ -8,6 +8,9 @@ from schema import CSV_COLUMNS
 
 BRT = ZoneInfo("America/Sao_Paulo")
 
+# TLS verification is on by default; set VERIFY_SSL=false only to work around a store with a broken certificate
+VERIFY_SSL = os.environ.get("VERIFY_SSL", "true").strip().lower() not in ("0", "false", "no")
+
 def find_true_products_array(data):
     """Recursively search the JSON tree to find the TRUE products array for Next.js endpoints."""
     if isinstance(data, dict):
@@ -170,7 +173,7 @@ def scrape_store_product(store, product, max_retries=2):
                 impersonate="chrome120",
                 timeout=(10, 20),
                 allow_redirects=True,
-                verify=False
+                verify=VERIFY_SSL
             )
             break  # Connection successful
         except requests.errors.RequestsError as e:
