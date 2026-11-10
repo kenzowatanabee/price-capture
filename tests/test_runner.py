@@ -66,3 +66,33 @@ def test_partial_csv_survives_a_crash(tmp_path, monkeypatch):
     with open("results.csv", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     assert len(rows) >= 2
+
+
+def test_make_run_id_prefers_explicit_then_github_then_timestamp(monkeypatch):
+    monkeypatch.delenv("RUN_ID", raising=False)
+    monkeypatch.delenv("GITHUB_RUN_ID", raising=False)
+    monkeypatch.delenv("GITHUB_RUN_ATTEMPT", raising=False)
+    assert runner.make_run_id().startswith("local-")
+    monkeypatch.setenv("GITHUB_RUN_ID", "123")
+    assert runner.make_run_id() == "gh-123-1"
+    monkeypatch.setenv("GITHUB_RUN_ATTEMPT", "2")
+    assert runner.make_run_id() == "gh-123-2"
+    monkeypatch.setenv("RUN_ID", "manual-7")
+    assert runner.make_run_id() == "manual-7"
+
+
+def test_every_row_of_a_run_shares_one_run_id_and_csv_has_all_columns(tmp_path, monkeypatch):
+    setup_inputs(tmp_path, monkeypatch, n_products=3)
+    monkeypatch.setenv("RUN_ID", "test-run")
+    monkeypatch.setattr(
+        runner, "scrape_store_product",
+        lambda store, product: {"status": "Success", "product_name": "X", "price_brl": 9.9,
+                                "list_price": 12.0, "available": "true", "seller": "S", "url": "https://x.test/p"},
+    )
+    runner.main()
+    with open("results.csv", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+        assert reader.fieldnames == CSV_COLUMNS
+    assert {r["run_id"] for r in rows} == {"test-run"}
+    assert rows[0]["list_price"] == "12.0" and rows[0]["url"] == "https://x.test/p"

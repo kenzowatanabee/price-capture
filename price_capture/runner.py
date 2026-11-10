@@ -15,9 +15,19 @@ from price_capture.scrape import scrape_store_product
 BRT = ZoneInfo("America/Sao_Paulo")
 
 
+def make_run_id():
+    """Identifies one scraper run: RUN_ID if set, else the GitHub Actions run, else a local timestamp."""
+    if os.environ.get("RUN_ID"):
+        return os.environ["RUN_ID"]
+    github_run = os.environ.get("GITHUB_RUN_ID")
+    if github_run:
+        return f"gh-{github_run}-{os.environ.get('GITHUB_RUN_ATTEMPT', '1')}"
+    return datetime.now(BRT).strftime("local-%Y%m%d-%H%M%S")
+
+
 def process_task(args):
     """Worker function to process a single (store, product) pair in a thread."""
-    store, product = args
+    store, product, run_id = args
     res = scrape_store_product(store, product)
     store_name = store["name"]
     ean = product["ean"]
@@ -34,6 +44,11 @@ def process_task(args):
         "price_brl": res.get("price_brl"),
         "found_name": res.get("product_name"),
         "message": res.get("message"),
+        "list_price": res.get("list_price"),
+        "available": res.get("available"),
+        "seller": res.get("seller"),
+        "url": res.get("url"),
+        "run_id": run_id,
     }
 
     # Thread-safe console log
@@ -133,7 +148,9 @@ def main():
         sys.exit(1)
 
     # Build matrix of all (store, product) tasks
-    tasks = [(store, product) for product in products for store in stores]
+    run_id = make_run_id()
+    tasks = [(store, product, run_id) for product in products for store in stores]
+    print(f"Run id: {run_id}")
     print(f"Loaded {len(products)} product(s) and {len(stores)} active store(s).")
     print(f"Starting {len(tasks)} requests across {max_workers} worker threads...\n{'='*60}")
 

@@ -224,7 +224,8 @@ def test_process_task_record_shape_and_timestamp(monkeypatch):
         "scrape_store_product",
         lambda store, product: {"status": "Success", "product_name": "X", "price_brl": 9.9},
     )
-    rec = runner.process_task((make_store("B2C_REST", "Loja"), PRODUCT))
+    rec = runner.process_task((make_store("B2C_REST", "Loja"), PRODUCT, "run-1"))
+    assert rec["run_id"] == "run-1"
     assert set(rec) == set(CSV_COLUMNS)
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", rec["fetched_at"])
 
