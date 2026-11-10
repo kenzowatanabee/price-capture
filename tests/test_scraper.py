@@ -42,7 +42,7 @@ def no_sleep(monkeypatch):
 
 
 def patch_get(monkeypatch, handler):
-    monkeypatch.setattr(cffi_requests, "get", handler)
+    monkeypatch.setattr(cffi_requests.Session, "get", lambda self, url, **kwargs: handler(url, **kwargs))
 
 
 # ---------- helpers ----------

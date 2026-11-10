@@ -20,7 +20,7 @@ PRODUCT = {"ean": "7509546060781", "desc_sku": "CREME DENTAL TESTE 50g"}
 
 
 def patch_get(monkeypatch, handler):
-    monkeypatch.setattr(cffi_requests, "get", handler)
+    monkeypatch.setattr(cffi_requests.Session, "get", lambda self, url, **kwargs: handler(url, **kwargs))
 
 
 def test_vtex_io_html_takes_lowest_positive_offer_and_product_name(monkeypatch):

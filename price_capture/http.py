@@ -1,6 +1,8 @@
 """HTTP fetching with browser impersonation, split timeouts and retry/backoff."""
 import os
+import threading
 import time
+from urllib.parse import urlsplit
 
 from curl_cffi import requests
 
@@ -27,22 +29,38 @@ HEADERS = {
 }
 
 
+_local = threading.local()
+
+
+def _session_for(domain):
+    """
+    One session per (thread, domain): connections and cookies are reused across the many
+    requests a store receives, and sessions are never shared between threads.
+    """
+    sessions = getattr(_local, "sessions", None)
+    if sessions is None:
+        sessions = _local.sessions = {}
+    session = sessions.get(domain)
+    if session is None:
+        session = sessions[domain] = requests.Session(
+            impersonate=IMPERSONATE,
+            headers=HEADERS,
+            timeout=TIMEOUT,
+            allow_redirects=True,
+            verify=VERIFY_SSL,
+        )
+    return session
+
+
 def fetch(url, max_retries=2):
     """
     GETs a URL, retrying timeouts (curl 28) and unexpected exceptions with
     linear backoff. Returns (response, None) on success or (None, error_result).
     """
+    session = _session_for(urlsplit(url).netloc)
     for attempt in range(max_retries + 1):
         try:
-            response = requests.get(
-                url,
-                headers=HEADERS,
-                impersonate=IMPERSONATE,
-                timeout=TIMEOUT,
-                allow_redirects=True,
-                verify=VERIFY_SSL,
-            )
-            return response, None
+            return session.get(url), None
         except requests.errors.RequestsError as e:
             # curl error 28 = operation timed out
             if e.code == 28 and attempt < max_retries:
