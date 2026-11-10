@@ -465,3 +465,31 @@ def test_relative_product_link_is_resolved_against_the_request_url(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: resp)
     res = scrape.scrape_store_product(make_store("CARREFOUR_INTELLIGENT_SEARCH"), PRODUCT)
     assert res["url"] == "https://carrefour.test/produto-x/p"
+
+
+# ---------- per-store diagnostics in the summary ----------
+
+def test_summary_shows_reason_codes_per_store(capsys):
+    results = (
+        rows(success=3, store="Good")
+        + [{"store": "RD", "status": "Success", "message": None}] * 2
+        + [{"store": "RD", "status": "Not Found", "message": "NO_PRICE: product found, but no price available"}] * 3
+        + [{"store": "RD", "status": "Not Found", "message": "NOT_LISTED: store returned no product"}]
+    )
+    runner.summarize_results(results, 9)
+    out = capsys.readouterr().out
+    rd_block = out[out.index("  RD "):]
+    assert "NO_PRICE: 3" in rd_block.split("Non-success reasons")[0]
+    assert "NOT_LISTED: 1" in rd_block.split("Non-success reasons")[0]
+
+
+def test_dead_store_warning_includes_the_most_common_error_text(capsys, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    results = (
+        [{"store": "Dead", "status": "Error", "message": "NETWORK: curl 60: SSL certificate problem"}] * 4
+        + [{"store": "Dead", "status": "Error", "message": "TIMEOUT: connection timed out (curl 28)"}]
+    )
+    runner.summarize_results(results, 5)
+    out = capsys.readouterr().out
+    assert "Most common: NETWORK: curl 60: SSL certificate problem (4x)" in out
+    assert "::warning::Dead:" in out and "curl 60" in out.split("::warning::")[1]

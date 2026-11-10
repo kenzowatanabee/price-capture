@@ -75,8 +75,10 @@ def reason_code(result):
 
 
 def summarize_results(results, expected_total):
-    """Prints per-store success and the reasons for non-successes; returns the overall success rate."""
+    """Prints per-store success with the reasons for non-successes; returns the overall success rate."""
     per_store = {}
+    store_codes = {}
+    store_messages = {}
     reasons = Counter()
     for r in results:
         stats = per_store.setdefault(r["store"], [0, 0])
@@ -85,12 +87,20 @@ def summarize_results(results, expected_total):
             stats[0] += 1
         else:
             reasons[reason_code(r)] += 1
+            store_codes.setdefault(r["store"], Counter())[reason_code(r)] += 1
+            store_messages.setdefault(r["store"], Counter())[r.get("message") or "(no message)"] += 1
 
     print("\nPer-store success:")
     for store, (ok, total) in sorted(per_store.items()):
         print(f"  {store.ljust(22)}: {ok}/{total}")
+        for code, count in store_codes.get(store, Counter()).most_common():
+            print(f"      {code}: {count}")
         if ok == 0:
-            warning = f"{store}: no successful prices ({total} requests). Blocked or layout changed?"
+            message, count = store_messages[store].most_common(1)[0]
+            warning = (
+                f"{store}: no successful prices ({total} requests). "
+                f"Most common: {message} ({count}x). Blocked or layout changed?"
+            )
             print(f"  ⚠️ {warning}")
             if os.environ.get("GITHUB_ACTIONS") == "true":
                 print(f"::warning::{warning}")
