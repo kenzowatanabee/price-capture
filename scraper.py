@@ -174,11 +174,13 @@ def scrape_store_product(store, product, max_retries=2):
             )
             break  # Connection successful
         except requests.errors.RequestsError as e:
-            err_msg = str(e).lower()
-            if ("timed out" in err_msg or "28" in err_msg) and attempt < max_retries:
+            # curl error 28 = operation timed out
+            if e.code == 28 and attempt < max_retries:
                 time.sleep(2 * (attempt + 1))  # Waits 2s, then 4s
                 continue
-            return {"status": "Error", "message": "Connection Timed Out (curl 28)"}
+            if e.code == 28:
+                return {"status": "Error", "message": "Connection Timed Out (curl 28)"}
+            return {"status": "Error", "message": f"Request failed (curl {int(e.code)}): {str(e)[:60]}"}
         except Exception as e:
             if attempt < max_retries:
                 time.sleep(2 * (attempt + 1))
