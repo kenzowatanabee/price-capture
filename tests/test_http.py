@@ -47,3 +47,55 @@ def test_sessions_are_not_shared_between_threads(monkeypatch):
     t.start()
     t.join()
     assert seen[0][0] != seen[1][0]
+
+
+def test_concurrency_per_domain_is_capped(monkeypatch):
+    import time as real_time
+
+    monkeypatch.setattr(http, "PER_STORE_CONCURRENCY", 2)
+    state = {"now": 0, "max": 0}
+    lock = threading.Lock()
+
+    def slow_get(self, url, **kwargs):
+        with lock:
+            state["now"] += 1
+            state["max"] = max(state["max"], state["now"])
+        real_time.sleep(0.05)
+        with lock:
+            state["now"] -= 1
+        return FakeResponse()
+
+    monkeypatch.setattr(cffi_requests.Session, "get", slow_get)
+    threads = [threading.Thread(target=http.fetch, args=("https://capped.test/x",)) for _ in range(8)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert state["max"] == 2
+
+
+def test_different_domains_do_not_share_a_cap(monkeypatch):
+    import time as real_time
+
+    monkeypatch.setattr(http, "PER_STORE_CONCURRENCY", 1)
+    barrier = threading.Barrier(2, timeout=5)
+
+    def get(self, url, **kwargs):
+        barrier.wait()  # only passes if both domains are in flight at once
+        return FakeResponse()
+
+    monkeypatch.setattr(cffi_requests.Session, "get", get)
+    threads = [threading.Thread(target=http.fetch, args=(f"https://own{i}.test/x",)) for i in range(2)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert not barrier.broken
+
+
+def test_jitter_sleeps_a_random_amount_before_each_request(monkeypatch, no_sleep):
+    monkeypatch.setattr(http, "REQUEST_JITTER", 0.5)
+    monkeypatch.setattr(http.random, "uniform", lambda a, b: b)  # worst case
+    record_sessions(monkeypatch)
+    http.fetch("https://jitter.test/x")
+    assert no_sleep == [0.5]

@@ -1,5 +1,6 @@
 """HTTP fetching with browser impersonation, split timeouts and retry/backoff."""
 import os
+import random
 import threading
 import time
 from urllib.parse import urlsplit
@@ -13,6 +14,11 @@ VERIFY_SSL = os.environ.get("VERIFY_SSL", "true").strip().lower() not in ("0", "
 
 IMPERSONATE = "chrome120"
 TIMEOUT = (10, 20)  # (connect_timeout, read_timeout)
+
+# Politeness towards each store: at most N requests in flight per domain, and a small
+# random delay (up to REQUEST_JITTER seconds) before each one.
+PER_STORE_CONCURRENCY = int(os.environ.get("PER_STORE_CONCURRENCY", 2))
+REQUEST_JITTER = float(os.environ.get("REQUEST_JITTER", 0.3))
 
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -30,6 +36,16 @@ HEADERS = {
 
 
 _local = threading.local()
+_domain_limits = {}
+_domain_limits_lock = threading.Lock()
+
+
+def _limit_for(domain):
+    """The semaphore capping concurrent requests to one domain (shared by all threads)."""
+    with _domain_limits_lock:
+        if domain not in _domain_limits:
+            _domain_limits[domain] = threading.BoundedSemaphore(PER_STORE_CONCURRENCY)
+        return _domain_limits[domain]
 
 
 def _session_for(domain):
@@ -57,7 +73,15 @@ def fetch(url, max_retries=2):
     GETs a URL, retrying timeouts (curl 28) and unexpected exceptions with
     linear backoff. Returns (response, None) on success or (None, error_result).
     """
-    session = _session_for(urlsplit(url).netloc)
+    domain = urlsplit(url).netloc
+    # The slot is held across retries and their backoff, so a struggling store gets less traffic.
+    with _limit_for(domain):
+        if REQUEST_JITTER > 0:
+            time.sleep(random.uniform(0, REQUEST_JITTER))
+        return _fetch_with_retries(_session_for(domain), url, max_retries)
+
+
+def _fetch_with_retries(session, url, max_retries):
     for attempt in range(max_retries + 1):
         try:
             return session.get(url), None
