@@ -13,10 +13,12 @@ class Platform:
         raise NotImplementedError
 
 
-def build_result(found_name, price, product):
-    """Common tail of every parser: a positive price makes it a success, otherwise 'Not Found'."""
+def build_result(found_name, price, product, available=True):
+    """Common tail of every parser: an in-stock positive price is a success, otherwise 'Not Found'."""
     if price is None:
         return {"status": "Not Found", "message": "Product found, but no price available."}
+    if not available:
+        return {"status": "Not Found", "message": "Product found, but out of stock."}
     # Stores report 0 for items they cannot sell; that is not a shelf price.
     if price <= 0:
         return {"status": "Not Found", "message": f"Product found, but price is {price} (unavailable)."}
@@ -27,12 +29,21 @@ def build_result(found_name, price, product):
     }
 
 
-def vtex_first_seller_price(vtex_product):
-    """Price of the first item's first seller in a VTEX product payload (or None)."""
+def vtex_offer(vtex_product):
+    """
+    (price, available) of the preferred offer of a VTEX product payload: the first item's
+    default seller, else its first seller. Availability is only false when the payload says
+    so explicitly (IsAvailable false, or AvailableQuantity present and not positive).
+    """
     items = vtex_product.get("items", [])
-    if items and items[0].get("sellers"):
-        return items[0]["sellers"][0].get("commertialOffer", {}).get("Price")
-    return None
+    if not items or not items[0].get("sellers"):
+        return None, True
+    sellers = items[0]["sellers"]
+    chosen = next((s for s in sellers if s.get("sellerDefault") is True), sellers[0])
+    offer = chosen.get("commertialOffer", {})
+    quantity = offer.get("AvailableQuantity")
+    available = offer.get("IsAvailable") is not False and not (quantity is not None and quantity <= 0)
+    return offer.get("Price"), available
 
 
 def next_js_product(state):

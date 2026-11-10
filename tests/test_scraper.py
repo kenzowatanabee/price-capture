@@ -253,3 +253,45 @@ def test_rd_nextjs_zero_price_is_not_a_success(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
     res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
     assert res["status"] == "Not Found"
+
+
+# ---------- VTEX seller choice and availability ----------
+
+def vtex_sellers_payload(*sellers):
+    return [{"productName": "Produto X", "items": [{"sellers": list(sellers)}]}]
+
+
+def seller(price, default=None, **offer_extra):
+    s = {"commertialOffer": {"Price": price, **offer_extra}}
+    if default is not None:
+        s["sellerDefault"] = default
+    return s
+
+
+def test_vtex_prefers_the_default_seller(monkeypatch):
+    payload = vtex_sellers_payload(seller(20.0, default=False), seller(15.0, default=True))
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["price_brl"] == 15.0
+
+
+def test_vtex_falls_back_to_first_seller_without_default_flag(monkeypatch):
+    payload = vtex_sellers_payload(seller(20.0), seller(15.0))
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["price_brl"] == 20.0
+
+
+@pytest.mark.parametrize("extra", [{"AvailableQuantity": 0}, {"IsAvailable": False}])
+def test_vtex_out_of_stock_offer_is_not_a_success(monkeypatch, extra):
+    payload = vtex_sellers_payload(seller(15.0, default=True, **extra))
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["status"] == "Not Found"
+    assert "price_brl" not in res
+
+
+def test_vtex_in_stock_offer_is_a_success(monkeypatch):
+    payload = vtex_sellers_payload(seller(15.0, default=True, AvailableQuantity=5, IsAvailable=True))
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    assert scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)["status"] == "Success"
