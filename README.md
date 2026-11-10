@@ -37,6 +37,21 @@ python upload_to_domo.py   # appends results.csv to the Domo dataset
 
 Locally, the uploader also reads these from a `.env` file (git-ignored).
 
+## Code layout
+
+```
+scraper.py                  entry point (python scraper.py)
+upload_to_domo.py           Domo uploader
+price_capture/
+  runner.py                 task matrix, threading, output files, success-rate gate
+  scrape.py                 one (store, product) request
+  http.py                   fetch with browser impersonation, timeouts, retries
+  config.py                 CSV loaders
+  schema.py                 output column order (shared with the uploader)
+  platforms/                one class per store architecture + registry
+tests/                      unit tests (mocked HTTP)
+```
+
 ## Inputs
 
 **`data/products.csv`** has the columns `ean,desc_sku`. Spaces and dashes in the EAN are stripped.
@@ -50,7 +65,7 @@ Locally, the uploader also reads these from a `.env` file (git-ignored).
 | `CARREFOUR_INTELLIGENT_SEARCH` | VTEX Intelligent Search | JSON API |
 | `B2C_REST` | Legacy VTEX | `catalog_system` JSON API |
 
-To add a store, append a row with an existing `type`. A new platform needs a new branch in `scrape_store_product`.
+To add a store, append a row with an existing `type`. To support a new platform, add a class in `price_capture/platforms/` (implement `build_url` and `parse`) and register it in `price_capture/platforms/__init__.py`.
 
 ## Output and the Domo dataset
 
