@@ -77,7 +77,15 @@ Columns, in order (defined once in `schema.py`):
 - The Domo import is **positional (no header row)**, so this order must match the Domo dataset. The uploader refuses to upload if `results.csv` doesn't match `schema.py`.
 - The upload uses **APPEND**. Every run adds rows, so running the workflow twice in a day (for example a manual dispatch on top of the schedule) duplicates that day's rows. Deduplicate downstream on `(ean, store, date(fetched_at))` if that matters.
 - `fetched_at` is in **Brasília time** (`America/Sao_Paulo`), formatted `YYYY-MM-DD HH:MM:SS`.
-- **Every attempted request produces a row**, including failures. `status` is one of `Success`, `Not Found` or `Error`, and `price_brl` is empty unless it is `Success`. Filter on `status = 'Success'` for price analysis. The other rows are useful for tracking store coverage and blocking.
+- **Every attempted request produces a row**, including failures. `status` is one of `Success`, `Not Found` or `Error`, and `price_brl` is empty unless it is `Success`.
+
+  `message` starts with a reason code (`CODE: detail`) for every non-success:
+
+  | `status` | Codes |
+  |---|---|
+  | `Not Found` | `NOT_LISTED` (store returned no product), `OUT_OF_STOCK`, `ZERO_PRICE` (store reports a price of 0), `NO_PRICE`, `NO_STATE` (page had no embedded product data, which may mean the layout changed) |
+  | `Error` | `TIMEOUT`, `NETWORK`, `HTTP_ERROR` (e.g. `HTTP_ERROR: 403`), `BLOCKED`, `PARSE_ERROR`, `CONFIG` |
+ Filter on `status = 'Success'` for price analysis. The other rows are useful for tracking store coverage and blocking.
 
 ## Automation
 
