@@ -85,9 +85,9 @@ Columns, in order (defined once in `price_capture/schema.py`):
 | 2 | `desc_sku` | STRING | From `products.csv` |
 | 3 | `store` | STRING | |
 | 4 | `status` | STRING | `Success`, `Not Found` or `Error` |
-| 5 | `price_brl` | DOUBLE | Selling price. Only set when `status = Success` |
+| 5 | `price_brl` | DECIMAL | Selling price. Only set when `status = Success` |
 | 6 | `found_name` | STRING | Product name as the store lists it |
-| 7 | `fetched_at` | STRING | Brasília time, `YYYY-MM-DD HH:MM:SS` |
+| 7 | `fetched_at` | DATETIME | Brasília time, `YYYY-MM-DD HH:MM:SS` |
 | 8 | `message` | STRING | Reason code and detail for non-successes |
 | 9 | `list_price` | DOUBLE | Store's list ("from") price, when reported |
 | 10 | `available` | STRING | `true` / `false`, empty when the store does not say |

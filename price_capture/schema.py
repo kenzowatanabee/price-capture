@@ -4,15 +4,15 @@ The Domo import is positional (no header row), so CSV_COLUMNS MUST match the col
 the Domo dataset. New columns are only ever appended at the end.
 """
 
-# (column name, Domo column type), in CSV / Domo order.
+# (column name, Domo column type), in CSV / Domo order. Types mirror the production dataset.
 COLUMNS = [
     ("ean", "STRING"),
     ("desc_sku", "STRING"),
     ("store", "STRING"),
     ("status", "STRING"),
-    ("price_brl", "DOUBLE"),
+    ("price_brl", "DECIMAL"),
     ("found_name", "STRING"),
-    ("fetched_at", "STRING"),  # "YYYY-MM-DD HH:MM:SS" in Brasilia time
+    ("fetched_at", "DATETIME"),  # "YYYY-MM-DD HH:MM:SS" in Brasilia time
     ("message", "STRING"),
     ("list_price", "DOUBLE"),  # list ("from") price reported by the store, when present
     ("available", "STRING"),  # "true" / "false", empty when the store does not say

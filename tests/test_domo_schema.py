@@ -14,7 +14,7 @@ def test_append_keeps_existing_columns_and_adds_the_rest_at_the_end():
     assert desired[8:] == COLUMNS[8:]
     assert len(desired) == len(COLUMNS)
     assert any("'Desc'" in n for n in notes)  # name differs from the scraper's: flagged
-    assert any("Price" in n and "DOUBLE" in n for n in notes)  # type differs: flagged
+    assert any("Price" in n and "DECIMAL" in n for n in notes)  # type differs: flagged
 
 
 def test_already_up_to_date_is_a_no_op():
@@ -53,3 +53,9 @@ def test_read_credentials_accepts_both_naming_styles():
     assert domo_schema.read_credentials({"client_id": "a", "secret_id": "b", "dataset_id": "c"}) == ("a", "b", "c")
     assert domo_schema.read_credentials({"DOMO_CLIENT_ID": "a", "DOMO_CLIENT_SECRET": "b", "DOMO_DATASET_ID": "c"}) == ("a", "b", "c")
     assert domo_schema.read_credentials({}) == (None, None, None)
+
+
+def test_canonical_types_match_the_production_dataset():
+    # --rename-existing must not retype production columns: price is DECIMAL and the timestamp DATETIME in Domo.
+    types = dict(COLUMNS)
+    assert types["price_brl"] == "DECIMAL" and types["fetched_at"] == "DATETIME"
