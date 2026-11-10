@@ -41,3 +41,41 @@ Dataset: PRICE_TRACKER (#), rows: 53563
 ⚠️  column 7 ('fetched_at'): type is DATETIME in Domo, scraper type is STRING.
 
 ✅ The schema is already up to date. Nothing to do.
+
+---
+
+
+Scraping complete. Total requests processed: 750
+
+Per-store success:
+  Droga Raia            : 45/75
+      NO_PRICE: 30
+  Drogal                : 71/75
+      OUT_OF_STOCK: 3
+      NOT_LISTED: 1
+  Drogaria Catarinense  : 64/75
+      NOT_LISTED: 10
+      OUT_OF_STOCK: 1
+  Drogaria São Paulo    : 74/75
+      NOT_LISTED: 1
+  Drogaria Venancio     : 75/75
+  Drogarias Pacheco     : 0/75
+      NETWORK: 75
+  ⚠️ Drogarias Pacheco: no successful prices (75 requests). Most common: NETWORK: curl 60: Failed to perform, curl: (60) SSL certificate OpenSSL verify (75x). Blocked or layout changed?
+  Drogasil              : 47/75
+      NO_PRICE: 28
+  Farmácia Indiana      : 74/75
+      OUT_OF_STOCK: 1
+  Farmácias São João    : 0/75
+      NETWORK: 75
+  ⚠️ Farmácias São João: no successful prices (75 requests). Most common: NETWORK: curl 60: Failed to perform, curl: (60) SSL certificate OpenSSL verify (75x). Blocked or layout changed?
+  Pague Menos           : 69/75
+      OUT_OF_STOCK: 3
+      NOT_LISTED: 3
+
+Non-success reasons:
+  NETWORK: 150
+  NO_PRICE: 58
+  NOT_LISTED: 15
+  OUT_OF_STOCK: 8
+Overall: 519/750 (69%)
