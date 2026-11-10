@@ -229,3 +229,27 @@ def test_summarize_results_rate(capsys):
 def test_summarize_counts_missing_results_as_failures():
     # 1 success out of 4 expected requests (3 workers crashed) -> 25%
     assert runner.summarize_results([{"store": "A", "status": "Success"}], 4) == 0.25
+
+
+# ---------- zero / negative prices are not real prices ----------
+
+@pytest.mark.parametrize("bad_price", [0, 0.0, -1])
+def test_b2c_rest_zero_price_is_not_a_success(monkeypatch, bad_price):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=vtex_payload(bad_price)))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["status"] == "Not Found"
+    assert "price_brl" not in res
+
+
+def test_carrefour_zero_price_is_not_a_success(monkeypatch):
+    payload = {"products": vtex_payload(0)}
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("CARREFOUR_INTELLIGENT_SEARCH"), PRODUCT)
+    assert res["status"] == "Not Found"
+
+
+def test_rd_nextjs_zero_price_is_not_a_success(monkeypatch):
+    html = next_html([{"sku": "1", "name": "Loja propria", "priceService": 0, "is1P": True}])
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert res["status"] == "Not Found"

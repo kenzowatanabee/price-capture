@@ -14,14 +14,17 @@ class Platform:
 
 
 def build_result(found_name, price, product):
-    """Common tail of every parser: a price makes it a success, otherwise 'Not Found'."""
-    if price is not None:
-        return {
-            "status": "Success",
-            "product_name": found_name or product.get("desc_sku", "Produto Encontrado"),
-            "price_brl": price,
-        }
-    return {"status": "Not Found", "message": "Product found, but no price available."}
+    """Common tail of every parser: a positive price makes it a success, otherwise 'Not Found'."""
+    if price is None:
+        return {"status": "Not Found", "message": "Product found, but no price available."}
+    # Stores report 0 for items they cannot sell; that is not a shelf price.
+    if price <= 0:
+        return {"status": "Not Found", "message": f"Product found, but price is {price} (unavailable)."}
+    return {
+        "status": "Success",
+        "product_name": found_name or product.get("desc_sku", "Produto Encontrado"),
+        "price_brl": price,
+    }
 
 
 def vtex_first_seller_price(vtex_product):
