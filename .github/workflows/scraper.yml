@@ -28,6 +28,7 @@ jobs:
           PRODUCTS_FILE: 'data/products.csv'
           STORES_FILE: 'data/stores.csv'
           MAX_WORKERS: '10'
+          MIN_SUCCESS_RATE: '0.5' # fail the run (skip Domo upload) below this share of successful requests
         run: |
           python scraper.py
 

@@ -298,6 +298,24 @@ def process_task(args):
 
     return record
 
+def summarize_results(results, expected_total):
+    """Prints a per-store success summary and returns the overall success rate."""
+    per_store = {}
+    for r in results:
+        stats = per_store.setdefault(r["store"], [0, 0])
+        stats[1] += 1
+        if r["status"] == "Success":
+            stats[0] += 1
+
+    print("\nPer-store success:")
+    for store, (ok, total) in sorted(per_store.items()):
+        print(f"  {store.ljust(22)}: {ok}/{total}")
+
+    successes = sum(ok for ok, _ in per_store.values())
+    rate = successes / expected_total if expected_total else 0.0
+    print(f"Overall: {successes}/{expected_total} ({rate:.0%})")
+    return rate
+
 def main():
     products_file = os.environ.get("PRODUCTS_FILE", "data/products.csv")
     stores_file = os.environ.get("STORES_FILE", "data/stores.csv")
@@ -341,6 +359,14 @@ def main():
         writer.writerows(all_results)
 
     print(f"\nScraping complete. Total requests processed: {len(all_results)}")
+
+    # Fail the run (and so skip the Domo upload) if too many requests failed,
+    # e.g. when a WAF starts blocking the runner.
+    min_rate = float(os.environ.get("MIN_SUCCESS_RATE", 0.5))
+    rate = summarize_results(all_results, len(tasks))
+    if rate < min_rate:
+        print(f"❌ Success rate {rate:.0%} is below the required {min_rate:.0%}. Failing the run.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
