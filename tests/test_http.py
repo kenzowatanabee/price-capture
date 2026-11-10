@@ -152,3 +152,8 @@ def test_other_error_statuses_are_not_retried(monkeypatch, no_sleep):
     calls = scripted_get(monkeypatch, [FakeResponse(403)])
     response, _ = http.fetch("https://ra.test/f")
     assert (response.status_code, len(calls), no_sleep) == (403, 1, [])
+
+
+def test_only_language_is_hand_set_so_headers_match_the_impersonated_browser():
+    # User-Agent / sec-ch-ua must come from the impersonation, never be hard-coded to another version.
+    assert set(http.HEADERS) == {"Accept-Language"}

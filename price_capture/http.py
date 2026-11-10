@@ -12,31 +12,21 @@ from price_capture.results import error
 # TLS verification is on by default; set VERIFY_SSL=false only to work around a store with a broken certificate
 VERIFY_SSL = os.environ.get("VERIFY_SSL", "true").strip().lower() not in ("0", "false", "no")
 
-IMPERSONATE = "chrome120"
+# Browser fingerprint (TLS + HTTP/2 + default headers) sent by curl_cffi. The matching User-Agent and
+# sec-ch-ua headers come from the impersonation itself, so do not hand-write them here: a header set that
+# disagrees with the fingerprint is easier to flag than a consistent one.
+IMPERSONATE = os.environ.get("IMPERSONATE", "chrome142")
 TIMEOUT = (10, 20)  # (connect_timeout, read_timeout)
 
-# Politeness towards each store: at most N requests in flight per domain, and a small
-# random delay (up to REQUEST_JITTER seconds) before each one.
+HEADERS = {"Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"}
+
 RETRY_STATUSES = {429, 503}  # rate limited / temporarily unavailable
 MAX_RETRY_AFTER = 30  # never wait longer than this (seconds) on a Retry-After header
 
+# Politeness towards each store: at most N requests in flight per domain, and a small
+# random delay (up to REQUEST_JITTER seconds) before each one.
 PER_STORE_CONCURRENCY = int(os.environ.get("PER_STORE_CONCURRENCY", 2))
 REQUEST_JITTER = float(os.environ.get("REQUEST_JITTER", 0.3))
-
-HEADERS = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Sec-Ch-Ua": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-    "Sec-Ch-Ua-Mobile": "?0",
-    "Sec-Ch-Ua-Platform": '"Windows"',
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "none",
-    "Sec-Fetch-User": "?1",
-    "Upgrade-Insecure-Requests": "1",
-}
-
 
 _local = threading.local()
 _domain_limits = {}
