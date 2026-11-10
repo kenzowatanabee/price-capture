@@ -3,6 +3,7 @@
 /.vscode
 /venv
 /temp
+/.venv
 
 results.csv
 results.json
