@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from price_capture.config import load_products, load_stores
+from price_capture.config import ConfigError, load_products, load_stores
 from price_capture.schema import CSV_COLUMNS
 from price_capture.scrape import scrape_store_product
 
@@ -76,8 +76,12 @@ def main():
     stores_file = os.environ.get("STORES_FILE", "data/stores.csv")
     max_workers = int(os.environ.get("MAX_WORKERS", 10))  # Default to 10 concurrent threads
 
-    products = load_products(products_file)
-    stores = load_stores(stores_file)
+    try:
+        products = load_products(products_file)
+        stores = load_stores(stores_file)
+    except ConfigError as e:
+        print(f"❌ [ERROR] {e}")
+        sys.exit(1)
 
     if not products or not stores:
         print("No valid products or stores loaded. Exiting.")

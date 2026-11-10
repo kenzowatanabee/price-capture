@@ -109,6 +109,19 @@ def test_load_stores_respects_enabled_flag(tmp_path):
     assert [s["name"] for s in config.load_stores(str(f))] == ["A", "C"]
 
 
+def test_load_stores_rejects_unknown_type(tmp_path):
+    f = tmp_path / "stores.csv"
+    f.write_text("store_id,type,domain\nA,B2C_RST,https://a.test\n", encoding="utf-8")
+    with pytest.raises(config.ConfigError, match="B2C_RST"):
+        config.load_stores(str(f))
+
+
+def test_load_stores_ignores_unknown_type_when_disabled(tmp_path):
+    f = tmp_path / "stores.csv"
+    f.write_text("store_id,type,domain,enabled\nA,WIP,https://a.test,false\n", encoding="utf-8")
+    assert config.load_stores(str(f)) == []
+
+
 def test_load_stores_enabled_defaults_to_true_without_column(tmp_path):
     f = tmp_path / "stores.csv"
     f.write_text("store_id,type,domain\nA,B2C_REST,https://a.test\n", encoding="utf-8")

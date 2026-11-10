@@ -14,5 +14,5 @@ PLATFORMS = {
 
 
 def get_platform(type_name):
-    # Unknown types fall back to the legacy VTEX API, as before the refactor.
-    return PLATFORMS.get(type_name, PLATFORMS["B2C_REST"])
+    """The platform for a store type, or None if the type is unknown."""
+    return PLATFORMS.get(type_name)

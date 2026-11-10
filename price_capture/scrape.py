@@ -11,6 +11,8 @@ def scrape_store_product(store, product):
         return error("CONFIG", "domain URL not configured")
 
     platform = get_platform(store["type"])
+    if platform is None:
+        return error("CONFIG", f"unknown store type '{store['type']}'")
     response, fetch_error = fetch(platform.build_url(domain, product["ean"]))
     if fetch_error:
         return fetch_error

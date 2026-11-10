@@ -51,19 +51,15 @@ def test_vtex_io_html_without_state_is_not_found(monkeypatch):
     assert res["message"].startswith("NO_STATE:")
 
 
-def test_unknown_store_type_uses_legacy_vtex_api(monkeypatch):
-    seen = {}
-
-    def handler(url, **k):
-        seen["url"] = url
-        return FakeResponse(payload=[{"productName": "P", "items": [{"sellers": [{"commertialOffer": {"Price": 3.0}}]}]}])
+def test_unknown_store_type_is_a_config_error_and_makes_no_request(monkeypatch):
+    def handler(*a, **k):
+        raise AssertionError("no request expected")
 
     patch_get(monkeypatch, handler)
     res = scrape.scrape_store_product(
         {"name": "S", "type": "SOMETHING_NEW", "domain": "https://x.test"}, PRODUCT
     )
-    assert "api/catalog_system/pub/products/search?fq=alternateIds_Ean:7509546060781" in seen["url"]
-    assert res["status"] == "Success"
+    assert res == {"status": "Error", "message": "CONFIG: unknown store type 'SOMETHING_NEW'"}
 
 
 def test_missing_domain_is_an_error():

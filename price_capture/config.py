@@ -3,6 +3,12 @@ import csv
 import os
 import re
 
+from price_capture.platforms import PLATFORMS
+
+
+class ConfigError(Exception):
+    """Invalid input data (e.g. a store with an unknown platform type)."""
+
 
 def clean_ean(ean_input):
     """Removes spaces and dashes from the EAN input."""
@@ -47,6 +53,11 @@ def load_stores(file_path):
             if not is_enabled:
                 print(f"⏭️ Skipping disabled store: {store_id}")
                 continue
+
+            if store_type and store_type not in PLATFORMS:
+                raise ConfigError(
+                    f"Store '{store_id}' has unknown type '{store_type}'. Valid types: {', '.join(sorted(PLATFORMS))}"
+                )
 
             if store_id and store_type and domain:
                 stores.append({
