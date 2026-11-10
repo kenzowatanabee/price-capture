@@ -3,7 +3,7 @@ name: Price Scraper Run
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 15 * * *' # Runs daily at 08:00 UTC
+    - cron: '0 15 * * *' # Runs daily at 15:00 UTC (12:00 Brasilia)
 
 jobs:
   scrape-and-upload:
