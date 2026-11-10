@@ -139,28 +139,27 @@ def main():
 
     all_results = []
 
-    # Execute requests concurrently
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_task = {executor.submit(process_task, task): task for task in tasks}
-        for future in as_completed(future_to_task):
-            try:
-                result = future.result()
-                all_results.append(result)
-            except Exception as e:
-                print(f"⚠️ Worker error: {e}")
+    # Execute requests concurrently, appending each row to results.csv as soon as it completes
+    # so a crash part-way through still leaves the rows scraped so far.
+    with open("results.csv", "w", newline="", encoding="utf-8") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=CSV_COLUMNS)
+        writer.writeheader()
+        csv_file.flush()
 
-    # Save outputs
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            future_to_task = {executor.submit(process_task, task): task for task in tasks}
+            for future in as_completed(future_to_task):
+                try:
+                    result = future.result()
+                except Exception as e:
+                    print(f"⚠️ Worker error: {e}")
+                    continue
+                all_results.append(result)
+                writer.writerow(result)
+                csv_file.flush()
+
     with open("results.json", "w", encoding="utf-8") as f:
         json.dump(all_results, f, ensure_ascii=False, indent=2)
-
-    # Save to CSV output
-    with open("results.csv", "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=CSV_COLUMNS,
-        )
-        writer.writeheader()
-        writer.writerows(all_results)
 
     print(f"\nScraping complete. Total requests processed: {len(all_results)}")
 
