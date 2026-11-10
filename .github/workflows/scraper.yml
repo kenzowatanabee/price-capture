@@ -3,7 +3,7 @@ name: Price Scraper Run
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 15 * * *' # Runs daily at 08:00 UTC
+    - cron: '0 15 * * *' # Runs daily at 15:00 UTC (12:00 Brasilia)
 
 jobs:
   scrape-and-upload:
@@ -28,6 +28,8 @@ jobs:
           PRODUCTS_FILE: 'data/products.csv'
           STORES_FILE: 'data/stores.csv'
           MAX_WORKERS: '10'
+          MIN_SUCCESS_RATE: '0.2' # fail the run (skip Domo upload) below this share of successful requests
+          MAX_ERROR_RATE: '0.5'   # ...or above this share of errors (blocked, timeouts, parse failures)
         run: |
           python scraper.py
 

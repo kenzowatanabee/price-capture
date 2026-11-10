@@ -1,12 +1,12 @@
-store_id,type,domain,enabled
-Drogasil,RD_NEXTJS,https://www.drogasil.com.br,true
-Droga Raia,RD_NEXTJS,https://www.drogaraia.com.br,true
-Drogaria Araujo,VTEX_IO_HTML,https://www.araujo.com.br,false
-Drogaria São Paulo,B2C_REST,https://www.drogariasaopaulo.com.br,true
-Drogarias Pacheco,B2C_REST,https://www.drogariaspacheco.com.br,true
-Pague Menos,B2C_REST,https://www.paguemenos.com.br,true
-Farmácias São João,B2C_REST,https://www.saojoaofarmacias.com.br,true
-Drogal,B2C_REST,https://www.drogal.com.br,true
-Drogaria Venancio,B2C_REST,https://www.drogariavenancio.com.br,true
-Drogaria Catarinense,B2C_REST,https://www.drogariacatarinense.com.br,true
-Farmácia Indiana,B2C_REST,https://www.farmaciaindiana.com.br,true
+store_id,type,domain,enabled,verify_ssl
+Drogasil,RD_NEXTJS,https://www.drogasil.com.br,true,true
+Droga Raia,RD_NEXTJS,https://www.drogaraia.com.br,true,true
+Drogaria Araujo,VTEX_IO_HTML,https://www.araujo.com.br,false,true
+Drogaria São Paulo,B2C_REST,https://www.drogariasaopaulo.com.br,true,true
+Drogarias Pacheco,B2C_REST,https://www.drogariaspacheco.com.br,true,false
+Pague Menos,B2C_REST,https://www.paguemenos.com.br,true,true
+Farmácias São João,B2C_REST,https://www.saojoaofarmacias.com.br,true,false
+Drogal,B2C_REST,https://www.drogal.com.br,true,true
+Drogaria Venancio,B2C_REST,https://www.drogariavenancio.com.br,true,true
+Drogaria Catarinense,B2C_REST,https://www.drogariacatarinense.com.br,true,true
+Farmácia Indiana,B2C_REST,https://www.farmaciaindiana.com.br,true,true

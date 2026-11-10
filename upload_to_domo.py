@@ -4,15 +4,16 @@ import pandas as pd
 from dotenv import load_dotenv
 from pydomo import Domo
 
+from price_capture.domo_schema import columns_from_dataset, read_credentials, schema_mismatch
+from price_capture.schema import CSV_COLUMNS
+
 # Load local .env file if executing locally
 load_dotenv()
 
 
 def main():
     # Retrieve Domo credentials from environment variables
-    client_id = os.getenv("client_id") or os.getenv("DOMO_CLIENT_ID")
-    secret_id = os.getenv("secret_id") or os.getenv("DOMO_CLIENT_SECRET")
-    dataset_id = os.getenv("dataset_id") or os.getenv("DOMO_DATASET_ID")
+    client_id, secret_id, dataset_id = read_credentials()
 
     csv_file = "results.csv"
 
@@ -41,10 +42,24 @@ def main():
             client_id=client_id, client_secret=secret_id, api_host="api.domo.com"
         )
 
-        # Load scraped results
-        df = pd.read_csv(csv_file)
+        # Load scraped results (as text so EANs keep any leading zeros)
+        df = pd.read_csv(csv_file, dtype=str)
 
-        # Import payload into Domo (Replacing existing rows)
+        # The import is positional (no header), so the column order must match Domo
+        if list(df.columns) != CSV_COLUMNS:
+            print(
+                f"❌ [ERROR] Column mismatch. Expected {CSV_COLUMNS}, got {list(df.columns)}."
+            )
+            sys.exit(1)
+
+        # The import is positional, so refuse to run against a dataset whose column count differs
+        # (otherwise rows would be misaligned or rejected after a schema change).
+        problem = schema_mismatch(len(columns_from_dataset(client.datasets.get(dataset_id))))
+        if problem:
+            print(f"❌ [ERROR] {problem}")
+            sys.exit(1)
+
+        # Append payload to the Domo dataset (existing rows are kept)
         client.datasets.data_import(
             dataset_id,
             df.to_csv(index=False, header=False),

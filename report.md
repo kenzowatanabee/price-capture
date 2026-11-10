@@ -1,0 +1,116 @@
+Scraping complete. Total requests processed: 750
+
+Per-store success:
+  Droga Raia            : 45/75
+  Drogal                : 71/75
+  Drogaria Catarinense  : 64/75
+  Drogaria São Paulo    : 74/75
+  Drogaria Venancio     : 75/75
+  Drogarias Pacheco     : 0/75
+  ⚠️ Drogarias Pacheco: no successful prices (75 requests). Blocked or layout changed?
+  Drogasil              : 48/75
+  Farmácia Indiana      : 74/75
+  Farmácias São João    : 0/75
+  ⚠️ Farmácias São João: no successful prices (75 requests). Blocked or layout changed?
+  Pague Menos           : 69/75
+
+Non-success reasons:
+  NETWORK: 150
+  NO_PRICE: 57
+  NOT_LISTED: 15
+  OUT_OF_STOCK: 8
+Overall: 520/750 (69%)
+
+Dataset: PRICE_TRACKER (#), rows: 53563
+
+  #  current                      proposed
+  1  ean (STRING)                 ean (STRING)
+  2  desc_sku (STRING)            desc_sku (STRING)
+  3  store (STRING)               store (STRING)
+  4  status (STRING)              status (STRING)
+  5  price_brl (DECIMAL)          price_brl (DECIMAL)
+  6  found_name (STRING)          found_name (STRING)
+  7  fetched_at (DATETIME)        fetched_at (DATETIME)
+  8  message (STRING)             message (STRING)
+  9  list_price (DOUBLE)          list_price (DOUBLE)
+ 10  available (STRING)           available (STRING)
+ 11  seller (STRING)              seller (STRING)
+ 12  url (STRING)                 url (STRING)
+ 13  run_id (STRING)              run_id (STRING)
+⚠️  column 5 ('price_brl'): type is DECIMAL in Domo, scraper type is DOUBLE.
+⚠️  column 7 ('fetched_at'): type is DATETIME in Domo, scraper type is STRING.
+
+✅ The schema is already up to date. Nothing to do.
+
+---
+
+
+Scraping complete. Total requests processed: 750
+
+Per-store success:
+  Droga Raia            : 45/75
+      NO_PRICE: 30
+  Drogal                : 71/75
+      OUT_OF_STOCK: 3
+      NOT_LISTED: 1
+  Drogaria Catarinense  : 64/75
+      NOT_LISTED: 10
+      OUT_OF_STOCK: 1
+  Drogaria São Paulo    : 74/75
+      NOT_LISTED: 1
+  Drogaria Venancio     : 75/75
+  Drogarias Pacheco     : 0/75
+      NETWORK: 75
+  ⚠️ Drogarias Pacheco: no successful prices (75 requests). Most common: NETWORK: curl 60: Failed to perform, curl: (60) SSL certificate OpenSSL verify (75x). Blocked or layout changed?
+  Drogasil              : 47/75
+      NO_PRICE: 28
+  Farmácia Indiana      : 74/75
+      OUT_OF_STOCK: 1
+  Farmácias São João    : 0/75
+      NETWORK: 75
+  ⚠️ Farmácias São João: no successful prices (75 requests). Most common: NETWORK: curl 60: Failed to perform, curl: (60) SSL certificate OpenSSL verify (75x). Blocked or layout changed?
+  Pague Menos           : 69/75
+      OUT_OF_STOCK: 3
+      NOT_LISTED: 3
+
+Non-success reasons:
+  NETWORK: 150
+  NO_PRICE: 58
+  NOT_LISTED: 15
+  OUT_OF_STOCK: 8
+Overall: 519/750 (69%)
+
+---
+
+Scraping complete. Total requests processed: 750
+
+Per-store success:
+  Droga Raia            : 45/75
+      NO_PRICE: 30
+  Drogal                : 71/75
+      OUT_OF_STOCK: 3
+      NOT_LISTED: 1
+  Drogaria Catarinense  : 64/75
+      NOT_LISTED: 10
+      OUT_OF_STOCK: 1
+  Drogaria São Paulo    : 74/75
+      NOT_LISTED: 1
+  Drogaria Venancio     : 75/75
+  Drogarias Pacheco     : 73/75
+      OUT_OF_STOCK: 1
+      NOT_LISTED: 1
+  Drogasil              : 45/75
+      NO_PRICE: 30
+  Farmácia Indiana      : 74/75
+      OUT_OF_STOCK: 1
+  Farmácias São João    : 70/75
+      NOT_LISTED: 5
+  Pague Menos           : 69/75
+      OUT_OF_STOCK: 3
+      NOT_LISTED: 3
+
+Non-success reasons:
+  NO_PRICE: 60
+  NOT_LISTED: 21
+  OUT_OF_STOCK: 9
+Overall: 660/750 (88%)
