@@ -1,12 +1,13 @@
 import json
 import re
+import time
 
 import pytest
 from curl_cffi import requests as cffi_requests
 
-import scraper
-from price_capture import config
+from price_capture import config, runner, scrape
 from price_capture.platforms import embedded_state
+from price_capture.schema import CSV_COLUMNS
 
 
 class FakeResponse:
@@ -37,11 +38,11 @@ def next_html(products):
 
 @pytest.fixture
 def no_sleep(monkeypatch):
-    monkeypatch.setattr(scraper.time, "sleep", lambda _s: None)
+    monkeypatch.setattr(time, "sleep", lambda _s: None)
 
 
 def patch_get(monkeypatch, handler):
-    monkeypatch.setattr(scraper.requests, "get", handler)
+    monkeypatch.setattr(cffi_requests, "get", handler)
 
 
 # ---------- helpers ----------
@@ -122,20 +123,20 @@ def vtex_payload(price, name="Produto X"):
 
 def test_b2c_rest_success(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=vtex_payload(12.9)))
-    res = scraper.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert res == {"status": "Success", "product_name": "Produto X", "price_brl": 12.9}
 
 
 def test_b2c_rest_empty_result_is_not_found(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=[]))
-    res = scraper.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert res["status"] == "Not Found"
 
 
 def test_carrefour_intelligent_search_success(monkeypatch):
     payload = {"products": vtex_payload(8.5, "Carrefour item")}
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
-    res = scraper.scrape_store_product(make_store("CARREFOUR_INTELLIGENT_SEARCH"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("CARREFOUR_INTELLIGENT_SEARCH"), PRODUCT)
     assert (res["status"], res["price_brl"]) == ("Success", 8.5)
 
 
@@ -147,13 +148,13 @@ def test_rd_nextjs_prefers_first_party_seller(monkeypatch):
         ]
     )
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
-    res = scraper.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
     assert (res["product_name"], res["price_brl"]) == ("Loja propria", 15.0)
 
 
 def test_http_error_status(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(status_code=403))
-    res = scraper.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert res == {"status": "Error", "message": "HTTP 403"}
 
 
@@ -167,7 +168,7 @@ def test_timeout_is_retried_then_succeeds(monkeypatch, no_sleep):
         return FakeResponse(payload=vtex_payload(5.0))
 
     patch_get(monkeypatch, handler)
-    res = scraper.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert res["status"] == "Success"
     assert calls["n"] == 3
 
@@ -177,7 +178,7 @@ def test_timeout_gives_up_after_retries(monkeypatch, no_sleep):
         raise cffi_requests.errors.RequestsError("timed out", 28)
 
     patch_get(monkeypatch, handler)
-    res = scraper.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert res == {"status": "Error", "message": "Connection Timed Out (curl 28)"}
 
 
@@ -189,7 +190,7 @@ def test_non_timeout_curl_error_is_not_retried_and_reports_code(monkeypatch, no_
         raise cffi_requests.errors.RequestsError("SSL certificate problem", 60)
 
     patch_get(monkeypatch, handler)
-    res = scraper.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert calls["n"] == 1
     assert res["status"] == "Error"
     assert "curl 60" in res["message"]
@@ -197,7 +198,7 @@ def test_non_timeout_curl_error_is_not_retried_and_reports_code(monkeypatch, no_
 
 def test_waf_block_detected_for_vtex_io_html(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(text="<html>Just a moment...</html>"))
-    res = scraper.scrape_store_product(make_store("VTEX_IO_HTML"), PRODUCT)
+    res = scrape.scrape_store_product(make_store("VTEX_IO_HTML"), PRODUCT)
     assert res == {"status": "Error", "message": "Blocked by WAF / Cloudflare"}
 
 
@@ -205,12 +206,12 @@ def test_waf_block_detected_for_vtex_io_html(monkeypatch):
 
 def test_process_task_record_shape_and_timestamp(monkeypatch):
     monkeypatch.setattr(
-        scraper,
+        runner,
         "scrape_store_product",
         lambda store, product: {"status": "Success", "product_name": "X", "price_brl": 9.9},
     )
-    rec = scraper.process_task((make_store("B2C_REST", "Loja"), PRODUCT))
-    assert set(rec) == set(scraper.CSV_COLUMNS)
+    rec = runner.process_task((make_store("B2C_REST", "Loja"), PRODUCT))
+    assert set(rec) == set(CSV_COLUMNS)
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", rec["fetched_at"])
 
 
@@ -221,10 +222,10 @@ def test_summarize_results_rate(capsys):
         {"store": "B", "status": "Success"},
         {"store": "B", "status": "Not Found"},
     ]
-    assert scraper.summarize_results(results, 4) == 0.5
+    assert runner.summarize_results(results, 4) == 0.5
     assert "A" in capsys.readouterr().out
 
 
 def test_summarize_counts_missing_results_as_failures():
     # 1 success out of 4 expected requests (3 workers crashed) -> 25%
-    assert scraper.summarize_results([{"store": "A", "status": "Success"}], 4) == 0.25
+    assert runner.summarize_results([{"store": "A", "status": "Success"}], 4) == 0.25

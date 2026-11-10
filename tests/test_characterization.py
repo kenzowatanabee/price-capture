@@ -1,7 +1,9 @@
-"""Behaviour that must not change during the refactor (only imports `scraper`)."""
+"""Behaviour that must not change during the refactor."""
 import json
 
-import scraper
+from curl_cffi import requests as cffi_requests
+
+from price_capture import scrape
 
 
 class FakeResponse:
@@ -18,7 +20,7 @@ PRODUCT = {"ean": "7509546060781", "desc_sku": "CREME DENTAL TESTE 50g"}
 
 
 def patch_get(monkeypatch, handler):
-    monkeypatch.setattr(scraper.requests, "get", handler)
+    monkeypatch.setattr(cffi_requests, "get", handler)
 
 
 def test_vtex_io_html_takes_lowest_positive_offer_and_product_name(monkeypatch):
@@ -34,7 +36,7 @@ def test_vtex_io_html_takes_lowest_positive_offer_and_product_name(monkeypatch):
         + "</script></template>"
     )
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
-    res = scraper.scrape_store_product(
+    res = scrape.scrape_store_product(
         {"name": "S", "type": "VTEX_IO_HTML", "domain": "https://x.test"}, PRODUCT
     )
     assert res == {"status": "Success", "product_name": "Creme VTEX IO", "price_brl": 12.9}
@@ -42,7 +44,7 @@ def test_vtex_io_html_takes_lowest_positive_offer_and_product_name(monkeypatch):
 
 def test_vtex_io_html_without_state_is_not_found(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(text="<html>sem estado</html>"))
-    res = scraper.scrape_store_product(
+    res = scrape.scrape_store_product(
         {"name": "S", "type": "VTEX_IO_HTML", "domain": "https://x.test"}, PRODUCT
     )
     assert res["status"] == "Not Found"
@@ -57,7 +59,7 @@ def test_unknown_store_type_uses_legacy_vtex_api(monkeypatch):
         return FakeResponse(payload=[{"productName": "P", "items": [{"sellers": [{"commertialOffer": {"Price": 3.0}}]}]}])
 
     patch_get(monkeypatch, handler)
-    res = scraper.scrape_store_product(
+    res = scrape.scrape_store_product(
         {"name": "S", "type": "SOMETHING_NEW", "domain": "https://x.test"}, PRODUCT
     )
     assert "api/catalog_system/pub/products/search?fq=alternateIds_Ean:7509546060781" in seen["url"]
@@ -65,7 +67,7 @@ def test_unknown_store_type_uses_legacy_vtex_api(monkeypatch):
 
 
 def test_missing_domain_is_an_error():
-    res = scraper.scrape_store_product({"name": "S", "type": "B2C_REST", "domain": ""}, PRODUCT)
+    res = scrape.scrape_store_product({"name": "S", "type": "B2C_REST", "domain": ""}, PRODUCT)
     assert res == {"status": "Error", "message": "Domain URL not configured"}
 
 
@@ -78,7 +80,7 @@ def test_request_urls_per_platform(monkeypatch):
 
     patch_get(monkeypatch, handler)
     for t in ["B2C_REST", "RD_NEXTJS", "VTEX_IO_HTML", "CARREFOUR_INTELLIGENT_SEARCH"]:
-        scraper.scrape_store_product({"name": "S", "type": t, "domain": "https://x.test"}, PRODUCT)
+        scrape.scrape_store_product({"name": "S", "type": t, "domain": "https://x.test"}, PRODUCT)
     assert seen == [
         "https://x.test/api/catalog_system/pub/products/search?fq=alternateIds_Ean:7509546060781",
         "https://x.test/search?w=7509546060781&search-type=direct",
