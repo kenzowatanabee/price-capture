@@ -1,6 +1,7 @@
 """HTTP fetching with browser impersonation, split timeouts and retry/backoff."""
 import os
 import random
+import re
 import threading
 import time
 from urllib.parse import urlsplit
@@ -41,37 +42,48 @@ def _limit_for(domain):
         return _domain_limits[domain]
 
 
-def _session_for(domain):
+def _session_for(domain, verify):
     """
-    One session per (thread, domain): connections and cookies are reused across the many
+    One session per (thread, domain, verify): connections and cookies are reused across the many
     requests a store receives, and sessions are never shared between threads.
     """
     sessions = getattr(_local, "sessions", None)
     if sessions is None:
         sessions = _local.sessions = {}
-    session = sessions.get(domain)
+    key = (domain, verify)
+    session = sessions.get(key)
     if session is None:
-        session = sessions[domain] = requests.Session(
+        session = sessions[key] = requests.Session(
             impersonate=IMPERSONATE,
             headers=HEADERS,
             timeout=TIMEOUT,
             allow_redirects=True,
-            verify=VERIFY_SSL,
+            verify=verify,
         )
     return session
 
 
-def fetch(url, max_retries=2):
+def _clean_curl_message(message):
+    """Drops curl's boilerplate ("Failed to perform, curl: (N)" and the docs link) so the real reason fits."""
+    message = re.sub(r"^Failed to perform, curl: \(\d+\)\s*", "", message)
+    message = re.sub(r"\s*See https://curl\.se\S*.*$", "", message, flags=re.S)
+    return message.strip()
+
+
+def fetch(url, max_retries=2, verify=True):
     """
     GETs a URL, retrying timeouts (curl 28), unexpected exceptions and 429/503
     responses (honouring Retry-After) with backoff. Returns (response, None) on success or (None, error_result).
+
+    `verify` is the store's own TLS-verification setting; the global VERIFY_SSL=false overrides it for every store.
     """
     domain = urlsplit(url).netloc
+    verify = VERIFY_SSL and verify is not False
     # The slot is held across retries and their backoff, so a struggling store gets less traffic.
     with _limit_for(domain):
         if REQUEST_JITTER > 0:
             time.sleep(random.uniform(0, REQUEST_JITTER))
-        return _fetch_with_retries(_session_for(domain), url, max_retries)
+        return _fetch_with_retries(_session_for(domain, verify), url, max_retries)
 
 
 def _retry_delay(response, attempt):
@@ -99,7 +111,7 @@ def _fetch_with_retries(session, url, max_retries):
                 continue
             if e.code == 28:
                 return None, error("TIMEOUT", "connection timed out (curl 28)")
-            return None, error("NETWORK", f"curl {int(e.code)}: {str(e)[:60]}")
+            return None, error("NETWORK", f"curl {int(e.code)}: {_clean_curl_message(str(e))[:120]}")
         except Exception as e:
             if attempt < max_retries:
                 time.sleep(2 * (attempt + 1))

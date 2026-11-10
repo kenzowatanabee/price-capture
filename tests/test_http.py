@@ -157,3 +157,54 @@ def test_other_error_statuses_are_not_retried(monkeypatch, no_sleep):
 def test_only_language_is_hand_set_so_headers_match_the_impersonated_browser():
     # User-Agent / sec-ch-ua must come from the impersonation, never be hard-coded to another version.
     assert set(http.HEADERS) == {"Accept-Language"}
+
+
+# ---------- per-store TLS verification ----------
+
+def recording_session_class(monkeypatch):
+    created = []
+
+    class RecordingSession:
+        def __init__(self, **kwargs):
+            created.append(kwargs)
+
+        def get(self, url, **kwargs):
+            return FakeResponse()
+
+    monkeypatch.setattr(http.requests, "Session", RecordingSession)
+    return created
+
+
+def test_store_can_opt_out_of_tls_verification(monkeypatch):
+    created = recording_session_class(monkeypatch)
+    http.fetch("https://strict.test/x")
+    http.fetch("https://brokencert.test/x", verify=False)
+    verify_by_call = [c["verify"] for c in created]
+    assert verify_by_call == [True, False]
+
+
+def test_global_verify_ssl_false_overrides_a_stores_verify_true(monkeypatch):
+    created = recording_session_class(monkeypatch)
+    monkeypatch.setattr(http, "VERIFY_SSL", False)
+    http.fetch("https://global-off.test/x", verify=True)
+    assert created[0]["verify"] is False
+
+
+def test_same_domain_with_different_verify_gets_separate_sessions(monkeypatch):
+    created = recording_session_class(monkeypatch)
+    http.fetch("https://twice.test/x", verify=True)
+    http.fetch("https://twice.test/y", verify=False)
+    http.fetch("https://twice.test/z", verify=False)  # reuses the second session
+    assert len(created) == 2
+
+
+def test_curl_error_text_keeps_the_reason_and_drops_boilerplate(monkeypatch, no_sleep):
+    raw = (
+        "Failed to perform, curl: (60) SSL certificate OpenSSL verify result: unable to get "
+        "local issuer certificate (20). See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+    )
+    scripted_get(monkeypatch, [cffi_requests.errors.RequestsError(raw, 60)])
+    _, err = http.fetch("https://badcert.test/x")
+    assert err["message"].startswith("NETWORK: curl 60: ")
+    assert "unable to get local issuer certificate" in err["message"]
+    assert "See https" not in err["message"] and "Failed to perform" not in err["message"]

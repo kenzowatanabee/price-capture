@@ -527,3 +527,51 @@ def test_process_task_writes_the_name_of_a_priceless_match_to_found_name(monkeyp
     )
     rec = runner.process_task((make_store("RD_NEXTJS", "Drogasil"), PRODUCT, "r"))
     assert rec["found_name"] == "Algum Produto" and rec["price_brl"] is None
+
+
+# ---------- verify_ssl column in stores.csv ----------
+
+def test_load_stores_reads_the_optional_verify_ssl_column(tmp_path):
+    f = tmp_path / "stores.csv"
+    f.write_text(
+        "store_id,type,domain,enabled,verify_ssl\n"
+        "A,B2C_REST,https://a.test,true,false\n"
+        "B,B2C_REST,https://b.test,true,true\n"
+        "C,B2C_REST,https://c.test,true,\n",
+        encoding="utf-8",
+    )
+    assert [s["verify_ssl"] for s in config.load_stores(str(f))] == [False, True, True]
+
+
+def test_load_stores_defaults_verify_ssl_to_true_without_the_column(tmp_path):
+    f = tmp_path / "stores.csv"
+    f.write_text("store_id,type,domain\nA,B2C_REST,https://a.test\n", encoding="utf-8")
+    assert config.load_stores(str(f))[0]["verify_ssl"] is True
+
+
+def test_scrape_passes_the_stores_verify_setting_to_fetch(monkeypatch):
+    seen = {}
+
+    def fake_fetch(url, **kwargs):
+        seen.update(kwargs)
+        return FakeResponse(payload=[]), None
+
+    monkeypatch.setattr(scrape, "fetch", fake_fetch)
+    store = make_store("B2C_REST") | {"verify_ssl": False}
+    scrape.scrape_store_product(store, PRODUCT)
+    assert seen == {"verify": False}
+    scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)  # no key: verified
+    assert seen == {"verify": True}
+
+
+def test_load_stores_handles_short_rows_and_announces_disabled_verification(tmp_path, capsys):
+    f = tmp_path / "stores.csv"
+    f.write_text(
+        "store_id,type,domain,enabled,verify_ssl\n"
+        "Short,B2C_REST,https://s.test,true\n"
+        "Lax,B2C_REST,https://l.test,true,false\n",
+        encoding="utf-8",
+    )
+    stores = config.load_stores(str(f))
+    assert [s["verify_ssl"] for s in stores] == [True, False]
+    assert "TLS verification is disabled for store: Lax" in capsys.readouterr().out

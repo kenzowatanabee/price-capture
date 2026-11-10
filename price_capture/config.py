@@ -50,6 +50,10 @@ def load_stores(file_path):
             enabled_val = row.get('enabled', 'true').strip().lower()
             is_enabled = enabled_val in ['true', '1', 'yes']
 
+            # Per-store TLS verification (defaults to true). Only turn it off for a store whose
+            # certificate chain cannot be verified, e.g. a missing intermediate certificate.
+            verify_ssl = (row.get('verify_ssl') or 'true').strip().lower() not in ['false', '0', 'no']
+
             if not is_enabled:
                 print(f"⏭️ Skipping disabled store: {store_id}")
                 continue
@@ -60,9 +64,12 @@ def load_stores(file_path):
                 )
 
             if store_id and store_type and domain:
+                if not verify_ssl:
+                    print(f"⚠️ TLS verification is disabled for store: {store_id}")
                 stores.append({
                     'name': store_id,
                     'type': store_type,
-                    'domain': domain
+                    'domain': domain,
+                    'verify_ssl': verify_ssl,
                 })
     return stores

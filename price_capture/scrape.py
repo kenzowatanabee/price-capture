@@ -13,7 +13,10 @@ def scrape_store_product(store, product):
     platform = get_platform(store["type"])
     if platform is None:
         return error("CONFIG", f"unknown store type '{store['type']}'")
-    response, fetch_error = fetch(platform.build_url(domain, product["ean"]))
+    response, fetch_error = fetch(
+        platform.build_url(domain, product["ean"]),
+        verify=store.get("verify_ssl", True),
+    )
     if fetch_error:
         return fetch_error
 
