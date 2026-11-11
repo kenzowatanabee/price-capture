@@ -1,4 +1,4 @@
-from price_capture.platforms.base import Platform, build_result, vtex_offer
+from price_capture.platforms.base import Platform, apply_cart_check, build_result, vtex_offer, with_cart_check
 from price_capture.results import not_found
 
 
@@ -14,4 +14,8 @@ class VtexIntelligentSearch(Platform):
             return not_found("NOT_LISTED", "store returned no product")
         p = data["products"][0]
         offer = vtex_offer(p, getattr(response, "url", ""))
-        return build_result(p.get("productName"), offer.price, product, offer.available, offer.extra)
+        result = build_result(p.get("productName"), offer.price, product, offer.available, offer.extra)
+        return with_cart_check(result, offer)
+
+    def parse_follow_up(self, response, product, first):
+        return apply_cart_check(response, first)

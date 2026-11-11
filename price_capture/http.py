@@ -73,12 +73,13 @@ def _clean_curl_message(message):
     return message.strip()
 
 
-def fetch(url, max_retries=2, verify=True):
+def fetch(url, max_retries=2, verify=True, json=None):
     """
     GETs a URL, retrying transient curl errors (timeouts, resets), unexpected exceptions and 429/503
     responses (honouring Retry-After) with backoff. Returns (response, None) on success or (None, error_result).
 
     `verify` is the store's own TLS-verification setting; the global VERIFY_SSL=false overrides it for every store.
+    With `json`, the request is a POST of that body (used for read-only VTEX cart simulations, safe to retry).
     """
     domain = urlsplit(url).netloc
     verify = VERIFY_SSL and verify is not False
@@ -86,7 +87,7 @@ def fetch(url, max_retries=2, verify=True):
     with _limit_for(domain):
         if REQUEST_JITTER > 0:
             time.sleep(random.uniform(0, REQUEST_JITTER))
-        return _fetch_with_retries(_session_for(domain, verify), url, max_retries)
+        return _fetch_with_retries(_session_for(domain, verify), url, max_retries, json)
 
 
 def _retry_delay(response, attempt):
@@ -99,10 +100,10 @@ def _retry_delay(response, attempt):
     return min(max(delay, 0), MAX_RETRY_AFTER)
 
 
-def _fetch_with_retries(session, url, max_retries):
+def _fetch_with_retries(session, url, max_retries, json=None):
     for attempt in range(max_retries + 1):
         try:
-            response = session.get(url)
+            response = session.post(url, json=json) if json is not None else session.get(url)
             if response.status_code in RETRY_STATUSES and attempt < max_retries:
                 time.sleep(_retry_delay(response, attempt))
                 continue

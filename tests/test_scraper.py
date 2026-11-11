@@ -686,3 +686,101 @@ def test_both_requests_use_the_stores_tls_setting(monkeypatch):
     monkeypatch.setattr(scrape, "fetch", fake_fetch)
     scrape.scrape_store_product(make_store("RD_NEXTJS") | {"verify_ssl": False}, PRODUCT)
     assert [v for _, v in calls] == [False, False]
+
+
+# ---------- VTEX cart availability check (reference CEP) ----------
+
+from price_capture.platforms import base as platform_base  # noqa: E402
+
+
+def vtex_catalog_payload(price=10.19, item_id="55", seller_id="1", **offer):
+    return [{"productName": "Creme X", "items": [{"itemId": item_id, "sellers": [
+        {"sellerId": seller_id, "sellerDefault": True, "commertialOffer": {"Price": price, "AvailableQuantity": 99999, **offer}}]}]}]
+
+
+def vtex_store(monkeypatch, catalog, cart=None, cart_status=200):
+    """Fake VTEX store: GET serves the catalog, POST the cart simulation. Returns the POST bodies."""
+    posts = []
+    monkeypatch.setattr(cffi_requests.Session, "get", lambda self, url, **k: FakeResponse(payload=catalog))
+
+    def fake_post(self, url, json=None, **k):
+        posts.append((url, json))
+        return FakeResponse(status_code=cart_status, payload=cart)
+
+    monkeypatch.setattr(cffi_requests.Session, "post", fake_post)
+    return posts
+
+
+@pytest.fixture
+def cart_check(monkeypatch):
+    monkeypatch.setattr(platform_base, "CART_CHECK_CEP", "01310100")
+
+
+def test_cart_check_marks_a_purchasable_sku_available(monkeypatch, cart_check):
+    posts = vtex_store(monkeypatch, vtex_catalog_payload(), {"items": [{"availability": "available"}]})
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["status"], res["price_brl"], res["available"]) == ("Success", 10.19, "true")
+    url, body = posts[0]
+    assert url == "https://example.test/api/checkout/pub/orderForms/simulation?sc=1"
+    assert body == {"items": [{"id": "55", "quantity": 1, "seller": "1"}], "country": "BRA", "postalCode": "01310100"}
+
+
+@pytest.mark.parametrize("cart, reason", [
+    ({"items": [{"availability": "cannotBeDelivered"}]}, "cannotBeDelivered"),
+    ({"items": [{"availability": "withoutStock"}]}, "withoutStock"),
+    ({"items": [], "messages": [{"text": "Item não encontrado ou indisponível"}]}, "not_returned"),
+])
+def test_cart_check_keeps_the_price_but_flags_unpurchasable_skus(monkeypatch, cart_check, cart, reason):
+    # The Indiana case: the catalog says 99,999 in stock, the cart says it cannot be bought.
+    vtex_store(monkeypatch, vtex_catalog_payload(14.9), cart)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["status"], res["price_brl"], res["available"]) == ("Success", 14.9, "false")
+    assert res["message"] == f"NOT_PURCHASABLE: {reason} for CEP 01310100"
+
+
+def test_failed_cart_check_never_costs_the_price(monkeypatch, cart_check, no_sleep):
+    vtex_store(monkeypatch, vtex_catalog_payload(), cart={}, cart_status=500)
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["status"], res["price_brl"]) == ("Success", 10.19)
+    assert res["available"] == "true"  # from the catalog flags, unchanged
+    assert res["message"] == "AVAILABILITY_UNCHECKED: HTTP_ERROR: 500"
+
+
+def test_unparseable_cart_response_is_also_unchecked(monkeypatch, cart_check):
+    vtex_store(monkeypatch, vtex_catalog_payload(), cart=None)  # FakeResponse.json() returns None
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["status"], res["price_brl"], res["available"]) == ("Success", 10.19, "true")  # unchanged
+    assert res["message"].startswith("AVAILABILITY_UNCHECKED: PARSE_ERROR")
+
+
+def test_no_cart_check_without_a_price_or_when_disabled(monkeypatch, cart_check):
+    posts = vtex_store(monkeypatch, [], {"items": []})
+    assert message_code(scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)) == "NOT_LISTED"
+    posts += vtex_store(monkeypatch, vtex_catalog_payload(9.0, AvailableQuantity=0), {"items": []})
+    assert message_code(scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)) == "OUT_OF_STOCK"
+    assert posts == []
+    monkeypatch.setattr(platform_base, "CART_CHECK_CEP", "")
+    posts = vtex_store(monkeypatch, vtex_catalog_payload(), {"items": [{"availability": "available"}]})
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["status"] == "Success" and posts == []
+
+
+def test_cart_check_uses_the_stores_tls_setting(monkeypatch, cart_check):
+    calls = []
+
+    def fake_fetch(url, **kwargs):
+        calls.append((url, kwargs))
+        if "simulation" in url:
+            return FakeResponse(payload={"items": [{"availability": "available"}]}), None
+        return FakeResponse(payload=vtex_catalog_payload()), None
+
+    monkeypatch.setattr(scrape, "fetch", fake_fetch)
+    scrape.scrape_store_product(make_store("B2C_REST") | {"verify_ssl": False}, PRODUCT)
+    assert [k.get("verify") for _, k in calls] == [False, False]
+    assert "json" not in calls[0][1] and calls[1][1]["json"]["postalCode"] == "01310100"
+
+
+def test_cart_check_also_runs_for_intelligent_search_stores(monkeypatch, cart_check):
+    vtex_store(monkeypatch, {"products": vtex_catalog_payload()}, {"items": [{"availability": "cannotBeDelivered"}]})
+    res = scrape.scrape_store_product(make_store("CARREFOUR_INTELLIGENT_SEARCH"), PRODUCT)
+    assert (res["status"], res["available"]) == ("Success", "false")

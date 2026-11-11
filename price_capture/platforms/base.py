@@ -1,4 +1,5 @@
 """Platform interface and helpers shared by the store implementations."""
+import os
 import re
 from typing import NamedTuple, Optional
 from urllib.parse import urljoin
@@ -73,10 +74,18 @@ def build_result(found_name, price, product, available=None, extra=None):
     return result
 
 
+# Cart availability check for VTEX stores: after a price is found, simulate a cart for this CEP
+# with the main seller to learn whether the SKU can actually be bought there. Empty disables it.
+CART_CHECK_CEP = re.sub(r"\D", "", os.environ.get("AVAILABILITY_CEP", "01310-100"))
+CART_CHECK_SC = os.environ.get("AVAILABILITY_SC", "1")
+
+
 class VtexOffer(NamedTuple):
     price: Optional[float]
     available: Optional[bool]  # None when the payload does not say
     extra: dict  # list_price, available, seller, url (only the ones present)
+    item_id: Optional[str] = None
+    seller_id: Optional[str] = None
 
 
 def vtex_offer(vtex_product, base_url=""):
@@ -109,7 +118,41 @@ def vtex_offer(vtex_product, base_url=""):
         "seller": chosen.get("sellerName"),
         "url": urljoin(base_url, link) if link else None,
     }
-    return VtexOffer(offer.get("Price"), available, {k: v for k, v in extra.items() if v is not None})
+    return VtexOffer(offer.get("Price"), available, {k: v for k, v in extra.items() if v is not None},
+                     items[0].get("itemId"), chosen.get("sellerId"))
+
+
+def with_cart_check(result, offer):
+    """
+    For a priced VTEX result, asks the caller for a follow-up cart simulation at CART_CHECK_CEP.
+    Optional: if that request fails, the caller keeps `base_result` (price intact) and notes it.
+    """
+    if result.get("status") != "Success" or not CART_CHECK_CEP or not offer.item_id:
+        return result
+    return {
+        "follow_path": f"/api/checkout/pub/orderForms/simulation?sc={CART_CHECK_SC}",
+        "follow_json": {"items": [{"id": offer.item_id, "quantity": 1, "seller": offer.seller_id or "1"}],
+                        "country": "BRA", "postalCode": CART_CHECK_CEP},
+        "follow_optional": True,
+        "base_result": result,
+    }
+
+
+def apply_cart_check(response, first):
+    """The base result with `available` set from the cart simulation; the price is kept either way."""
+    result = dict(first["base_result"])
+    payload = response.json()
+    if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
+        # Not a simulation answer at all: the caller keeps the result as AVAILABILITY_UNCHECKED.
+        raise ValueError("cart simulation returned no items list")
+    items = payload["items"]
+    availability = (items[0].get("availability") if items else None) or "not_returned"
+    if availability == "available":
+        result["available"] = "true"
+    else:
+        result["available"] = "false"
+        result["message"] = f"NOT_PURCHASABLE: {availability} for CEP {CART_CHECK_CEP}"
+    return result
 
 
 def next_js_product(state):

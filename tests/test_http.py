@@ -229,3 +229,24 @@ def test_certificate_errors_are_not_retried(monkeypatch, no_sleep):
     calls = scripted_get(monkeypatch, [cffi_requests.errors.RequestsError("SSL certificate problem", 60)])
     http.fetch("https://cert.test/x")
     assert len(calls) == 1 and no_sleep == []
+
+
+# ---------- POST (cart simulation) ----------
+
+def test_fetch_posts_json_when_given_and_retries_transient_errors(monkeypatch, no_sleep):
+    calls = []
+
+    def fake_post(self, url, json=None, **kwargs):
+        calls.append(json)
+        if len(calls) == 1:
+            raise cffi_requests.errors.RequestsError("reset", 56)
+        return FakeResponse(200)
+
+    def no_get(self, url, **kwargs):
+        raise AssertionError("GET not expected")
+
+    monkeypatch.setattr(cffi_requests.Session, "post", fake_post)
+    monkeypatch.setattr(cffi_requests.Session, "get", no_get)
+    response, err = http.fetch("https://post.test/sim", json={"items": [1]})
+    assert (err, response.status_code) == (None, 200)
+    assert calls == [{"items": [1]}, {"items": [1]}]
