@@ -141,13 +141,18 @@ It writes `region_check.csv` (git-ignored) with one row per store, SKU and CEP. 
 
 `diagnose.py` saves raw store responses so problems can be investigated offline. It never stores cookies.
 
-- **RD:** the search page for EANs that came back `NO_PRICE` in `results.csv`, plus a couple that succeed as a control. For each product on the page it lists every price, stock and identity field, and marks the one the parser picks.
-- **VTEX:** the catalog search, the regional sellers and cart simulations for several CEPs and sales channels. By default it covers Venancio, Indiana and Drogaria São Paulo, to explain "available in the catalog, out of stock in the cart".
+- **RD:** the search page for EANs that came back `NO_PRICE` in `results.csv`, plus a couple that succeed as a control. For each product on the page it lists every price, stock, sponsorship and identity field, and marks the one the parser picks. Sponsored products have no price in the search data, so it also fetches their product page. It fetches one priced product page per store as well, as a control that shows which field holds the price.
+- **VTEX:** the catalog, a no-CEP cart simulation and, for each CEP, three checks of regional availability:
+  - **E1:** the main seller simulated with the CEP;
+  - **E2:** one simulation with up to `--max-sellers` of the regional sellers;
+  - **E3:** the catalog search with the store's `regionId`.
+
+  By default it covers Venancio, Indiana and Drogaria São Paulo.
 
 ```bash
 python diagnose.py                     # both checks, ~110 requests, 1-2 minutes
 python diagnose.py --skip-vtex         # only RD
-python diagnose.py --rd-eans 7891024035504 --vtex-stores "Drogal" --sc 1,2
+python diagnose.py --rd-eans 7891024035504 --vtex-stores "Drogal" --sc 1,2 --max-sellers 20
 ```
 
 Output goes to `diagnostics/<timestamp>/` (git-ignored). `summary.md` is the short part to share, `index.json` lists every request, and the raw responses sit next to them. A zip of the folder is written too.
