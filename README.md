@@ -69,7 +69,7 @@ tests/                      unit tests (mocked HTTP)
 
 | `type` | Platform | Method |
 |---|---|---|
-| `RD_NEXTJS` | Drogasil / Droga Raia (Next.js) | Parses `__NEXT_DATA__` from the search page |
+| `RD_NEXTJS` | Drogasil / Droga Raia (Next.js) | Finds the product on the search page (the store's own offer first), then reads the price from its product page (`price_aux.value_to`, with `value_from` as the list price). The search page's own price field is unreliable and missing on sponsored results. This means two requests per SKU |
 | `VTEX_IO_HTML` | VTEX IO storefront | Parses the embedded `__STATE__` from the search page |
 | `CARREFOUR_INTELLIGENT_SEARCH` | VTEX Intelligent Search | JSON API |
 | `B2C_REST` | Legacy VTEX | `catalog_system` JSON API |
@@ -97,7 +97,7 @@ Columns, in order (defined once in `price_capture/schema.py`):
 | 13 | `run_id` | STRING | Same value for every row of one scraper run |
 | 14 | `fetched_at_brt` | STRING | Brasília clock time of the same moment, as text, so Domo shows it unchanged |
 
-Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` stores. They are empty for `RD_NEXTJS` and `VTEX_IO_HTML` stores, because those payload fields have not been mapped yet. They are also filled on `OUT_OF_STOCK` and `ZERO_PRICE` rows, since they describe the product, while `price_brl` stays empty.
+Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` stores. `RD_NEXTJS` stores fill `list_price` and `url`. The columns are empty for `VTEX_IO_HTML` stores, because those payload fields have not been mapped yet. They are also filled on `OUT_OF_STOCK` and `ZERO_PRICE` rows, since they describe the product, while `price_brl` stays empty.
 
 - The Domo import is **positional (no header row)**, so this order must match the Domo dataset. The uploader refuses to upload if `results.csv` doesn't match `schema.py`, or if the Domo dataset has a different number of columns.
 - The upload uses **APPEND**. Every run adds rows, so running the workflow twice in a day (for example a manual dispatch on top of the schedule) duplicates that day's rows. Deduplicate downstream on `(ean, store, date(fetched_at))` if that matters.
@@ -136,6 +136,27 @@ python region_check.py --eans 7891024132005 --ceps "SP=01310-100,PE=50030-230"
 ```
 
 It writes `region_check.csv` (git-ignored) with one row per store, SKU and CEP. A `catalog` row shows the price the scraper records, for comparison. It then prints per store how many SKUs had more than one price across CEPs. The default CEPs are city centres in SP, RJ, MG, PR, RS, BA, PE and DF; pass your own with `--ceps`. RD stores are not covered yet.
+
+## Diagnostics capture
+
+`diagnose.py` saves raw store responses so problems can be investigated offline. It never stores cookies.
+
+- **RD:** the search page for EANs that came back `NO_PRICE` in `results.csv`, plus a couple that succeed as a control. For each product on the page it lists every price, stock, sponsorship and identity field, and marks the one the parser picks. Sponsored products have no price in the search data, so it also fetches their product page. It fetches one priced product page per store as well, as a control that shows which field holds the price.
+- **VTEX:** the catalog, a no-CEP cart simulation and, for each CEP, three checks of regional availability:
+  - **E1:** the main seller simulated with the CEP;
+  - **E2:** one simulation with up to `--max-sellers` of the regional sellers;
+  - **E3:** the catalog search with the store's `regionId`.
+
+  By default it covers Venancio, Indiana and Drogaria São Paulo.
+
+```bash
+python diagnose.py                     # both checks, ~110 requests, 1-2 minutes
+python diagnose.py --skip-vtex         # only RD
+python diagnose.py --skip-vtex --rd-eans all --rd-pages all   # every RD SKU: search price vs product-page price table
+python diagnose.py --rd-eans 7891024035504 --vtex-stores "Drogal" --sc 1,2 --max-sellers 20
+```
+
+Output goes to `diagnostics/<timestamp>/` (git-ignored). `summary.md` is the short part to share, `index.json` lists every request, and the raw responses sit next to them. A zip of the folder is written too.
 
 ## Automation
 

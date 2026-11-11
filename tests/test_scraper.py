@@ -36,6 +36,36 @@ def next_html(products):
     )
 
 
+def rd_product(sku, name, is1P=True, **extra):
+    """A search result as RD sends it, with its product page url."""
+    return {"sku": sku, "name": name, "is1P": is1P, "url": f"/{name.lower().replace(' ', '-')}-{sku}.html?origin=search", **extra}
+
+
+def rd_page(sku, name, value_to, value_from=None):
+    state = {"props": {"pageProps": {"productData": {
+        "sku": sku, "name": name, "price": 0, "price_aux": {"value_to": value_to, "value_from": value_from},
+        "liveComposition": {"livePrice": {"valueTo": value_to}},
+    }}}}
+    return '<script id="__NEXT_DATA__" type="application/json">' + json.dumps(state) + "</script>"
+
+
+def rd_site(monkeypatch, products, pages):
+    """Fake RD store: the search page lists `products`; pages maps sku -> product page html (or a FakeResponse)."""
+    requested = []
+
+    def handler(url, **kwargs):
+        requested.append(url)
+        if "/search?w=" in url:
+            return FakeResponse(text=next_html(products))
+        for sku, page in pages.items():
+            if f"-{sku}.html" in url:
+                return page if isinstance(page, FakeResponse) else FakeResponse(text=page)
+        return FakeResponse(status_code=404)
+
+    patch_get(monkeypatch, handler)
+    return requested
+
+
 @pytest.fixture
 def no_sleep(monkeypatch):
     monkeypatch.setattr(time, "sleep", lambda _s: None)
@@ -155,15 +185,11 @@ def test_carrefour_intelligent_search_success(monkeypatch):
 
 
 def test_rd_nextjs_prefers_first_party_seller(monkeypatch):
-    html = next_html(
-        [
-            {"sku": "1", "name": "Marketplace", "priceService": 20.0, "is1P": False},
-            {"sku": "2", "name": "Loja propria", "priceService": 15.0, "is1P": True},
-        ]
-    )
-    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    rd_site(monkeypatch,
+            [rd_product("1", "Marketplace", is1P=False, priceService=20.0), rd_product("2", "Loja propria", priceService=15.0)],
+            {"1": rd_page("1", "Marketplace", 20.0), "2": rd_page("2", "Loja propria", 16.5, 19.9)})
     res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
-    assert (res["product_name"], res["price_brl"]) == ("Loja propria", 15.0)
+    assert (res["product_name"], res["price_brl"]) == ("Loja propria", 16.5)
 
 
 def test_http_error_status(monkeypatch):
@@ -264,10 +290,9 @@ def test_carrefour_zero_price_is_not_a_success(monkeypatch):
 
 
 def test_rd_nextjs_zero_price_is_not_a_success(monkeypatch):
-    html = next_html([{"sku": "1", "name": "Loja propria", "priceService": 0, "is1P": True}])
-    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    rd_site(monkeypatch, [rd_product("1", "Loja propria")], {"1": rd_page("1", "Loja propria", 0)})
     res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
-    assert res["status"] == "Not Found"
+    assert res["status"] == "Not Found" and res["message"].startswith("ZERO_PRICE")
 
 
 # ---------- VTEX seller choice and availability ----------
@@ -498,8 +523,7 @@ def test_dead_store_warning_includes_the_most_common_error_text(capsys, monkeypa
 # ---------- found_name is kept on non-success rows so mismatches can be audited ----------
 
 def test_rd_product_without_price_keeps_the_matched_product_name(monkeypatch):
-    html = next_html([{"sku": "1", "name": "Creme Dental Outro 90g", "is1P": True}])  # no priceService
-    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    rd_site(monkeypatch, [rd_product("1", "Creme Dental Outro 90g")], {"1": rd_page("1", "Creme Dental Outro 90g", None)})
     res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
     assert (res["status"], message_code(res)) == ("Not Found", "NO_PRICE")
     assert res["product_name"] == "Creme Dental Outro 90g"
@@ -581,28 +605,84 @@ def test_load_stores_handles_short_rows_and_announces_disabled_verification(tmp_
 
 @pytest.mark.parametrize("raw, expected", [("19.90", 19.9), ("R$ 19,90", 19.9), ("1.299,90", 1299.9), (" 7 ", 7.0)])
 def test_numeric_string_prices_are_converted(monkeypatch, raw, expected):
-    html = next_html([{"sku": "1", "name": "Creme", "priceService": raw, "is1P": True}])
-    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("1", "Creme", raw)})
     res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
     assert res["status"] == "Success" and res["price_brl"] == expected
 
 
 @pytest.mark.parametrize("raw", ["abc", True])
 def test_unparseable_prices_are_a_clear_parse_error(monkeypatch, raw):
-    html = next_html([{"sku": "1", "name": "Creme", "priceService": raw, "is1P": True}])
-    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("1", "Creme", raw)})
     res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
     assert (res["status"], message_code(res)) == ("Error", "PARSE_ERROR")
     assert "unparseable price" in res["message"]
 
 
 def test_string_zero_price_is_still_zero_price(monkeypatch):
-    html = next_html([{"sku": "1", "name": "Creme", "priceService": "0.00", "is1P": True}])
-    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("1", "Creme", "0.00")})
     assert message_code(scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)) == "ZERO_PRICE"
 
 
 def test_empty_string_price_means_no_price(monkeypatch):
-    html = next_html([{"sku": "1", "name": "Creme", "priceService": "  ", "is1P": True}])
-    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("1", "Creme", "  ")})
     assert message_code(scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)) == "NO_PRICE"
+
+
+
+# ---------- RD: the price comes from the product page ----------
+
+def test_rd_uses_the_product_page_price_not_the_search_index_price(monkeypatch):
+    # The real case: search priceService said 17.99, the site shows 21.99 discounted from 23.69.
+    requested = rd_site(monkeypatch, [rd_product("62451", "Gel Dental Colgate Baby 50g", priceService=17.99)],
+                        {"62451": rd_page("62451", "Gel Dental Colgate Baby 50g", 21.99, 23.69)})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert res == {
+        "status": "Success", "product_name": "Gel Dental Colgate Baby 50g", "price_brl": 21.99,
+        "list_price": 23.69, "url": "https://example.test/gel-dental-colgate-baby-50g-62451.html",
+    }
+    assert len(requested) == 2 and "/search?w=" in requested[0] and requested[1].endswith("-62451.html?origin=search")
+
+
+def test_rd_sponsored_result_without_search_price_gets_the_page_price(monkeypatch):
+    rd_site(monkeypatch, [rd_product("1329580", "Creme Periogard 60g", isSponsored=True)],
+            {"1329580": rd_page("1329580", "Creme Periogard 60g", 14.92, 19.89)})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], res["price_brl"], res["list_price"]) == ("Success", 14.92, 19.89)
+
+
+def test_rd_product_page_for_a_different_sku_is_rejected(monkeypatch):
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("999", "Outro produto", 10.0)})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Error", "PARSE_ERROR") and "999" in res["message"]
+
+
+def test_rd_product_page_errors_are_reported(monkeypatch):
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": FakeResponse(status_code=404)})
+    assert scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)["message"] == "HTTP_ERROR: 404"
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": "<html>layout changed</html>"})
+    assert message_code(scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)) == "NO_STATE"
+
+
+def test_rd_search_result_without_url_is_no_price_with_the_name(monkeypatch):
+    rd_site(monkeypatch, [{"sku": "1", "name": "Sem link", "is1P": True}], {})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (message_code(res), res["product_name"]) == ("NO_PRICE", "Sem link")
+
+
+def test_rd_list_price_is_dropped_when_missing_or_zero(monkeypatch):
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("1", "Creme", 9.9, 0)})
+    assert "list_price" not in scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+
+
+def test_both_requests_use_the_stores_tls_setting(monkeypatch):
+    calls = []
+
+    def fake_fetch(url, **kwargs):
+        calls.append((url, kwargs.get("verify")))
+        if "/search?w=" in url:
+            return FakeResponse(text=next_html([rd_product("1", "Creme")])), None
+        return FakeResponse(text=rd_page("1", "Creme", 5.0)), None
+
+    monkeypatch.setattr(scrape, "fetch", fake_fetch)
+    scrape.scrape_store_product(make_store("RD_NEXTJS") | {"verify_ssl": False}, PRODUCT)
+    assert [v for _, v in calls] == [False, False]
