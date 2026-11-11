@@ -6,9 +6,11 @@ Two checks, both on by default:
   RD   (Drogasil / Droga Raia): the search page for EANs that come back NO_PRICE, plus a few that
        succeed as a control. Saves the embedded Next.js state and lists, per product, every
        price / stock / identity field, so we can see which product and which price field is right.
-  VTEX (default: Venancio, Indiana, Drogaria Sao Paulo): the catalog search, the regions lookup and
-       cart simulations for several CEPs and sales channels, to explain why the catalog says
-       "available" while the simulation says "withoutStock".
+       For sponsored products (no price in the search data) it also fetches the product page, and one
+       priced product page per store as a control, listing every price-like field found there.
+  VTEX (default: Venancio, Indiana, Drogaria Sao Paulo): the catalog, a no-CEP simulation and, per CEP,
+       three ways of judging regional availability: E1 the main seller with the CEP, E2 one simulation
+       with up to --max-sellers regional sellers, E3 the catalog search with the store's regionId.
 
     python diagnose.py                          # both checks with the defaults below
     python diagnose.py --skip-vtex              # only RD
@@ -27,6 +29,7 @@ import shutil
 import sys
 import time
 from datetime import datetime
+from urllib.parse import urljoin
 
 from price_capture.config import load_products, load_stores
 from price_capture.platforms.embedded_state import extract_state_from_html, find_true_products_array
@@ -36,7 +39,7 @@ from region_check import DEFAULT_CEPS, make_session
 DEFAULT_VTEX_STORES = ["Drogaria Venancio", "Farmácia Indiana", "Drogaria São Paulo"]
 DEFAULT_VTEX_EANS = ["7509546651040", "7509546060781"]  # out of stock in the simulation vs fine in the catalog
 DEFAULT_CEP_LABELS = ["SP-Sao Paulo", "RJ-Rio de Janeiro", "MG-Belo Horizonte"]
-INTERESTING_KEY = re.compile(r"price|preco|valor|stock|estoque|avail|dispon|quant|qty|ean|gtin|sku|name|nome|1p|seller|status|buy|sale", re.I)
+INTERESTING_KEY = re.compile(r"price|preco|valor|stock|estoque|avail|dispon|quant|qty|ean|gtin|sku|name|nome|1p|seller|status|buy|sale|sponsor|amount", re.I)
 HTML_LIMIT = 300_000  # bytes of HTML kept when a page has no embedded state (unless --full-html)
 
 
@@ -91,6 +94,64 @@ def scalar_fields(obj, depth=0, prefix=""):
     return out
 
 
+PRICE_KEY = re.compile(r"price|preco|valor|amount|cost", re.I)
+
+
+def price_paths(state, limit=40):
+    """Every scalar under a price-like key in a JSON tree, as (path, value), for locating a price field."""
+    found = []
+
+    def walk(obj, path, under_price):
+        if len(found) >= limit:
+            return
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                p = f"{path}.{k}"
+                pricey = under_price or bool(PRICE_KEY.search(str(k)))
+                if isinstance(v, (int, float, str)) and not isinstance(v, bool):
+                    if pricey:
+                        found.append((p, v if not isinstance(v, str) else v[:60]))
+                else:
+                    walk(v, p, pricey)  # everything under e.g. "priceInfo": {...} counts
+        elif isinstance(obj, list):
+            for i, v in enumerate(obj[:50]):
+                walk(v, f"{path}[{i}]", under_price)
+
+    walk(state, "$", False)
+    return found
+
+
+def ld_json_prices(html):
+    """"price" values inside application/ld+json blocks (schema.org offers), as a fallback signal."""
+    prices = []
+    for block in re.findall(r'<script[^>]*application/ld\+json[^>]*>(.*?)</script>', html or "", re.S | re.I):
+        prices += re.findall(r'"(?:price|lowPrice|highPrice)"\s*:\s*"?([\d.,]+)', block)
+    return prices[:5]
+
+
+def diagnose_product_page(store, ean, product, role, capture, session, delay, full_html):
+    """Fetches a product page from the search result's url and lists where price-like fields live."""
+    page_url = urljoin(store["domain"], product["url"])
+    name = f"rd_{slug(store['name'])}_{ean}_page_{product.get('sku')}"
+    time.sleep(delay)
+    try:
+        r = session.get(page_url)
+    except Exception as e:
+        capture.save(name, store["name"], ean, f"rd_product_page ({role})", "GET", page_url, error=e)
+        return [f"  - product page ({role}, sku {product.get('sku')}): request failed: {str(e)[:150]}"]
+    html = r.text or ""
+    state, kind = extract_state_from_html(html)
+    ld = ld_json_prices(html)
+    if kind != "NEXT_JS":
+        capture.save(name, store["name"], ean, f"rd_product_page ({role})", "GET", page_url, r,
+                     html if full_html else html[:HTML_LIMIT], ext="html")
+        return [f"  - product page ({role}, sku {product.get('sku')}): HTTP {r.status_code}, no __NEXT_DATA__; ld+json prices {ld}"]
+    capture.save(name, store["name"], ean, f"rd_product_page ({role})", "GET", page_url, r, state)
+    paths = "; ".join(f"{p}={v}" for p, v in price_paths(state))
+    return [f"  - product page ({role}, sku {product.get('sku')}): HTTP {r.status_code}; ld+json prices {ld}; "
+            f"price-like fields: `{paths[:2500] or 'none'}`"]
+
+
 def find_path(data, target, path="$"):
     """JSON path of the list object `target` inside `data` (to show where the products array lives)."""
     if data is target:
@@ -125,6 +186,7 @@ def pick_rd_eans(results_file, rd_names, products, limit=5, controls=2):
 def diagnose_rd(store, eans, capture, session, delay, full_html, desc_by_ean):
     lines = [f"### {store['name']} (RD_NEXTJS)", ""]
     platform = RdNextJs()
+    control_needed = True  # fetch one priced product page per store to confirm which field holds the price
     for ean in eans:
         time.sleep(delay)
         url = platform.build_url(store["domain"], ean)
@@ -152,6 +214,12 @@ def diagnose_rd(store, eans, capture, session, delay, full_html, desc_by_ean):
             lines.append(f"- product[{i}]{marker}: `{json.dumps(scalar_fields(p), ensure_ascii=False)[:1500]}`")
         if chosen is not None:
             lines.append(f"- all keys of the picked product: `{', '.join(sorted(chosen.keys()))[:1500]}`")
+            if chosen.get("priceService") is None and chosen.get("url"):
+                lines += diagnose_product_page(store, ean, chosen, "picked, no price", capture, session, delay, full_html)
+            elif control_needed and chosen.get("priceService") is not None and chosen.get("url"):
+                lines += diagnose_product_page(store, ean, chosen, f"control, search price {chosen.get('priceService')}",
+                                               capture, session, delay, full_html)
+                control_needed = False
         lines.append("")
     return lines
 
@@ -174,69 +242,100 @@ def simulation_facts(payload):
     }
 
 
-def diagnose_vtex(store, eans, ceps, scs, capture, session, delay):
+def batch_facts(payload, limit=5):
+    """Availability counts of a multi-seller simulation and the first sellers that can deliver."""
+    items = (payload or {}).get("items") or []
+    counts = {}
+    for it in items:
+        counts[it.get("availability") or "none"] = counts.get(it.get("availability") or "none", 0) + 1
+    available = [{"seller": it.get("seller"), "sellingPrice": it.get("sellingPrice")}
+                 for it in items if it.get("availability") == "available"][:limit]
+    return {"returned": len(items), "by_availability": counts, "available_sellers": available}
+
+
+def regional_sellers(regions):
+    """Distinct seller ids across every region entry the store returned, in order."""
+    ids = []
+    for entry in regions or []:
+        for seller in entry.get("sellers") or []:
+            if seller.get("id") and seller["id"] not in ids:
+                ids.append(seller["id"])
+    return ids
+
+
+def fetch_json(session, capture, name, store, ean, purpose, url, body=None):
+    """GET (or POST when body is given), save the raw response, return (status, parsed JSON or None)."""
+    method = "POST" if body is not None else "GET"
+    try:
+        r = session.post(url, json=body) if body is not None else session.get(url)
+    except Exception as e:
+        capture.save(name, store["name"], ean, purpose, method, url, error=e)
+        return None, None
+    payload, ext = body_of(r)
+    capture.save(name, store["name"], ean, purpose, method, url, r, payload, ext=ext)
+    return r.status_code, payload if ext == "json" else None
+
+
+def diagnose_vtex(store, eans, ceps, scs, capture, session, delay, max_sellers=50):
+    """
+    Per SKU: the catalog, a no-CEP simulation, and per CEP three ways of judging regional availability:
+      E1 the main online seller (the catalog's default seller) simulated with the CEP,
+      E2 one simulation with up to `max_sellers` of the sellers the regions lookup returns,
+      E3 the catalog search with the store's regionId.
+    """
     lines = [f"### {store['name']} (VTEX)", ""]
     domain = store["domain"]
     for ean in eans:
-        time.sleep(delay)
         base = f"vtex_{slug(store['name'])}_{ean}"
         url = f"{domain}/api/catalog_system/pub/products/search?fq=alternateIds_Ean:{ean}"
         lines.append(f"**EAN {ean}**")
-        try:
-            r = session.get(url)
-        except Exception as e:
-            capture.save(f"{base}_catalog", store["name"], ean, "catalog", "GET", url, error=e)
-            lines += [f"- catalog request failed: {str(e)[:200]}", ""]
-            continue
-        data, ext = body_of(r)
-        capture.save(f"{base}_catalog", store["name"], ean, "catalog", "GET", url, r, data, ext=ext)
-        if ext != "json":
-            lines += [f"- catalog: HTTP {r.status_code}, not JSON (saved {base}_catalog.txt)", ""]
-            continue
-        if not data or not data[0].get("items"):
-            lines += [f"- catalog: HTTP {r.status_code}, not listed", ""]
+        time.sleep(delay)
+        status, data = fetch_json(session, capture, f"{base}_catalog", store, ean, "catalog", url)
+        if not data or not isinstance(data, list) or not data[0].get("items"):
+            lines += [f"- catalog: HTTP {status}, not listed or not JSON", ""]
             continue
         item = data[0]["items"][0]
         sellers = item.get("sellers") or []
-        lines.append(f"- catalog: {len(data[0]['items'])} item(s); item[0] itemId={item.get('itemId')}, sellers: "
-                     f"`{json.dumps([offer_facts(s) for s in sellers], ensure_ascii=False)[:1200]}`")
+        lines.append(f"- catalog: itemId={item.get('itemId')}, sellers: "
+                     f"`{json.dumps([offer_facts(s) for s in sellers], ensure_ascii=False)[:800]}`")
         default = next((s for s in sellers if s.get("sellerDefault") is True), sellers[0] if sellers else {})
-        sku_id, default_seller = item.get("itemId"), default.get("sellerId") or "1"
+        sku_id, main_seller = item.get("itemId"), default.get("sellerId") or "1"
 
-        for label, cep in [("no CEP", None)] + list(ceps.items()):
-            digits = re.sub(r"\D", "", cep) if cep else None
-            seller = default_seller
-            if cep:
-                time.sleep(delay)
-                rurl = f"{domain}/api/checkout/pub/regions?country=BRA&postalCode={digits}&sc={scs[0]}"
-                try:
-                    rr = session.get(rurl)
-                    regions, ext = body_of(rr)
-                    capture.save(f"{base}_regions_{digits}", store["name"], ean, f"regions {label}", "GET", rurl, rr, regions, ext=ext)
-                    ok = ext == "json" and isinstance(regions, list) and regions
-                    regional = [s.get("id") for s in (regions[0].get("sellers") or [])] if ok else []
-                    seller = regional[0] if regional else default_seller
-                    lines.append(f"- {label} {cep}: regional sellers {regional[:5] or 'none'}")
-                except Exception as e:
-                    capture.save(f"{base}_regions_{digits}", store["name"], ean, f"regions {label}", "GET", rurl, error=e)
-                    lines.append(f"- {label} {cep}: regions lookup failed: {str(e)[:150]}")
+        for sc in scs:
+            time.sleep(delay)
+            surl = f"{domain}/api/checkout/pub/orderForms/simulation?sc={sc}"
+            body = {"items": [{"id": sku_id, "quantity": 1, "seller": main_seller}], "country": "BRA"}
+            status, payload = fetch_json(session, capture, f"{base}_sim_nocep_sc{sc}", store, ean, f"simulation no CEP sc={sc}", surl, body)
+            lines.append(f"- no CEP, sc={sc}, seller {main_seller}: HTTP {status} `{json.dumps(simulation_facts(payload), ensure_ascii=False)[:300]}`")
+
+        for label, cep in ceps.items():
+            digits = re.sub(r"\D", "", cep)
+            time.sleep(delay)
+            rurl = f"{domain}/api/checkout/pub/regions?country=BRA&postalCode={digits}&sc={scs[0]}"
+            status, regions = fetch_json(session, capture, f"{base}_regions_{digits}", store, ean, f"regions {label}", rurl)
+            regions = regions if isinstance(regions, list) else []
+            ids = regional_sellers(regions)
+            lines.append(f"- {label} {cep}: regions HTTP {status}, {len(regions)} region(s), {len(ids)} distinct seller(s); main seller in list: {main_seller in ids}")
             for sc in scs:
-                time.sleep(delay)
                 surl = f"{domain}/api/checkout/pub/orderForms/simulation?sc={sc}"
-                body = {"items": [{"id": sku_id, "quantity": 1, "seller": seller}], "country": "BRA"}
-                if digits:
-                    body["postalCode"] = digits
-                name = f"{base}_sim_{digits or 'nocep'}_sc{sc}"
-                try:
-                    sr = session.post(surl, json=body)
-                    payload, ext = body_of(sr)
-                    capture.save(name, store["name"], ean, f"simulation {label} sc={sc}", "POST", surl, sr, payload, ext=ext)
-                    facts = simulation_facts(payload) if ext == "json" and isinstance(payload, dict) else "not JSON"
-                    lines.append(f"  - simulation {label} sc={sc} seller={seller}: HTTP {sr.status_code} "
-                                 f"`{json.dumps(facts, ensure_ascii=False)[:400]}`")
-                except Exception as e:
-                    capture.save(name, store["name"], ean, f"simulation {label} sc={sc}", "POST", surl, error=e)
-                    lines.append(f"  - simulation {label} sc={sc}: failed: {str(e)[:150]}")
+                time.sleep(delay)
+                body = {"items": [{"id": sku_id, "quantity": 1, "seller": main_seller}], "country": "BRA", "postalCode": digits}
+                status, payload = fetch_json(session, capture, f"{base}_e1_{digits}_sc{sc}", store, ean, f"E1 main seller {label} sc={sc}", surl, body)
+                lines.append(f"  - E1 main seller {main_seller}, sc={sc}: HTTP {status} `{json.dumps(simulation_facts(payload), ensure_ascii=False)[:300]}`")
+                if ids:
+                    batch = ids[:max_sellers]
+                    time.sleep(delay)
+                    body = {"items": [{"id": sku_id, "quantity": 1, "seller": sid} for sid in batch], "country": "BRA", "postalCode": digits}
+                    status, payload = fetch_json(session, capture, f"{base}_e2_{digits}_sc{sc}", store, ean, f"E2 regional sellers {label} sc={sc}", surl, body)
+                    cut = f" (first {len(batch)} of {len(ids)})" if len(ids) > len(batch) else ""
+                    lines.append(f"  - E2 {len(batch)} regional sellers{cut}, sc={sc}: HTTP {status} `{json.dumps(batch_facts(payload), ensure_ascii=False)[:400]}`")
+            if regions and regions[0].get("id"):
+                time.sleep(delay)
+                curl = f"{url}&regionId={regions[0]['id']}"
+                status, rdata = fetch_json(session, capture, f"{base}_e3_{digits}", store, ean, f"E3 catalog regionId {label}", curl)
+                offers = (rdata[0]["items"][0].get("sellers") or []) if isinstance(rdata, list) and rdata and rdata[0].get("items") else []
+                lines.append(f"  - E3 catalog with regionId: HTTP {status}, {len(offers)} seller offer(s) "
+                             f"`{json.dumps([offer_facts(o) for o in offers[:5]], ensure_ascii=False)[:500]}`")
         lines.append("")
     return lines
 
@@ -248,7 +347,8 @@ def main(argv=None, session_factory=make_session):
     parser.add_argument("--vtex-stores", help=f"comma-separated store_ids (default: {', '.join(DEFAULT_VTEX_STORES)})")
     parser.add_argument("--vtex-eans", help=f"comma-separated EANs (default: {', '.join(DEFAULT_VTEX_EANS)})")
     parser.add_argument("--ceps", help='e.g. "SP=01310-100,RJ=20010-000" (default: SP, RJ, MG city centres)')
-    parser.add_argument("--sc", default="1,2,3", help="VTEX sales channels to simulate (default 1,2,3)")
+    parser.add_argument("--sc", default="1", help="VTEX sales channels to simulate, e.g. 1,2,3 (default 1, what the scraper uses)")
+    parser.add_argument("--max-sellers", type=int, default=50, help="regional sellers per batch simulation (default 50)")
     parser.add_argument("--skip-rd", action="store_true")
     parser.add_argument("--skip-vtex", action="store_true")
     parser.add_argument("--full-html", action="store_true", help="keep whole HTML pages (large)")
@@ -293,7 +393,7 @@ def main(argv=None, session_factory=make_session):
         for name in names:
             if name in by_name:
                 print(f"VTEX: {name}...")
-                summary += diagnose_vtex(by_name[name], eans, ceps, scs, capture, session_factory(by_name[name]), args.delay)
+                summary += diagnose_vtex(by_name[name], eans, ceps, scs, capture, session_factory(by_name[name]), args.delay, args.max_sellers)
 
     with open(os.path.join(capture.dir, "index.json"), "w", encoding="utf-8") as f:
         json.dump(capture.index, f, ensure_ascii=False, indent=1)
