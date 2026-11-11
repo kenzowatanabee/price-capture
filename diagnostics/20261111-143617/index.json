@@ -1,0 +1,5482 @@
+[
+ {
+  "store": "Drogasil",
+  "ean": "7509546060781",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546060781&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546060781.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546060781",
+  "purpose": "rd_product_page (control, search price 17.99)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-my-first-sem-fluor-50g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546060781_page_62451.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546061689",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546061689&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546061689.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-slim-soft-black-lv2-pg1-651531.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546061689_partner_651531.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dentes-colgate-slim-soft-black-macia-2-unidades-1496440.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546061689_partner_1496440.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dentes-colgate-slim-soft-black-macia-2-unidades-1474157.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546061689_partner_1474157.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dentes-colgate-slim-soft-black-macia-2-unidades-1460239.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546061689_partner_1460239.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546069593",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546069593&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546069593.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546069593",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-smiles-minions-100g-664906.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546069593_partner_664906.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546069593",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-infantil-colgate-smiles-minions-bubble-fruit-100g-1470731.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546069593_partner_1470731.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546074399",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546074399&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546074399.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546074399",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-escova-de-dente-colgate-slim-soft-black-3-unidades-891038.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546074399_partner_891038.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546080864",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546080864&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546080864.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546080864",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-media-infusao-de-carvao-colgate-zig-zag-4-unidades-666181.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546080864_partner_666181.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546651040",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546651040&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546651040.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546651040",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-891170.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546651040_partner_891170.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546651040",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-665160.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546651040_partner_665160.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546651040",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-1093158.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546651040_partner_1093158.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546651040",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-1494977.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546651040_partner_1494977.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546654027",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546654027&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546654027.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546654027",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-total-12-anti-tartaro-140g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546654027_page_78764.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546654027",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-12-anti-tartaro-140g-1030367.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546654027_partner_1030367.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546654027",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-12-anti-tartaro-140g-891125.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546654027_partner_891125.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546657066",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546657066&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546657066.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546657066",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-natural-extracts-reinforced-defense-140g-665616.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546657066_partner_665616.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546657066",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-natural-extracts-reinforced-defense-140g-891106.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546657066_partner_891106.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546657240",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546657240&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546657240.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546657240",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-slim-soft-black-com-4-unidades-665509.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546657240_partner_665509.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546665306",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546665306&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546665306.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546665306",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-luminous-white-carvao-ativado-140g-724962.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546665306_partner_724962.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546665306",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-luminous-white-carvao-ativado-com-fluor-de-140g-891194.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546665306_partner_891194.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546665801",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546665801&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546665801.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546665801",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-palmolive-luminous-oils-sensacao-refrescante-figo-e-orquidea-250ml-731551.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546665801_partner_731551.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546665801",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-palmolive-liquido-250ml-luminous-figo-e-orquidea-1310865.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546665801_partner_1310865.html"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546668758",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546668758&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546668758.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546668758",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-enxaguatorio-bucal-antisseptico-colgate-uso-diario-500ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546668758_page_111720.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546668758",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-500ml-665602.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546668758_partner_665602.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546668758",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-uso-diario-hortela-sem-alcool-500ml-1319316.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546668758_partner_1319316.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546668758",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-uso-diario-hortela-sem-alcool-500ml-1432622.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546668758_partner_1432622.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546668758",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-antisseptico-bucal-colgate-periogard-gengiva-saudavel-sem-alcool-500ml-1312549.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546668758_partner_1312549.html"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546673226",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546673226&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546673226.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546673226",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-em-barra-protex-baby-suave-glicerina-natural-85g-666138.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546673226_partner_666138.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546673226",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-em-barra-protex-baby-glicerina-85g-1026597.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546673226_partner_1026597.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546675862",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546675862&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546675862.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546675862",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-periogard-creme-dental-60g-1329580.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546675862_page_1329580.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546675862",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-gengiva-saudavel-creme-dental-colgate-60g-891159.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546675862_partner_891159.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546675862",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-60g-1430933.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546675862_partner_1430933.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546675862",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-60g-1319187.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546675862_partner_1319187.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546675862",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-60g-1285673.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546675862_partner_1285673.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546676258",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546676258&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546676258.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546676258",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-clareador-colgate-luminous-white-glow-70g-925743.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546676258_partner_925743.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546676258",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-luminous-white-glow-70g-926228.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546676258_partner_926228.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546679174",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546679174&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546679174.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546679174",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-anticarie-com-fluor-e-calcio-colgate-tripla-acao-90g-4-unidades-1312687.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546679174_partner_1312687.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546679600",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546679600&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546679600.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546679600",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/pack-creme-dental-colgate-carvao-ativado-luminous-white-3un-70g-666146.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546679600_partner_666146.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546679617",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546679617&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546679617.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546685939",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546685939&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546685939.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546685939",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-plax-odor-control-750ml-1307502.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546685939_partner_1307502.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546685960",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546685960&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546685960.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546685960",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-total-whitening-4x3-leve-mais-pague-menos-90g-1319357.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546685960_page_1319357.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546686035",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546686035&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546686035.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546686035",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-total-12-carvao-140g-924803.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546686035_page_924803.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546686912",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546686912&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546686912.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546686912",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-sensitive-1030368.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546686912_partner_1030368.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546686929",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546686929&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546686929.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546688442",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546688442&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546688442.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546688442",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-para-clareamento-colgate-luminous-white-glow-70g-2un-948117.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546688442_partner_948117.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546690308",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546690308&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546690308.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546690308",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-escova-de-dente-sensitive-professional-ultra-macia-2-unidades-1074186.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546690308_page_1074186.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-elmex-sensitive-2-unidades-1421558.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546690308_partner_1421558.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-elmex-sensitive-2-unidades-1187241.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546690308_partner_1187241.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-elmex-sensitive-2-unidades-1432170.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546690308_partner_1432170.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-elmex-sensitive-2-unidades-1430124.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546690308_partner_1430124.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693729",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546693729&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693729.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693729",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-escova-de-dente-total-limpeza-espumosa-macia-2-unidades-1074219.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693729_page_1074219.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-total-limpeza-espumosa-macia-2-unidades-1285052.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693729_partner_1285052.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-total-limpeza-espumosa-suave-2-unidades-1187282.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693729_partner_1187282.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-total-limpeza-espumosa-macia-2-unidades-1503651.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693729_partner_1503651.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-total-limpeza-espumosa-macia-2-unidades-1494769.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693729_partner_1494769.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693736",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546693736&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693736.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693736",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-escova-de-dente-total-whitening-macia-2-unidades-1074221.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693736_page_1074221.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693736",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-total-whitening-2-unidades-1305098.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693736_partner_1305098.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693873",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546693873&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693873.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546693873",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-palmolive-naturals-melancia-e-lichia-85g-embalagem-com-6-unidades-1392205.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546693873_partner_1392205.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546694580",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546694580&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546694580.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546694580",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-enxaguatorio-bucal-colgate-sem-alcool-250ml-creme-dental-60g-1096189.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546694580_page_1096189.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546695792",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546695792&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546695792.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546695792",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-protex-fresh-85g-embalagem-com-6-unidades-1392170.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546695792_partner_1392170.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546695945",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546695945&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546695945.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546695945",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-palmolive-naturals-hidratacao-refrescante-melancia-e-lichia-250ml-1362302.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546695945_partner_1362302.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546696126",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546696126&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546696126.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546696126",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-palmolive-naturals-sensacao-purificante-argila-e-eucalipto-85g-embalagem-com-6-unidades-1392173.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546696126_partner_1392173.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546697239",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546697239&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546697239.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-sensitive-pro-alivio-xtreme-3-unidades-1495550.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546697239_partner_1495550.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-sensitive-pro-alivio-xtreme-3-unidades-1474173.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546697239_partner_1474173.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-sensitive-pro-alivio-xtreme-3-unidades-1460210.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546697239_partner_1460210.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-sensitive-pro-alivio-imediato-xtreme-3x90g-1197481.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546697239_partner_1197481.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546697383",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546697383&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546697383.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546697383",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-total-carvao-ativado-4x3-leve-mais-pague-menos-90g-1319371.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546697383_page_1319371.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546700434",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546700434&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546700434.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702605",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546702605&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702605.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702605",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-total-original-mint-90g-1321609.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702605_page_1321609.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-original-mint-90g-1421538.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702605_partner_1421538.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-original-mint-90g-1432175.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702605_partner_1432175.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-original-mint-90g-1452143.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702605_partner_1452143.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-original-mint-prevencao-ativa-90g-1341601.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702605_partner_1341601.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702612",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546702612&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702612.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702612",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-total-original-mint-4-unidades-1321582.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702612_page_1321582.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702612",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-creme-dental-colgate-total-prevencao-ativa-original-mint-4-unidades-90g-cada-1432169.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702612_partner_1432169.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702612",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-creme-dental-colgate-total-prevencao-ativa-original-mint-4-unidades-90g-cada-1430120.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702612_partner_1430120.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702612",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-creme-dental-colgate-total-prevencao-ativa-original-mint-4-unidades-90g-cada-1421553.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702612_partner_1421553.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702636",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546702636&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702636.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702636",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-total-creme-dental-clean-mint-140g-1321641.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702636_page_1321641.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702636",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-mint-prevencao-ativa-140g-1341614.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702636_partner_1341614.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702988",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7509546702988&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702988.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7509546702988",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-de-higiene-bucal-para-viagem-colgate-1362303.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7509546702988_partner_1362303.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7591083011081",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7591083011081&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7591083011081.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7591083011081",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-my-first-sem-fluor-extra-macia-1-unidade-0-a-2-anos-891088.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7591083011081_partner_891088.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7591083011081",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-my-first-sem-fluor-664950.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7591083011081_partner_664950.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100112287",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7793100112287&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100112287.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100112287",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-orthogard-90g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100112287_page_78446.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100112287",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-orthogard-de-uso-diario-e-cuidado-ortodontico-90g-1116266.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100112287_partner_1116266.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100112287",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-orthogard-90g-1015949.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100112287_partner_1015949.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100112287",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/orthogard-creme-dental-cuidado-ortodonico-90g-1467511.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100112287_partner_1467511.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100130243",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7793100130243&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100130243.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100130243",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-creme-dental-periogard-90g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100130243_page_27117.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-periogard-90g-664888.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100130243_partner_664888.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-90g-1228879.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100130243_partner_1228879.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-90g-1319195.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100130243_partner_1319195.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-periogard-hortela-90g-colgate-1238340.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100130243_partner_1238340.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/cr-dental-colgate-periogard-90g-1107657.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100130243_partner_1107657.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-90g-1432731.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7793100130243_partner_1432731.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024013540",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024013540&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024013540.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024013540",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-whitening-macia-cabeca-compacta-2-unidades-895912.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024013540_partner_895912.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024021606",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024021606&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024021606.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-ultra-soft-3-unidades-1262469.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024021606_partner_1262469.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-escova-de-dente-colgate-ultra-soft-3-unidades-1432162.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024021606_partner_1432162.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-escova-de-dente-colgate-ultra-soft-3-unidades-1430110.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024021606_partner_1430110.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-escova-de-dente-colgate-ultra-soft-3-unidades-1421548.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024021606_partner_1421548.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024024003",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024024003&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024024003.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024024003",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-intimo-liquido-protex-cuidado-intimo-delicate-care-leve-200ml-pague-150ml-1026501.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024024003_partner_1026501.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024024003",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-intimo-protex-delicate-care-leve-200ml-pague-150ml-725125.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024024003_partner_725125.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024026434",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024026434&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024026434.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024026434",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-dental-colgate-classic-clean-leve-3-pague-2-736960.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024026434_partner_736960.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024026434",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-colgate-classic-clean-3-unidades-1305485.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024026434_partner_1305485.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024030820",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024030820&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024030820.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024030820",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-luminous-white-brilliant-70g-664878.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024030820_partner_664878.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024033425",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024033425&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024033425.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024033425",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-enxaguante-bucal-periogard-extra-mint-sem-alcool-250ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024033425_page_11125.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-extra-mint-sem-alcool-250ml-665136.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024033425_partner_665136.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-solucao-bucal-extra-mint-250ml-sem-alcool-1025751.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024033425_partner_1025751.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-250ml-extra-mint-colgate-1147891.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024033425_partner_1147891.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-extra-mint-sem-alcool-250ml-1262445.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024033425_partner_1262445.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024035504",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024035504&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024035504.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024035511",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024035511&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024035511.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024035511",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/protex-limpeza-profunda-sabonete-em-barra-6-unidades-1495606.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024035511_partner_1495606.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024035511",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/protex-limpeza-profunda-sabonete-em-barra-6-unidades-1474213.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024035511_partner_1474213.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024035511",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/protex-limpeza-profunda-sabonete-em-barra-6-unidades-1460190.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024035511_partner_1460190.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024035535",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024035535&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024035535.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024035559",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024035559&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024035559.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024037973",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024037973&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024037973.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024037973",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-tripla-acao-180g-665812.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024037973_partner_665812.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024042984",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024042984&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024042984.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024042984",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-sensitive-pro-alivio-imediato-original-90g-leve-3-pague-2-665523.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024042984_partner_665523.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024042984",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-pasta-de-dente-colgate-sensitive-pro-alivio-imediato-90g-3-unidades-1082138.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024042984_partner_1082138.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114674",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024114674&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114674.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sab-protex-liq-limp-profunda-250ml-1107661.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114674_partner_1107661.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-protex-limpeza-profunda-250ml-816983.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114674_partner_816983.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-corporal-protex-limpeza-profunda-250ml-1485963.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114674_partner_1485963.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-corporal-protex-limpeza-profunda-250ml-1478524.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114674_partner_1478524.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-corporal-protex-limpeza-profunda-250ml-1473743.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114674_partner_1473743.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114865",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024114865&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114865.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-corporal-protex-vitamina-e-250ml-895824.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114865_partner_895824.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-corporal-protex-vitamina-e-250ml-1485944.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114865_partner_1485944.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-corporal-protex-vitamina-e-250ml-1478527.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114865_partner_1478527.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/sabonete-liquido-corporal-protex-vitamina-e-250ml-1473760.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024114865_partner_1473760.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024122556",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024122556&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024122556.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024122556",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-colgate-luminous-white-brilliant-mint-com-3-pastas-de-dente-de-70g-1-enxaguante-bucal-de-250ml-895010.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024122556_partner_895010.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024122556",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-colgate-luminous-white-com-3-creme-dental-enxaguante-1001571.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024122556_partner_1001571.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024132005",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024132005&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024132005.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024132906",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024132906&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024132906.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024132906",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-maxima-protecao-anticaries-menta-50g-colgate-1298784.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024132906_partner_1298784.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024135020",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024135020&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024135020.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024135020",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/pasta-de-dente-colgate-total-prevencao-ativa-whitening-90g-57703.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024135020_page_57703.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024135020",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-12h-whitening-90g-891124.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024135020_partner_891124.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024135020",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-12-whitening-90g-664893.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024135020_partner_664893.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024135020",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-total-12-whitening-90g-embalagem-com-12-unidades-1207235.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024135020_partner_1207235.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891024179925&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-antiseptico-bucal-sem-alcool-250ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_page_31369.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-250ml-menta-original-colgate-1147923.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_1147923.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-sem-alcool-sabor-extra-mint-250ml-1285051.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_1285051.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-enx-bucal-s-alcool-250ml-1129681.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_1129681.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-sem-alcool-250ml-664956.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_664956.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-sem-alcool-sabor-extra-mint-250ml-1319317.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_1319317.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/antisseptico-bucal-periogard-250ml-colgate-1102887.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_1102887.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguatorio-periogard-sem-alcool-250ml-997738.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_997738.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-colgate-periogard-sem-alcool-sabor-extra-mint-250ml-1431202.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_1431202.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/periogard-solucao-bucal-250ml-sem-alcool-1234882.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891024179925_partner_1234882.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038704",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891528038704&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038704.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038704",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-prevent-antiplaca-90g-664915.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038704_partner_664915.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038704",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/pasta-de-dente-prevent-antiplaca-90g-1107731.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038704_partner_1107731.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038704",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-prevent-antiplaca-90g-embalagem-com-12-unidades-1249614.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038704_partner_1249614.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038827",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=7891528038827&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038827.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-infantil-colgate-tandy-tutti-frutti-50g-1421536.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038827_partner_1421536.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-colgate-tandy-tutti-frutti-50g-891181.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038827_partner_891181.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-com-fluor-tandy-tutti-frutti-50g-colgate-1298785.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038827_partner_1298785.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-infantil-colgate-tandy-tutti-frutti-50g-1432161.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038827_partner_1432161.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-infantil-colgate-tandy-tutti-frutti-50g-1430140.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038827_partner_1430140.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-infantil-tandy-tutti-fruti-50g-651962.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_7891528038827_partner_651962.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8710103967408",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8710103967408&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8710103967408.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8710103967408",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-philips-electric-tooth-brusch-series-50-single.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8710103967408_page_223985.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8710103967408",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/escova-de-dente-eletrica-philips-colgate-sonicpro-50-665894.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8710103967408_partner_665894.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8710103967460",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8710103967460&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8710103967460.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8710103967460",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-philips-electric-tooth-brusch-s50-refil-deep-clean.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8710103967460_page_223990.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8710103967460",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/refil-para-escova-eletrica-philips-colgate-sonicpro-limpeza-profunda-com-2-unidades-665903.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8710103967460_partner_665903.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8710103985365",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8710103985365&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8710103985365.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8710103985365",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-philips-electric-tooth-brusch-series-10-single.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8710103985365_page_223983.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951193611",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8718951193611&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951193611.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951193611",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-enxaguante-bucal-anticaries-400ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951193611_page_39662.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951193611",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-bucal-elmex-400ml-664940.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951193611_partner_664940.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951193611",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/enxaguante-elmex-anticaries-400ml-1310300.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951193611_partner_1310300.html"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951193642",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8718951193642&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951193642.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951193642",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-enxaguante-bucal-sensitive-400ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951193642_page_39664.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951213524",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8718951213524&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951213524.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951213524",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-creme-dental-sensitive-110g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951213524_page_39577.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951213524",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-elmex-sensitive-110g-669421.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951213524_partner_669421.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951213524",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-110g-1496494.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951213524_partner_1496494.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951213524",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-110g-1495539.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951213524_partner_1495539.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951213524",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-110g-1487829.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951213524_partner_1487829.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951456440",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8718951456440&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951456440.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951456440",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-creme-dental-sensitive-whitening-110g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951456440_page_311368.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951456440",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-elmex-branqueador-sensitive-whitening-110g-666226.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951456440_partner_666226.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951456440",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-elmex-sensit-white-110g-1093451.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951456440_partner_1093451.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951456440",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/pasta-de-dente-elmex-sensitive-whitening-com-110g-895941.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951456440_partner_895941.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8718951539129&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-creme-dental-sensitive-professional-75g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129_page_607730.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-75g-1228872.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129_partner_1228872.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-elmex-sensitive-75g-1038603.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129_partner_1038603.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-sensitive-professional-75g-elmex-1470584.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129_partner_1470584.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-75g-1432725.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129_partner_1432725.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-elmex-sensitive-professional-75g-899085.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129_partner_899085.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-75g-1318793.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129_partner_1318793.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-pasta-de-dente-sensitive-professional-75g-1205400.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951539129_partner_1205400.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951655331",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8718951655331&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951655331.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951655331",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-kit-pasta-de-dente-sensitive-profissional-2-unidades-de-110g-cada-1001543.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951655331_page_1001543.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951655331",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-elmex-sensitive-profissional-creme-dental-2-unidades-110g-cada-1443782.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951655331_partner_1443782.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951655331",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-elmex-sensitive-profissional-creme-dental-2-unidades-110g-cada-1430109.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951655331_partner_1430109.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951655331",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-elmex-sensitive-professional-110g-2-unidades-1302126.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951655331_partner_1302126.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951655331",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/kit-elmex-sensitive-profissional-creme-dental-2-unidades-110g-cada-1421552.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951655331_partner_1421552.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951658240",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8718951658240&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951658240.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951658240",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-pasta-de-dente-anticarie-profissional-110g-1001544.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951658240_page_1001544.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951658240",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-anticarie-elmex-anticarie-professional-110g-1341615.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951658240_partner_1341615.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951725799",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8718951725799&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951725799.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951725799",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/elmex-sensitive-professional-gengiva-creme-dental-110g-1338125.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951725799_page_1338125.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8718951725799",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-gengivas-110g-1362296.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8718951725799_partner_1362296.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8720689030700",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/search?w=8720689030700&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8720689030700.json"
+ },
+ {
+  "store": "Drogasil",
+  "ean": "8720689030700",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogasil.com.br/colgate-philips-escova-eletrica-series-30-single-1227424.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_drogasil_8720689030700_page_1227424.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546060781",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546060781&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546060781.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546060781",
+  "purpose": "rd_product_page (control, search price 17.77)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-my-first-sem-fluor-50g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546060781_page_62451.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546061689",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546061689&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546061689.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-slim-soft-black-lv2-pg1-651531.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546061689_partner_651531.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dentes-colgate-slim-soft-black-macia-2-unidades-1496440.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546061689_partner_1496440.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dentes-colgate-slim-soft-black-macia-2-unidades-1474157.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546061689_partner_1474157.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dentes-colgate-slim-soft-black-macia-2-unidades-1460239.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546061689_partner_1460239.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546061689",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-slim-soft-black-pack-com-2-und-1311963.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546061689_partner_1311963.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546069593",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546069593&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546069593.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546069593",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-smiles-minions-100g-664906.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546069593_partner_664906.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546069593",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-infantil-colgate-smiles-minions-bubble-fruit-100g-1470731.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546069593_partner_1470731.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546074399",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546074399&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546074399.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546074399",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-escova-de-dente-colgate-slim-soft-black-3-unidades-891038.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546074399_partner_891038.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546074399",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-slimsoft-black-pack-com-3-und-1311978.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546074399_partner_1311978.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546080864",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546080864&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546080864.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546080864",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-media-infusao-de-carvao-colgate-zig-zag-4-unidades-666181.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546080864_partner_666181.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546080864",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-zig-zag-carvao-16-fhs-com-4-und-1311954.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546080864_partner_1311954.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546651040",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546651040&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546651040.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546651040",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-891170.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546651040_partner_891170.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546651040",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-665160.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546651040_partner_665160.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546651040",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-1093158.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546651040_partner_1093158.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546651040",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-1494977.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546651040_partner_1494977.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546654027",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546654027&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546654027.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546654027",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-total-12-anti-tartaro-140g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546654027_page_78764.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546654027",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-12-anti-tartaro-140g-1030367.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546654027_partner_1030367.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546654027",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-12-anti-tartaro-140g-891125.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546654027_partner_891125.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546657066",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546657066&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546657066.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546657066",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-natural-extracts-reinforced-defense-140g-665616.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546657066_partner_665616.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546657066",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-natural-extracts-reinforced-defense-140g-891106.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546657066_partner_891106.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546657240",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546657240&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546657240.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546657240",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-slim-soft-black-com-4-unidades-665509.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546657240_partner_665509.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546657240",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-slimsoft-com-4-und-1311976.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546657240_partner_1311976.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546665306",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546665306&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546665306.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546665306",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-carvao-ativado-140g-724962.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546665306_partner_724962.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546665306",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-carvao-ativado-com-fluor-de-140g-891194.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546665306_partner_891194.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546665801",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546665801&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546665801.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546665801",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-palmolive-luminous-oils-sensacao-refrescante-figo-e-orquidea-250ml-731551.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546665801_partner_731551.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546665801",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-palmolive-luminous-oil-figo-e-orquidea-250ml-1307944.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546665801_partner_1307944.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546668758",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546668758&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546668758.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546668758",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-enxaguatorio-bucal-antisseptico-colgate-uso-diario-500ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546668758_page_111720.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546668758",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-500ml-665602.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546668758_partner_665602.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546668758",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-uso-diario-hortela-sem-alcool-500ml-1432622.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546668758_partner_1432622.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546668758",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-uso-diario-hortela-sem-alcool-500ml-1319316.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546668758_partner_1319316.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546668758",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-enxaguante-bucal-periogard-uso-diario-500ml-1411019.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546668758_partner_1411019.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546673226",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546673226&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546673226.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546673226",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-em-barra-protex-baby-suave-glicerina-natural-85g-666138.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546673226_partner_666138.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546673226",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-em-barra-protex-baby-glicerina-85g-1026597.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546673226_partner_1026597.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546675862",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546675862&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546675862.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546675862",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-periogard-creme-dental-60g-1329580.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546675862_page_1329580.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546675862",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-gengiva-saudavel-creme-dental-colgate-60g-891159.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546675862_partner_891159.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546675862",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-60g-1430933.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546675862_partner_1430933.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546675862",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-60g-1319187.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546675862_partner_1319187.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546675862",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-60g-1285673.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546675862_partner_1285673.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546676258",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546676258&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546676258.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546676258",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-glow-70g-926228.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546676258_partner_926228.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546676258",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-clareador-colgate-luminous-white-glow-70g-925743.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546676258_partner_925743.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546679174",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546679174&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546679174.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546679174",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-anticarie-com-fluor-e-calcio-colgate-tripla-acao-90g-4-unidades-1312687.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546679174_partner_1312687.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546679600",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546679600&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546679600.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546679600",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/pack-creme-dental-colgate-carvao-ativado-luminous-white-3un-70g-666146.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546679600_partner_666146.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546679600",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-carvao-ativado-70g-c-3-unidades-1410911.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546679600_partner_1410911.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546679617",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546679617&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546679617.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546679617",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-plax-fresh-mint-750ml-1312503.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546679617_partner_1312503.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546685939",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546685939&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546685939.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546685939",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-plax-odor-control-750ml-1307502.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546685939_partner_1307502.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546685939",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-plax-odor-control-750ml-1312515.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546685939_partner_1312515.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546685960",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546685960&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546685960.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546685960",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-total-whitening-4x3-leve-mais-pague-menos-90g-1319357.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546685960_page_1319357.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546686035",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546686035&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546686035.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546686035",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-total-12-carvao-140g-924803.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546686035_page_924803.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546686912",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546686912&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546686912.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546686912",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-sensitive-1030368.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546686912_partner_1030368.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546686912",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-sensitive-pro-alivio-com-1-und-1311966.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546686912_partner_1311966.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546686929",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546686929&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546686929.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546688442",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546688442&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546688442.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546688442",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-para-clareamento-colgate-luminous-white-glow-70g-2un-948117.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546688442_partner_948117.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546690308",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546690308&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546690308.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546690308",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-escova-de-dente-sensitive-professional-ultra-macia-2-unidades-1074186.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546690308_page_1074186.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-elmex-sensitive-2-unidades-1187241.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546690308_partner_1187241.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-elmex-sensitive-2-unidades-1432170.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546690308_partner_1432170.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-elmex-sensitive-2-unidades-1430124.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546690308_partner_1430124.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-elmex-sensitive-2-unidades-1421558.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546690308_partner_1421558.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546690308",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-elmex-sensitive-professional-2-unidades-1411043.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546690308_partner_1411043.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693729",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546693729&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693729.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693729",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-escova-de-dente-total-limpeza-espumosa-macia-2-unidades-1074219.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693729_page_1074219.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-total-limpeza-espumosa-suave-2-unidades-1187282.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693729_partner_1187282.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-total-limpeza-espumosa-macia-2-unidades-1503651.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693729_partner_1503651.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-total-limpeza-espumosa-macia-2-unidades-1494769.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693729_partner_1494769.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-total-limpeza-espumosa-macia-2-unidades-1285052.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693729_partner_1285052.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693729",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-total-limpeza-espumosa-suave-2-unidades-1411038.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693729_partner_1411038.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693736",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546693736&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693736.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693736",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-escova-de-dente-total-whitening-macia-2-unidades-1074221.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693736_page_1074221.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693736",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-total-whitening-2-unidades-1305098.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693736_partner_1305098.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693736",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-total-whitening-2-unidades-1411018.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693736_partner_1411018.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693873",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546693873&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693873.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546693873",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-palmolive-naturals-melancia-e-lichia-85g-embalagem-com-6-unidades-1392205.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546693873_partner_1392205.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546694580",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546694580&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546694580.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546694580",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-enxaguatorio-bucal-colgate-sem-alcool-250ml-creme-dental-60g-1096189.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546694580_page_1096189.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546694580",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-colgate-periogard-enxaguante-bucal-250ml-creme-dental-60g-1411115.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546694580_partner_1411115.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546695792",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546695792&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546695792.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546695792",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-protex-fresh-85g-embalagem-com-6-unidades-1392170.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546695792_partner_1392170.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546695945",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546695945&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546695945.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546695945",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-palmolive-naturals-hidratacao-refrescante-melancia-e-lichia-250ml-1362302.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546695945_partner_1362302.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546696126",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546696126&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546696126.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546696126",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-palmolive-naturals-sensacao-purificante-argila-e-eucalipto-85g-embalagem-com-6-unidades-1392173.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546696126_partner_1392173.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546697239",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546697239&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546697239.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-sensitive-pro-alivio-xtreme-3-unidades-1495550.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546697239_partner_1495550.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-sensitive-pro-alivio-xtreme-3-unidades-1474173.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546697239_partner_1474173.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-sensitive-pro-alivio-xtreme-3-unidades-1460210.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546697239_partner_1460210.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-sensitive-pro-alivio-imediato-xtreme-3x90g-1197481.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546697239_partner_1197481.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546697239",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-sensitive-pro-alivio-imediato-xtreme-90g-3-unidades-1410912.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546697239_partner_1410912.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546697383",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546697383&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546697383.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546697383",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-total-carvao-ativado-4x3-leve-mais-pague-menos-90g-1319371.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546697383_page_1319371.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546700434",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546700434&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546700434.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702605",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546702605&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702605.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702605",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-total-original-mint-90g-1321609.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702605_page_1321609.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-original-mint-90g-1432175.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702605_partner_1432175.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-original-mint-prevencao-ativa-90g-1341601.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702605_partner_1341601.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-original-mint-90g-1452143.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702605_partner_1452143.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-original-mint-90g-1421538.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702605_partner_1421538.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702605",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-total-original-mint-colgate-90-g-1410923.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702605_partner_1410923.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702612",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546702612&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702612.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702612",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-total-original-mint-4-unidades-1321582.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702612_page_1321582.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702612",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-creme-dental-colgate-total-prevencao-ativa-original-mint-4-unidades-90g-cada-1432169.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702612_partner_1432169.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702612",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-creme-dental-colgate-total-prevencao-ativa-original-mint-4-unidades-90g-cada-1430120.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702612_partner_1430120.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702612",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-creme-dental-colgate-total-prevencao-ativa-original-mint-4-unidades-90g-cada-1421553.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702612_partner_1421553.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702612",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-original-mint-prevencao-ativa-90g-4-unidades-1410915.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702612_partner_1410915.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702636",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546702636&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702636.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702636",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-total-creme-dental-clean-mint-140g-1321641.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702636_page_1321641.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702636",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-mint-prevencao-ativa-140g-1341614.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702636_partner_1341614.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702636",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-prevencao-original-mint-1410916.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702636_partner_1410916.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702988",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7509546702988&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702988.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702988",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-de-higiene-bucal-para-viagem-colgate-1362303.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702988_partner_1362303.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7509546702988",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-estojo-colgate-creme-dental-anticarie-original-mint-30g-enxaguante-bucal-antibacteriano-clean-mint-60ml-1411114.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7509546702988_partner_1411114.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7591083011081",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7591083011081&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7591083011081.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7591083011081",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-my-first-sem-fluor-extra-macia-1-unidade-0-a-2-anos-891088.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7591083011081_partner_891088.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7591083011081",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-my-first-sem-fluor-664950.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7591083011081_partner_664950.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7591083011081",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-infantil-colgate-smiles-0-2-anos-1411052.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7591083011081_partner_1411052.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100112287",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7793100112287&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100112287.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100112287",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-orthogard-90g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100112287_page_78446.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100112287",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-orthogard-de-uso-diario-e-cuidado-ortodontico-90g-1116266.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100112287_partner_1116266.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100112287",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-orthogard-90g-1015949.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100112287_partner_1015949.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100112287",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/orthogard-creme-dental-cuidado-ortodonico-90g-1467511.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100112287_partner_1467511.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7793100130243&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-creme-dental-periogard-90g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243_page_27117.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-periogard-90g-664888.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243_partner_664888.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-periogard-hortela-90g-colgate-1238340.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243_partner_1238340.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-90g-1228879.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243_partner_1228879.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/cr-dental-colgate-periogard-90g-1107657.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243_partner_1107657.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-90g-1432731.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243_partner_1432731.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-periogard-gengiva-saudavel-sabor-hortela-90g-1319195.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243_partner_1319195.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7793100130243",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-90g-periogard-1467672.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7793100130243_partner_1467672.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024013540",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024013540&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024013540.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024013540",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-whitening-macia-cabeca-compacta-2-unidades-895912.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024013540_partner_895912.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024021606",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024021606&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024021606.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-ultra-soft-3-unidades-1262469.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024021606_partner_1262469.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-escova-de-dente-colgate-ultra-soft-3-unidades-1432162.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024021606_partner_1432162.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-escova-de-dente-colgate-ultra-soft-3-unidades-1430110.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024021606_partner_1430110.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-escova-de-dente-colgate-ultra-soft-3-unidades-1421548.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024021606_partner_1421548.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024021606",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-ultra-soft-pack-com-3-und-1311952.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024021606_partner_1311952.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024024003",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024024003&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024024003.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024024003",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-intimo-liquido-protex-cuidado-intimo-delicate-care-leve-200ml-pague-150ml-1026501.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024024003_partner_1026501.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024024003",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-intimo-protex-delicate-care-leve-200ml-pague-150ml-725125.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024024003_partner_725125.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024024003",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-intimo-protex-cuidado-intimo-delicate-care-200ml-1411164.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024024003_partner_1411164.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024026434",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024026434&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024026434.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024026434",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-classic-clean-leve-3-pague-2-736960.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024026434_partner_736960.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024026434",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-colgate-classic-clean-3-unidades-1305485.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024026434_partner_1305485.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024026434",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-dental-colgate-classic-clean-c-3-unidades-1311850.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024026434_partner_1311850.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024030820",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024030820&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024030820.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024030820",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-luminous-white-brilliant-70g-664878.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024030820_partner_664878.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024033425",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024033425&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024033425.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024033425",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-enxaguante-bucal-periogard-extra-mint-sem-alcool-250ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024033425_page_11125.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-extra-mint-sem-alcool-250ml-665136.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024033425_partner_665136.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-solucao-bucal-extra-mint-250ml-sem-alcool-1025751.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024033425_partner_1025751.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-250ml-extra-mint-colgate-1147891.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024033425_partner_1147891.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-extra-mint-sem-alcool-250ml-1262445.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024033425_partner_1262445.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024033425",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-sem-alcool-colgate-periogard-extra-mint-250ml-1411013.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024033425_partner_1411013.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024035504",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024035504&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024035504.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024035511",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024035511&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024035511.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024035511",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/protex-limpeza-profunda-sabonete-em-barra-6-unidades-1495606.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024035511_partner_1495606.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024035511",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/protex-limpeza-profunda-sabonete-em-barra-6-unidades-1474213.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024035511_partner_1474213.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024035511",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/protex-limpeza-profunda-sabonete-em-barra-6-unidades-1460190.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024035511_partner_1460190.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024035511",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-em-barra-protex-limpeza-profunda-85g-pacote-com-6-unidades-1411162.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024035511_partner_1411162.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024035535",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024035535&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024035535.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024035559",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024035559&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024035559.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024037973",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024037973&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024037973.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024037973",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-tripla-acao-180g-665812.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024037973_partner_665812.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024042984",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024042984&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024042984.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024042984",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-sensitive-pro-alivio-imediato-original-90g-leve-3-pague-2-665523.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024042984_partner_665523.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024042984",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-pasta-de-dente-colgate-sensitive-pro-alivio-imediato-90g-3-unidades-1082138.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024042984_partner_1082138.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024042984",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-sensitive-pro-alivio-imediato-90g-1410962.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024042984_partner_1410962.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114674",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024114674&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114674.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sab-protex-liq-limp-profunda-250ml-1107661.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114674_partner_1107661.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-protex-limpeza-profunda-250ml-816983.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114674_partner_816983.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-corporal-protex-limpeza-profunda-250ml-1485963.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114674_partner_1485963.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-corporal-protex-limpeza-profunda-250ml-1478524.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114674_partner_1478524.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-corporal-protex-limpeza-profunda-250ml-1473743.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114674_partner_1473743.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114674",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-protex-limpeza-profunda-250ml-1307949.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114674_partner_1307949.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114865",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024114865&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114865.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-corporal-protex-vitamina-e-250ml-895824.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114865_partner_895824.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-corporal-protex-vitamina-e-250ml-1485944.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114865_partner_1485944.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-corporal-protex-vitamina-e-250ml-1478527.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114865_partner_1478527.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-corporal-protex-vitamina-e-250ml-1473760.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114865_partner_1473760.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024114865",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/sabonete-liquido-protex-250ml-vitamina-e-1204317.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024114865_partner_1204317.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024122556",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024122556&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024122556.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024122556",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-colgate-luminous-white-brilliant-mint-com-3-pastas-de-dente-de-70g-1-enxaguante-bucal-de-250ml-895010.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024122556_partner_895010.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024122556",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-colgate-luminous-white-com-3-creme-dental-enxaguante-1001571.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024122556_partner_1001571.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024132005",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024132005&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024132005.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024132906",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024132906&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024132906.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024132906",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-maxima-protecao-anticaries-menta-50g-colgate-1298784.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024132906_partner_1298784.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024135020",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024135020&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024135020.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024135020",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/pasta-de-dente-colgate-total-prevencao-ativa-whitening-90g-57703.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024135020_page_57703.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024135020",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-12h-whitening-90g-891124.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024135020_partner_891124.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024135020",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-12-whitening-90g-664893.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024135020_partner_664893.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024135020",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-total-12-whitening-90g-embalagem-com-12-unidades-1207235.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024135020_partner_1207235.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891024179925&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-antiseptico-bucal-sem-alcool-250ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_page_31369.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-250ml-menta-original-colgate-1147923.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_1147923.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-sem-alcool-sabor-extra-mint-250ml-1285051.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_1285051.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-enx-bucal-s-alcool-250ml-1129681.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_1129681.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-sem-alcool-250ml-664956.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_664956.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-sem-alcool-sabor-extra-mint-250ml-1319317.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_1319317.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/antisseptico-bucal-periogard-250ml-colgate-1102887.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_1102887.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguatorio-periogard-sem-alcool-250ml-997738.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_997738.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-colgate-periogard-sem-alcool-sabor-extra-mint-250ml-1431202.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_1431202.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-antisseptico-bucal-colgate-periogard-sem-alcool-250ml-1410955.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_1410955.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891024179925",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/periogard-solucao-bucal-250ml-sem-alcool-1234882.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891024179925_partner_1234882.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038704",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891528038704&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038704.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038704",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-prevent-antiplaca-90g-664915.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038704_partner_664915.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038704",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/pasta-de-dente-prevent-antiplaca-90g-1107731.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038704_partner_1107731.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038704",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-prevent-antiplaca-90g-embalagem-com-12-unidades-1249614.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038704_partner_1249614.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038827",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=7891528038827&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038827.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-colgate-tandy-tutti-frutti-50g-891181.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038827_partner_891181.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-infantil-colgate-tandy-tutti-frutti-50g-1432161.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038827_partner_1432161.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-infantil-colgate-tandy-tutti-frutti-50g-1430140.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038827_partner_1430140.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-infantil-colgate-tandy-tutti-frutti-50g-1421536.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038827_partner_1421536.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-com-fluor-tandy-tutti-frutti-50g-colgate-1298785.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038827_partner_1298785.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "7891528038827",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-infantil-tandy-tutti-fruti-50g-651962.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_7891528038827_partner_651962.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103967408",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8710103967408&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103967408.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103967408",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-philips-electric-tooth-brusch-series-50-single.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103967408_page_223985.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103967408",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/escova-de-dente-eletrica-philips-colgate-sonicpro-50-665894.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103967408_partner_665894.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103967460",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8710103967460&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103967460.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103967460",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-philips-electric-tooth-brusch-s50-refil-deep-clean.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103967460_page_223990.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103967460",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/refil-para-escova-eletrica-philips-colgate-sonicpro-limpeza-profunda-com-2-unidades-665903.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103967460_partner_665903.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103967460",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/refil-de-escova-eletrica-philips-colgate-limpeza-profunda-2-unidades-1432364.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103967460_partner_1432364.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103985365",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8710103985365&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103985365.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8710103985365",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-philips-electric-tooth-brusch-series-10-single.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8710103985365_page_223983.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951193611",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8718951193611&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951193611.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951193611",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-enxaguante-bucal-anticaries-400ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951193611_page_39662.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951193611",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-elmex-400ml-664940.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951193611_partner_664940.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951193611",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-elmex-anticaries-400ml-1411030.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951193611_partner_1411030.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951193642",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8718951193642&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951193642.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951193642",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-enxaguante-bucal-sensitive-400ml.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951193642_page_39664.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951193642",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/enxaguante-bucal-elmex-sensitive-400ml-1411031.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951193642_partner_1411031.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951213524",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8718951213524&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951213524.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951213524",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-creme-dental-sensitive-110g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951213524_page_39577.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951213524",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-elmex-sensitive-110g-669421.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951213524_partner_669421.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951213524",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-110g-1496494.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951213524_partner_1496494.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951213524",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-110g-1495539.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951213524_partner_1495539.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951213524",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-110g-1487829.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951213524_partner_1487829.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951456440",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8718951456440&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951456440.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951456440",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-creme-dental-sensitive-whitening-110g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951456440_page_311368.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951456440",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-elmex-branqueador-sensitive-whitening-110g-666226.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951456440_partner_666226.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951456440",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-elmex-sensit-white-110g-1093451.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951456440_partner_1093451.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951456440",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/pasta-de-dente-elmex-sensitive-whitening-com-110g-895941.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951456440_partner_895941.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8718951539129&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-creme-dental-sensitive-professional-75g.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_page_607730.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-75g-1228872.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_partner_1228872.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-elmex-sensitive-75g-1038603.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_partner_1038603.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-sensitive-professional-75g-elmex-1470584.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_partner_1470584.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-elmex-sensitive-professional-75g-899085.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_partner_899085.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-75g-1432725.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_partner_1432725.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-elmex-sensitive-professional-75g-1410918.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_partner_1410918.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-75g-1318793.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_partner_1318793.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951539129",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-pasta-de-dente-sensitive-professional-75g-1205400.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951539129_partner_1205400.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951655331",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8718951655331&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951655331.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951655331",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-kit-pasta-de-dente-sensitive-profissional-2-unidades-de-110g-cada-1001543.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951655331_page_1001543.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951655331",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-elmex-sensitive-profissional-creme-dental-2-unidades-110g-cada-1443782.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951655331_partner_1443782.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951655331",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-elmex-sensitive-profissional-creme-dental-2-unidades-110g-cada-1430109.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951655331_partner_1430109.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951655331",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-elmex-sensitive-professional-110g-2-unidades-1302126.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951655331_partner_1302126.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951655331",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/kit-elmex-sensitive-profissional-creme-dental-2-unidades-110g-cada-1421552.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951655331_partner_1421552.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951658240",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8718951658240&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951658240.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951658240",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-pasta-de-dente-anticarie-profissional-110g-1001544.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951658240_page_1001544.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951658240",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-anticarie-elmex-anticarie-professional-110g-1341615.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951658240_partner_1341615.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951658240",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-elmex-anticarie-professional-110g-1410917.html?origin=search",
+  "status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951658240_partner_1410917.html"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951725799",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8718951725799&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951725799.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951725799",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/elmex-sensitive-professional-gengiva-creme-dental-110g-1338125.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951725799_page_1338125.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8718951725799",
+  "purpose": "rd_partner_page",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/creme-dental-para-sensibilidade-elmex-sensitive-professional-gengivas-110g-1362296.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8718951725799_partner_1362296.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8720689030700",
+  "purpose": "rd_search",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/search?w=8720689030700&search-type=direct",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8720689030700.json"
+ },
+ {
+  "store": "Droga Raia",
+  "ean": "8720689030700",
+  "purpose": "rd_product_page (picked, no price)",
+  "method": "GET",
+  "url": "https://www.drogaraia.com.br/colgate-philips-escova-eletrica-series-30-single-1227424.html?origin=search",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "file": "rd_droga-raia_8720689030700_page_1227424.json"
+ }
+]
