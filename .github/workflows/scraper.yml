@@ -35,6 +35,7 @@ jobs:
           MAX_WORKERS: '10'
           MIN_SUCCESS_RATE: '0.2' # fail the run (skip Domo upload) below this share of successful requests
           MAX_ERROR_RATE: '0.5'   # ...or above this share of errors (blocked, timeouts, parse failures)
+          AVAILABILITY_CEP: '01310-100' # VTEX cart check: can the SKU be bought for delivery here? Empty disables
         run: |
           python scraper.py
 

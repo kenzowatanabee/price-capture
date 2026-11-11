@@ -36,6 +36,8 @@ python upload_to_domo.py   # appends results.csv to the Domo dataset
 | `STORE_FAILURE_LIMIT` | scraper | `5` | After this many consecutive timeouts or network errors from one store, its remaining requests are skipped (`SKIPPED`). `0` disables this |
 | `REQUEST_JITTER` | scraper | `0.3` | Random delay (0 to N seconds) before each request |
 | `IMPERSONATE` | scraper | `chrome142` | Browser fingerprint curl_cffi impersonates; its User-Agent and `sec-ch-ua` headers come with it |
+| `AVAILABILITY_CEP` | scraper | `01310-100` | For VTEX stores, each priced SKU gets a cart simulation for this CEP (main seller) to fill `available` with whether it can actually be bought. Empty disables it (one extra request per priced VTEX SKU) |
+| `AVAILABILITY_SC` | scraper | `1` | VTEX sales channel used for that simulation |
 | `RUN_ID` | scraper | | Overrides the generated `run_id` (default: `gh-<run>-<attempt>` on GitHub Actions, else `local-<timestamp>`) |
 | `client_id` / `DOMO_CLIENT_ID` | uploader | | Domo API client id |
 | `secret_id` / `DOMO_CLIENT_SECRET` | uploader | | Domo API secret |
@@ -91,7 +93,7 @@ Columns, in order (defined once in `price_capture/schema.py`):
 | 7 | `fetched_at` | DATETIME | UTC, `YYYY-MM-DD HH:MM:SS`. Domo converts it to the company time zone for display |
 | 8 | `message` | STRING | Reason code and detail for non-successes |
 | 9 | `list_price` | DOUBLE | Store's list ("from") price, when reported |
-| 10 | `available` | STRING | `true` / `false`, empty when the store does not say |
+| 10 | `available` | STRING | VTEX stores: `true` / `false` = can it be bought for delivery to `AVAILABILITY_CEP` (cart simulation). Otherwise the catalog flag, empty when the store does not say |
 | 11 | `seller` | STRING | Seller name |
 | 12 | `url` | STRING | Product page |
 | 13 | `run_id` | STRING | Same value for every row of one scraper run |
@@ -110,6 +112,8 @@ Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` sto
   |---|---|
   | `Not Found` | `NOT_LISTED` (store returned no product), `OUT_OF_STOCK`, `ZERO_PRICE` (store reports a price of 0), `NO_PRICE`, `NO_STATE` (page had no embedded product data, which may mean the layout changed) |
   | `Error` | `TIMEOUT`, `NETWORK`, `HTTP_ERROR` (e.g. `HTTP_ERROR: 403`), `BLOCKED`, `PARSE_ERROR`, `CONFIG`, `SKIPPED` (store unreachable: see `STORE_FAILURE_LIMIT`) |
+
+  A `Success` row can still carry a message: `NOT_PURCHASABLE: <reason> for CEP <cep>` when the store lists a price but the cart check says it cannot be bought there (`available = false`), or `AVAILABILITY_UNCHECKED: <error>` when the cart check itself failed (price kept, `available` from the catalog).
 
   Filter on `status = 'Success'` for price analysis. The other rows are useful for tracking store coverage and blocking.
 
