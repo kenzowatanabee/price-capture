@@ -36,7 +36,10 @@ def product_page(sku, value_to, value_from, best=None):
 SPONSORED = {"sku": "1329580", "name": "Creme X 60g", "is1P": True, "isSponsored": True, "amount": "60g",
              "url": "/creme-x-60g-1329580.html?origin=search"}
 PRICED = {"sku": "62451", "name": "Gel Y 50g", "is1P": True, "priceService": 17.99, "url": "/gel-y-50g-62451.html?origin=search"}
-MARKETPLACE = {"sku": "891159", "name": "Creme X 60g", "is1P": False, "priceService": 23.5}
+MARKETPLACE = {"sku": "891159", "name": "Creme X 60g", "is1P": False, "isThirdPartner": True, "priceService": 23.5,
+               "url": "/creme-x-60g-891159.html?origin=search"}
+PARTNER_2PACK = {"sku": "948117", "name": "Creme X 60g 2 unidades", "is1P": False, "isThirdPartner": True,
+                 "priceService": 41.0, "url": "/creme-x-60g-2un-948117.html?origin=search"}
 
 
 class FakeSession:
@@ -46,7 +49,7 @@ class FakeSession:
     def get(self, url, **kw):
         # RD
         if "/search?w=111" in url:
-            return Resp(text=search_page([SPONSORED, MARKETPLACE]))
+            return Resp(text=search_page([SPONSORED, MARKETPLACE, PARTNER_2PACK]))
         if "/search?w=333" in url:
             return Resp(text=search_page([PRICED]))
         if "/search?w=222" in url:
@@ -54,6 +57,14 @@ class FakeSession:
         if "1329580.html" in url:
             ld = '<script type="application/ld+json">{"offers": {"price": "19.90"}}</script>'
             return Resp(text=next_page(product_page("1329580", 19.9, 24.9, best=(14.92, "PBM")), ld))
+        if "891159.html" in url:  # a partner selling the same EAN
+            page = product_page("891159", 23.5, 25.0)
+            page["props"]["pageProps"]["productData"] |= {"productEan": "111", "sellerInfo": {"sellerName": "Loja Parceira"}}
+            return Resp(text=next_page(page))
+        if "948117.html" in url:  # a partner 2-pack: different EAN
+            page = product_page("948117", 41.0, None)
+            page["props"]["pageProps"]["productData"] |= {"productEan": "999", "sellerInfo": {"sellerName": "Outra Loja"}}
+            return Resp(text=next_page(page))
         if "62451.html" in url:  # search said 17.99, the page says 21.99 (as seen in the real capture)
             ld = '<script type="application/ld+json">{"offers": {"price": "21.99"}}</script>'
             return Resp(text=next_page(product_page("62451", 21.99, 23.69), ld))
@@ -113,7 +124,7 @@ def run(tmp_path, *extra, session=None):
 def test_rd_sponsored_product_page_is_fetched_and_price_fields_listed(tmp_path):
     code, _, folder, summary = run(tmp_path, "--skip-vtex")
     assert code == 0
-    assert "products array at `$.props.pageProps.pageProps.results.products` with 2 item(s)" in summary
+    assert "products array at `$.props.pageProps.pageProps.results.products` with 3 item(s)" in summary
     assert '"isSponsored": true' in summary  # the flag that explains the missing price
     assert "product page (picked, no price, sku 1329580)" in summary
     assert "$.props.pageProps.productData.price_aux.value_to=19.9" in summary
@@ -201,3 +212,21 @@ def test_rd_page_prices_reads_the_main_live_best_and_ld_json_prices():
     html = '<script type="application/ld+json">{"offers":{"price":"14.92"}}</script>'
     prices = diagnose.rd_page_prices(product_page("1", 14.92, 19.89, best=(14.92, "PBM")), html)
     assert prices == {"value_to": 14.92, "value_from": 19.89, "live": 14.92, "best": 14.92, "best_type": "PBM", "ld_json": "14.92"}
+
+
+def test_rd_partners_are_fetched_and_checked_against_the_searched_ean(tmp_path):
+    _, _, folder, summary = run(tmp_path, "--skip-vtex", "--rd-partners", "5")
+    table = summary[summary.index("## RD partner listings"):]
+    assert "| Drogasil | 111 | 891159 | Creme X 60g | 23.5 | 111 | yes | 23.5 | 25.0 | `$.sellerInfo.sellerName=Loja Parceira` | HTTP 200 |" in table
+    assert "| Drogasil | 111 | 948117 | Creme X 60g 2 unidades | 41.0 | 999 | NO | 41.0 |" in table
+    assert "Partner pages with the searched EAN: 1 of 2" in table
+    assert "- partner listings: 2 (pages fetched: 2)" in summary
+    assert (folder / "rd_drogasil_111_partner_891159.json").exists()
+
+
+def test_partner_limit_and_default_off(tmp_path):
+    _, _, _, summary = run(tmp_path, "--skip-vtex")
+    assert "## RD partner listings" not in summary
+    (tmp_path / "b").mkdir()
+    _, _, _, summary = run(tmp_path / "b", "--skip-vtex", "--rd-partners", "1")
+    assert "- partner listings: 2 (pages fetched: 1)" in summary
