@@ -184,3 +184,67 @@ def test_run_stops_calling_a_dead_store_but_still_writes_every_row(tmp_path, mon
         rows = list(csv.DictReader(f))
     assert len(rows) == 20
     assert sum(r["message"].startswith("SKIPPED:") for r in rows) == 7
+
+
+# ---------- a slow store must not hold up the others ----------
+
+def test_fast_stores_are_not_held_up_by_a_slow_store(tmp_path, monkeypatch):
+    import time as real_time
+    from curl_cffi import requests as cffi_requests
+
+    # More products than workers (as in production: 75 x 10), otherwise every worker blocks on a
+    # slow task only after all fast tasks are already done and the problem never shows.
+    setup_inputs(tmp_path, monkeypatch, n_products=30)
+    stores = "".join(f"S{i},B2C_REST,https://{'slow' if i == 0 else 'fast'}{i}.test,true\n" for i in range(10))
+    (tmp_path / "s.csv").write_text("store_id,type,domain,enabled\n" + stores, encoding="utf-8")
+    monkeypatch.setenv("MAX_WORKERS", "10")
+
+    class R:
+        status_code = 200
+        text = ""
+
+        def json(self):
+            return [{"productName": "P", "items": [{"sellers": [{"commertialOffer": {"Price": 1.0}}]}]}]
+
+    fast_done = []
+
+    def fake_get(self, url, **kwargs):
+        if "slow" in url:
+            real_time.sleep(0.1)
+        else:
+            fast_done.append(real_time.monotonic())
+        return R()
+
+    monkeypatch.setattr(cffi_requests.Session, "get", fake_get)
+    start = real_time.monotonic()
+    runner.main()
+    total = real_time.monotonic() - start
+
+    # The slow store alone needs ~30 x 0.1s / 2 slots = 1.5s; the 270 fast requests should not wait for it.
+    assert len(fast_done) == 270
+    assert max(fast_done) - start < 0.4, f"fast stores finished at {max(fast_done) - start:.2f}s of {total:.2f}s"
+
+
+def test_max_workers_still_caps_total_requests_in_flight(tmp_path, monkeypatch):
+    import threading
+    import time as real_time
+
+    setup_inputs(tmp_path, monkeypatch, n_products=6)
+    stores = "".join(f"S{i},B2C_REST,https://s{i}.test,true\n" for i in range(5))
+    (tmp_path / "s.csv").write_text("store_id,type,domain,enabled\n" + stores, encoding="utf-8")
+    monkeypatch.setenv("MAX_WORKERS", "3")
+    state = {"now": 0, "max": 0}
+    lock = threading.Lock()
+
+    def fake_scrape(store, product):
+        with lock:
+            state["now"] += 1
+            state["max"] = max(state["max"], state["now"])
+        real_time.sleep(0.02)
+        with lock:
+            state["now"] -= 1
+        return {"status": "Success", "price_brl": 1.0}
+
+    monkeypatch.setattr(runner, "scrape_store_product", fake_scrape)
+    runner.main()
+    assert state["max"] == 3  # 5 stores x 2 threads available, but never more than MAX_WORKERS at once

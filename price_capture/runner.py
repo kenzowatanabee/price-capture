@@ -6,9 +6,11 @@ import sys
 import threading
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import ExitStack
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
+from price_capture import http as http_client
 from price_capture.config import ConfigError, load_products, load_stores
 from price_capture.results import error
 from price_capture.schema import CSV_COLUMNS
@@ -215,9 +217,26 @@ def main():
         writer.writeheader()
         csv_file.flush()
 
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            breaker = StoreBreaker(int(os.environ.get("STORE_FAILURE_LIMIT", 5)))
-            future_to_task = {executor.submit(process_task, task, breaker): task for task in tasks}
+        breaker = StoreBreaker(int(os.environ.get("STORE_FAILURE_LIMIT", 5)))
+        global_slots = threading.BoundedSemaphore(max_workers)
+
+        def run(task):
+            # The breaker check happens inside the slot, so a store that just tripped is skipped.
+            with global_slots:
+                return process_task(task, breaker)
+
+        # One small pool per store: a slow store only ties up its own threads, never the others'.
+        # global_slots keeps the total number of requests in flight at MAX_WORKERS.
+        with ExitStack() as stack:
+            pools = {}
+            future_to_task = {}
+            for task in tasks:
+                store_name = task[0]["name"]
+                if store_name not in pools:
+                    pools[store_name] = stack.enter_context(
+                        ThreadPoolExecutor(max_workers=max(1, http_client.PER_STORE_CONCURRENCY))
+                    )
+                future_to_task[pools[store_name].submit(run, task)] = task
             for future in as_completed(future_to_task):
                 try:
                     result = future.result()
