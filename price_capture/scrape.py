@@ -24,22 +24,32 @@ def scrape_store_product(store, product):
     except Exception as e:
         return error("PARSE_ERROR", str(e)[:60])
 
-    # Some platforms need a second page (e.g. RD reads the price from the product page).
+    # Some platforms need a second request: RD reads the price from the product page, VTEX checks
+    # the cart. An optional follow-up never costs the row its price: on failure the first result is
+    # kept with a note.
     if "follow_path" in result:
         page_url = urljoin(domain + "/", result["follow_path"])
-        response, problem = _get(page_url, verify)
+        optional = result.get("follow_optional")
+        response, problem = _get(page_url, verify, result.get("follow_json"))
         if problem:
-            return problem
+            return _unchecked(result, problem) if optional else problem
         try:
             return platform.parse_follow_up(response, product, result | {"page_url": page_url})
         except Exception as e:
-            return error("PARSE_ERROR", str(e)[:60])
+            problem = error("PARSE_ERROR", str(e)[:60])
+            return _unchecked(result, problem) if optional else problem
     return result
 
 
-def _get(url, verify):
-    """(response, None) for a usable response, else (None, error result)."""
-    response, fetch_error = fetch(url, verify=verify)
+def _unchecked(first, problem):
+    result = dict(first["base_result"])
+    result["message"] = f"AVAILABILITY_UNCHECKED: {problem['message']}"[:200]
+    return result
+
+
+def _get(url, verify, json=None):
+    """(response, None) for a usable response, else (None, error result). With json, a POST."""
+    response, fetch_error = fetch(url, verify=verify, **({"json": json} if json is not None else {}))
     if fetch_error:
         return None, fetch_error
     if not response or response.status_code not in [200, 301, 302]:
