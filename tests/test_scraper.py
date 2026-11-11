@@ -575,3 +575,34 @@ def test_load_stores_handles_short_rows_and_announces_disabled_verification(tmp_
     stores = config.load_stores(str(f))
     assert [s["verify_ssl"] for s in stores] == [True, False]
     assert "TLS verification is disabled for store: Lax" in capsys.readouterr().out
+
+
+# ---------- prices that arrive as strings ----------
+
+@pytest.mark.parametrize("raw, expected", [("19.90", 19.9), ("R$ 19,90", 19.9), ("1.299,90", 1299.9), (" 7 ", 7.0)])
+def test_numeric_string_prices_are_converted(monkeypatch, raw, expected):
+    html = next_html([{"sku": "1", "name": "Creme", "priceService": raw, "is1P": True}])
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert res["status"] == "Success" and res["price_brl"] == expected
+
+
+@pytest.mark.parametrize("raw", ["abc", True])
+def test_unparseable_prices_are_a_clear_parse_error(monkeypatch, raw):
+    html = next_html([{"sku": "1", "name": "Creme", "priceService": raw, "is1P": True}])
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Error", "PARSE_ERROR")
+    assert "unparseable price" in res["message"]
+
+
+def test_string_zero_price_is_still_zero_price(monkeypatch):
+    html = next_html([{"sku": "1", "name": "Creme", "priceService": "0.00", "is1P": True}])
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    assert message_code(scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)) == "ZERO_PRICE"
+
+
+def test_empty_string_price_means_no_price(monkeypatch):
+    html = next_html([{"sku": "1", "name": "Creme", "priceService": "  ", "is1P": True}])
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(text=html))
+    assert message_code(scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)) == "NO_PRICE"
