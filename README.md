@@ -125,17 +125,21 @@ python update_domo_schema.py --apply        # saves a backup of the dataset defi
 
 By default existing columns keep their names and types (so existing data and dashboards are untouched) and the missing ones are appended. `--rename-existing` replaces the whole schema with the one in `schema.py`. The script never drops columns, and refuses a dataset that has more columns than the scraper writes.
 
-## Regional pricing check
+## Regional check
 
-The daily scraper sends no location, so it records each store's **default online price**. `region_check.py` is a separate local analysis that checks whether a store prices or stocks differently by CEP. For each VTEX (`B2C_REST`) store it asks which seller serves a CEP (`/api/checkout/pub/regions`) and simulates a cart there (`/api/checkout/pub/orderForms/simulation`).
+The daily scraper sends no location, so it records each store's **default online price**. `region_check.py` is a separate local analysis that checks whether that holds by CEP. For each VTEX (`B2C_REST`) store it simulates a cart with the store's **main online seller**, first without a CEP and then for each CEP (`/api/checkout/pub/orderForms/simulation`).
 
 ```bash
 python region_check.py                                   # 3 single-pack SKUs x default CEPs x all B2C_REST stores
-python region_check.py --limit 5 --stores "Drogal,Pague Menos"
+python region_check.py --limit 10 --stores "Drogal,Pague Menos"
 python region_check.py --eans 7891024132005 --ceps "SP=01310-100,PE=50030-230"
 ```
 
-It writes `region_check.csv` (git-ignored) with one row per store, SKU and CEP. A `catalog` row shows the price the scraper records, for comparison. It then prints per store how many SKUs had more than one price across CEPs. The default CEPs are city centres in SP, RJ, MG, PR, RS, BA, PE and DF; pass your own with `--ceps`. RD stores are not covered yet.
+It writes `region_check.csv` (git-ignored) with one row per store, SKU and CEP. Each row has the price, list price, availability (`available`, `cannotBeDelivered`, `withoutStock`, ...) and the store's own message. A `catalog` row shows the price the scraper records, for comparison. It then prints:
+- per store, whether any SKU's price differs between CEPs;
+- a **delivery coverage** table: SKUs available out of those checked, per store and region.
+
+Only the main seller is simulated. The regional-seller lookup returns physical stores, up to 1,428 per CEP for Drogaria São Paulo, and VTEX simulates at most 20 sellers at once. So it does not give a reliable answer, while the main seller is what the site sells online. The default CEPs are city centres in SP, RJ, MG, PR, RS, BA, PE and DF; pass your own with `--ceps`. RD stores are not covered.
 
 ## Diagnostics capture
 
