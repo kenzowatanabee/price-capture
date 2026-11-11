@@ -23,18 +23,29 @@ def columns_from_dataset(dataset):
     return [(c["name"], c["type"]) for c in (dataset.get("schema") or {}).get("columns", [])]
 
 
-def schema_mismatch(domo_column_count, csv_column_count=None):
+def schema_mismatch(domo_names, csv_names=None):
     """
-    Message describing why an import would misalign, or None if the column counts agree.
-    The import is positional, so the counts (and order) must match.
+    Message describing why a positional import would misalign, or None if the Domo dataset has the
+    same columns in the same order as the CSV (names compared case-insensitively).
     """
-    csv_column_count = len(COLUMNS) if csv_column_count is None else csv_column_count
-    if domo_column_count == csv_column_count:
-        return None
-    return (
-        f"The Domo dataset has {domo_column_count} columns but the CSV has {csv_column_count} columns. "
-        "Run `python update_domo_schema.py` (dry run first, then --apply) to update the dataset schema."
-    )
+    csv_names = [name for name, _ in COLUMNS] if csv_names is None else list(csv_names)
+    domo_names = list(domo_names)
+    if len(domo_names) != len(csv_names):
+        return (
+            f"The Domo dataset has {len(domo_names)} columns but the CSV has {len(csv_names)} columns. "
+            "Run `python update_domo_schema.py` (dry run first, then --apply) to update the dataset schema."
+        )
+    differences = [
+        f"column {i + 1} is '{domo}' in Domo but '{csv}' in the CSV"
+        for i, (domo, csv) in enumerate(zip(domo_names, csv_names))
+        if domo.lower() != csv.lower()
+    ]
+    if differences:
+        return (
+            "The Domo dataset columns do not match the CSV: " + "; ".join(differences[:5])
+            + ". The import is positional, so rows would land in the wrong columns. Fix the dataset or schema.py first."
+        )
+    return None
 
 
 def plan_schema(current, canonical=None, rename_existing=False):

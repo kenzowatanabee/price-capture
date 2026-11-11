@@ -5,18 +5,18 @@ from price_capture.schema import COLUMNS, CSV_COLUMNS
 
 
 class FakeDatasets:
-    def __init__(self, n_columns):
-        self.n_columns = n_columns
+    def __init__(self, n_columns, names=None):
+        self.names = names or CSV_COLUMNS[:n_columns]
         self.imports = []
 
     def get(self, dataset_id):
-        return {"schema": {"columns": [{"name": f"c{i}", "type": "STRING"} for i in range(self.n_columns)]}}
+        return {"schema": {"columns": [{"name": n, "type": "STRING"} for n in self.names]}}
 
     def data_import(self, dataset_id, data, update_method):
         self.imports.append((dataset_id, data, update_method))
 
 
-def run_upload(tmp_path, monkeypatch, n_domo_columns, header=None):
+def run_upload(tmp_path, monkeypatch, n_domo_columns, header=None, domo_names=None):
     header = header or CSV_COLUMNS
     row = ["x"] * len(header)
     (tmp_path / "results.csv").write_text(",".join(header) + "\n" + ",".join(row) + "\n", encoding="utf-8")
@@ -24,7 +24,7 @@ def run_upload(tmp_path, monkeypatch, n_domo_columns, header=None):
     monkeypatch.setenv("DOMO_CLIENT_ID", "id")
     monkeypatch.setenv("DOMO_CLIENT_SECRET", "secret")
     monkeypatch.setenv("DOMO_DATASET_ID", "ds-1")
-    datasets = FakeDatasets(n_domo_columns)
+    datasets = FakeDatasets(n_domo_columns, domo_names)
 
     class FakeDomo:
         def __init__(self, **kwargs):
@@ -58,3 +58,12 @@ def test_refuses_to_upload_when_csv_columns_are_out_of_order(tmp_path, monkeypat
     with pytest.raises(SystemExit) as exc:
         upload_to_domo.main()
     assert exc.value.code == 1 and datasets.imports == []
+
+
+def test_refuses_to_upload_when_domo_columns_are_in_a_different_order(tmp_path, monkeypatch, capsys):
+    reordered = [CSV_COLUMNS[1], CSV_COLUMNS[0]] + CSV_COLUMNS[2:]
+    datasets = run_upload(tmp_path, monkeypatch, len(COLUMNS), domo_names=reordered)
+    with pytest.raises(SystemExit) as exc:
+        upload_to_domo.main()
+    assert exc.value.code == 1 and datasets.imports == []
+    assert "column 1 is 'desc_sku' in Domo but 'ean' in the CSV" in capsys.readouterr().out

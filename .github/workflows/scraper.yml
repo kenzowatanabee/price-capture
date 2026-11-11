@@ -23,6 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Run Tests
+        run: |
+          pip install -r requirements-dev.txt
+          python -m pytest -q
+
       - name: Run Price Scraper
         env:
           PRODUCTS_FILE: 'data/products.csv'

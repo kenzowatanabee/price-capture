@@ -1,4 +1,5 @@
 """Platform interface and helpers shared by the store implementations."""
+import re
 from typing import NamedTuple, Optional
 from urllib.parse import urljoin
 
@@ -17,6 +18,25 @@ class Platform:
         raise NotImplementedError
 
 
+def to_price(value):
+    """
+    A price as a number. Numbers pass through; numeric strings are converted ("19.90",
+    "R$ 19,90", "1.299,90"); an empty string means no price (None). Anything else raises
+    ValueError, which the caller reports as PARSE_ERROR instead of storing it in a DECIMAL column.
+    """
+    if value is None or (isinstance(value, (int, float)) and not isinstance(value, bool)):
+        return value
+    if isinstance(value, str):
+        text = value.replace("R$", "").strip()
+        if not text:
+            return None
+        if re.fullmatch(r"\d+(\.\d+)?", text):  # 19.90 / 1299.90
+            return float(text)
+        if re.fullmatch(r"\d{1,3}(\.\d{3})*(,\d+)?|\d+,\d+", text):  # 19,90 / 1.299,90
+            return float(text.replace(".", "").replace(",", "."))
+    raise ValueError(f"unparseable price {value!r}")
+
+
 def build_result(found_name, price, product, available=None, extra=None):
     """
     Common tail of every parser: an in-stock positive price is a success, otherwise 'Not Found'.
@@ -25,6 +45,7 @@ def build_result(found_name, price, product, available=None, extra=None):
     every outcome for a product that was found, while price_brl is only set on success. The
     matched product's name is likewise kept on every outcome for a found product.
     """
+    price = to_price(price)
     if price is None:
         result = not_found("NO_PRICE", "product found, but no price available")
     elif available is False:

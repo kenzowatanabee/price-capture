@@ -38,8 +38,10 @@ def test_dataset_with_extra_columns_is_refused():
 
 
 def test_schema_mismatch_message_points_at_the_script():
-    assert domo_schema.schema_mismatch(len(COLUMNS)) is None
-    msg = domo_schema.schema_mismatch(8)
+    names = [n for n, _ in COLUMNS]
+    assert domo_schema.schema_mismatch(names) is None
+    assert domo_schema.schema_mismatch([n.upper() for n in names]) is None  # case-insensitive
+    msg = domo_schema.schema_mismatch(names[:8])
     assert "8 columns" in msg and f"{len(COLUMNS)} columns" in msg and "update_domo_schema.py" in msg
 
 
@@ -59,3 +61,10 @@ def test_canonical_types_match_the_production_dataset():
     # --rename-existing must not retype production columns: price is DECIMAL and the timestamp DATETIME in Domo.
     types = dict(COLUMNS)
     assert types["price_brl"] == "DECIMAL" and types["fetched_at"] == "DATETIME"
+
+
+def test_same_count_but_different_order_is_a_mismatch():
+    names = [n for n, _ in COLUMNS]
+    swapped = names[:8] + [names[12], names[9], names[10], names[11], names[8]] + names[13:]
+    msg = domo_schema.schema_mismatch(swapped)
+    assert msg and "column 9 is 'run_id' in Domo but 'list_price' in the CSV" in msg

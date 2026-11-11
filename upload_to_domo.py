@@ -52,9 +52,10 @@ def main():
             )
             sys.exit(1)
 
-        # The import is positional, so refuse to run against a dataset whose column count differs
-        # (otherwise rows would be misaligned or rejected after a schema change).
-        problem = schema_mismatch(len(columns_from_dataset(client.datasets.get(dataset_id))))
+        # The import is positional, so refuse to run against a dataset whose columns differ in
+        # number, name or order (otherwise rows would be misaligned or rejected).
+        domo_columns = columns_from_dataset(client.datasets.get(dataset_id))
+        problem = schema_mismatch([name for name, _ in domo_columns])
         if problem:
             print(f"❌ [ERROR] {problem}")
             sys.exit(1)
