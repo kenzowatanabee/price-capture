@@ -3,12 +3,14 @@ import csv
 import json
 import os
 import sys
+import threading
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 from price_capture.config import ConfigError, load_products, load_stores
+from price_capture.results import error
 from price_capture.schema import CSV_COLUMNS
 from price_capture.scrape import scrape_store_product
 
@@ -25,10 +27,45 @@ def make_run_id():
     return datetime.now(BRT).strftime("local-%Y%m%d-%H%M%S")
 
 
-def process_task(args):
+class StoreBreaker:
+    """
+    Circuit breaker per store: after `limit` consecutive slow failures (timeouts / network errors)
+    the remaining requests to that store are skipped, so one unreachable site cannot stretch the
+    run for minutes. Any other outcome resets the count. limit=0 disables it.
+    """
+
+    TRIP_CODES = {"TIMEOUT", "NETWORK"}
+
+    def __init__(self, limit):
+        self.limit = limit
+        self._lock = threading.Lock()
+        self._consecutive = Counter()
+        self._open = set()
+
+    def is_open(self, store_name):
+        with self._lock:
+            return store_name in self._open
+
+    def record(self, store_name, result):
+        failed = result.get("status") == "Error" and reason_code(result) in self.TRIP_CODES
+        with self._lock:
+            if not failed:
+                self._consecutive[store_name] = 0
+                return
+            self._consecutive[store_name] += 1
+            if self.limit and self._consecutive[store_name] >= self.limit:
+                self._open.add(store_name)
+
+
+def process_task(args, breaker=None):
     """Worker function to process a single (store, product) pair in a thread."""
     store, product, run_id = args
-    res = scrape_store_product(store, product)
+    if breaker and breaker.is_open(store["name"]):
+        res = error("SKIPPED", f"store unreachable: {breaker.limit} consecutive network failures")
+    else:
+        res = scrape_store_product(store, product)
+        if breaker:
+            breaker.record(store["name"], res)
     store_name = store["name"]
     ean = product["ean"]
 
@@ -179,7 +216,8 @@ def main():
         csv_file.flush()
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            future_to_task = {executor.submit(process_task, task): task for task in tasks}
+            breaker = StoreBreaker(int(os.environ.get("STORE_FAILURE_LIMIT", 5)))
+            future_to_task = {executor.submit(process_task, task, breaker): task for task in tasks}
             for future in as_completed(future_to_task):
                 try:
                     result = future.result()
