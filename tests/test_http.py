@@ -208,3 +208,24 @@ def test_curl_error_text_keeps_the_reason_and_drops_boilerplate(monkeypatch, no_
     assert err["message"].startswith("NETWORK: curl 60: ")
     assert "unable to get local issuer certificate" in err["message"]
     assert "See https" not in err["message"] and "Failed to perform" not in err["message"]
+
+
+# ---------- transient curl errors are retried, permanent ones are not ----------
+
+@pytest.mark.parametrize("code", [7, 52, 55, 56])
+def test_transient_curl_errors_are_retried(monkeypatch, no_sleep, code):
+    calls = scripted_get(monkeypatch, [cffi_requests.errors.RequestsError("reset", code), FakeResponse(200)])
+    response, err = http.fetch(f"https://transient{code}.test/x")
+    assert (err, response.status_code, len(calls)) == (None, 200, 2)
+
+
+def test_transient_error_that_persists_gives_up_as_network_error(monkeypatch, no_sleep):
+    calls = scripted_get(monkeypatch, [cffi_requests.errors.RequestsError("Connection refused", 7)])
+    _, err = http.fetch("https://refused.test/x")
+    assert len(calls) == 3 and err["message"].startswith("NETWORK: curl 7")
+
+
+def test_certificate_errors_are_not_retried(monkeypatch, no_sleep):
+    calls = scripted_get(monkeypatch, [cffi_requests.errors.RequestsError("SSL certificate problem", 60)])
+    http.fetch("https://cert.test/x")
+    assert len(calls) == 1 and no_sleep == []

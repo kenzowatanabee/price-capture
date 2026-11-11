@@ -22,6 +22,9 @@ TIMEOUT = (10, 20)  # (connect_timeout, read_timeout)
 HEADERS = {"Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"}
 
 RETRY_STATUSES = {429, 503}  # rate limited / temporarily unavailable
+# curl errors worth another try: couldn't connect, timed out, empty reply, send/receive failure.
+# Certificate and DNS errors are not here: retrying them only repeats the same failure.
+RETRYABLE_CURL_CODES = {7, 28, 52, 55, 56}
 MAX_RETRY_AFTER = 30  # never wait longer than this (seconds) on a Retry-After header
 
 # Politeness towards each store: at most N requests in flight per domain, and a small
@@ -72,7 +75,7 @@ def _clean_curl_message(message):
 
 def fetch(url, max_retries=2, verify=True):
     """
-    GETs a URL, retrying timeouts (curl 28), unexpected exceptions and 429/503
+    GETs a URL, retrying transient curl errors (timeouts, resets), unexpected exceptions and 429/503
     responses (honouring Retry-After) with backoff. Returns (response, None) on success or (None, error_result).
 
     `verify` is the store's own TLS-verification setting; the global VERIFY_SSL=false overrides it for every store.
@@ -105,8 +108,7 @@ def _fetch_with_retries(session, url, max_retries):
                 continue
             return response, None
         except requests.errors.RequestsError as e:
-            # curl error 28 = operation timed out
-            if e.code == 28 and attempt < max_retries:
+            if int(e.code) in RETRYABLE_CURL_CODES and attempt < max_retries:
                 time.sleep(2 * (attempt + 1))  # Waits 2s, then 4s
                 continue
             if e.code == 28:
