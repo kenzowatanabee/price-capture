@@ -26,6 +26,13 @@ def search_page(products):
     return next_page({"props": {"pageProps": {"pageProps": {"results": {"products": products}}}}})
 
 
+def product_page(sku, value_to, value_from, best=None):
+    live = {"valueTo": value_to, "bestPrice": {"valueTo": best[0], "type": best[1]} if best else None}
+    return {"props": {"pageProps": {"productData": {
+        "sku": sku, "price": 0, "price_aux": {"value_to": value_to, "value_from": value_from}, "liveComposition": {"livePrice": live},
+    }}}}
+
+
 SPONSORED = {"sku": "1329580", "name": "Creme X 60g", "is1P": True, "isSponsored": True, "amount": "60g",
              "url": "/creme-x-60g-1329580.html?origin=search"}
 PRICED = {"sku": "62451", "name": "Gel Y 50g", "is1P": True, "priceService": 17.99, "url": "/gel-y-50g-62451.html?origin=search"}
@@ -46,9 +53,10 @@ class FakeSession:
             return Resp(status=403, text="<html>Access denied</html>", headers={"content-type": "text/html"})
         if "1329580.html" in url:
             ld = '<script type="application/ld+json">{"offers": {"price": "19.90"}}</script>'
-            return Resp(text=next_page({"props": {"pageProps": {"product": {"sku": "1329580", "priceInfo": {"final": 19.9}}}}}, ld))
-        if "62451.html" in url:
-            return Resp(text=next_page({"props": {"pageProps": {"product": {"sku": "62451", "priceInfo": {"final": 17.99}}}}}))
+            return Resp(text=next_page(product_page("1329580", 19.9, 24.9, best=(14.92, "PBM")), ld))
+        if "62451.html" in url:  # search said 17.99, the page says 21.99 (as seen in the real capture)
+            ld = '<script type="application/ld+json">{"offers": {"price": "21.99"}}</script>'
+            return Resp(text=next_page(product_page("62451", 21.99, 23.69), ld))
         # VTEX
         if "catalog_system" in url and "regionId=" in url:
             return Resp(payload=[{"items": [{"itemId": "55", "sellers": [
@@ -108,7 +116,7 @@ def test_rd_sponsored_product_page_is_fetched_and_price_fields_listed(tmp_path):
     assert "products array at `$.props.pageProps.pageProps.results.products` with 2 item(s)" in summary
     assert '"isSponsored": true' in summary  # the flag that explains the missing price
     assert "product page (picked, no price, sku 1329580)" in summary
-    assert "$.props.pageProps.product.priceInfo.final=19.9" in summary
+    assert "$.props.pageProps.productData.price_aux.value_to=19.9" in summary
     assert "ld+json prices ['19.90']" in summary
     assert (folder / "rd_drogasil_111_page_1329580.json").exists()
 
@@ -116,7 +124,7 @@ def test_rd_sponsored_product_page_is_fetched_and_price_fields_listed(tmp_path):
 def test_rd_fetches_one_priced_control_page_to_confirm_the_field(tmp_path):
     _, _, folder, summary = run(tmp_path, "--skip-vtex")
     assert "product page (control, search price 17.99, sku 62451)" in summary
-    assert "$.props.pageProps.product.priceInfo.final=17.99" in summary
+    assert "$.props.pageProps.productData.price_aux.value_to=21.99" in summary
     assert "**no __NEXT_DATA__**" in summary  # the 403 block page for EAN 222
 
 
@@ -168,3 +176,28 @@ def test_pick_rd_eans_falls_back_to_multipacks_and_singles(tmp_path):
     products = [{"ean": "a", "desc_sku": "X BIPACK"}, {"ean": "b", "desc_sku": "Y SINGLE"}]
     eans, source = diagnose.pick_rd_eans(str(tmp_path / "missing.csv"), {"Drogasil"}, products)
     assert eans == ["a", "b"] and "products.csv" in source
+
+
+def test_rd_pages_all_builds_a_search_vs_page_price_table(tmp_path):
+    _, _, _, summary = run(tmp_path, "--skip-vtex", "--rd-pages", "all")
+    table = summary[summary.index("## RD price comparison"):]
+    assert "| Drogasil | 333 | 62451 |  | 17.99 | 21.99 | 23.69 | 21.99 |  | -18.2% |" in table
+    assert "| Drogasil | 111 | 1329580 | yes |  | 19.9 | 24.9 | 19.90 | 14.92 (PBM) | no search price |" in table
+    assert "Tally: search lower: 1, no search price: 1" in table
+
+
+def test_default_mode_compares_the_sponsored_and_control_pages(tmp_path):
+    _, _, _, summary = run(tmp_path, "--skip-vtex")
+    # sponsored + one control are still compared, so the table appears with both rows
+    assert "## RD price comparison" in summary and summary.count("| Drogasil |") == 2
+
+
+def test_rd_eans_all_uses_every_product(tmp_path):
+    _, _, _, summary = run(tmp_path, "--skip-vtex", "--rd-eans", "all")
+    assert "EANs from products.csv (all): 111, 222, 333" in summary
+
+
+def test_rd_page_prices_reads_the_main_live_best_and_ld_json_prices():
+    html = '<script type="application/ld+json">{"offers":{"price":"14.92"}}</script>'
+    prices = diagnose.rd_page_prices(product_page("1", 14.92, 19.89, best=(14.92, "PBM")), html)
+    assert prices == {"value_to": 14.92, "value_from": 19.89, "live": 14.92, "best": 14.92, "best_type": "PBM", "ld_json": "14.92"}

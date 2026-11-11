@@ -152,6 +152,7 @@ It writes `region_check.csv` (git-ignored) with one row per store, SKU and CEP. 
 ```bash
 python diagnose.py                     # both checks, ~110 requests, 1-2 minutes
 python diagnose.py --skip-vtex         # only RD
+python diagnose.py --skip-vtex --rd-eans all --rd-pages all   # every RD SKU: search price vs product-page price table
 python diagnose.py --rd-eans 7891024035504 --vtex-stores "Drogal" --sc 1,2 --max-sellers 20
 ```
 

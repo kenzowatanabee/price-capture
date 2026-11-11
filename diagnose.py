@@ -129,7 +129,24 @@ def ld_json_prices(html):
     return prices[:5]
 
 
-def diagnose_product_page(store, ean, product, role, capture, session, delay, full_html):
+def rd_page_prices(state, html):
+    """The price fields of an RD product page: main price (price_aux), live price, best/benefit price and ld+json."""
+    pd = (((state or {}).get("props") or {}).get("pageProps") or {}).get("productData") or {}
+    aux = pd.get("price_aux") or {}
+    live = ((pd.get("liveComposition") or {}).get("livePrice")) or {}
+    best = live.get("bestPrice") or {}
+    ld = ld_json_prices(html)
+    return {
+        "value_to": aux.get("value_to"),
+        "value_from": aux.get("value_from"),
+        "live": live.get("valueTo"),
+        "best": best.get("valueTo"),
+        "best_type": best.get("type"),
+        "ld_json": ld[0] if ld else None,
+    }
+
+
+def diagnose_product_page(store, ean, product, role, capture, session, delay, full_html, verbose=True):
     """Fetches a product page from the search result's url and lists where price-like fields live."""
     page_url = urljoin(store["domain"], product["url"])
     name = f"rd_{slug(store['name'])}_{ean}_page_{product.get('sku')}"
@@ -138,18 +155,48 @@ def diagnose_product_page(store, ean, product, role, capture, session, delay, fu
         r = session.get(page_url)
     except Exception as e:
         capture.save(name, store["name"], ean, f"rd_product_page ({role})", "GET", page_url, error=e)
-        return [f"  - product page ({role}, sku {product.get('sku')}): request failed: {str(e)[:150]}"]
+        return [f"  - product page ({role}, sku {product.get('sku')}): request failed: {str(e)[:150]}"], None
     html = r.text or ""
     state, kind = extract_state_from_html(html)
     ld = ld_json_prices(html)
     if kind != "NEXT_JS":
         capture.save(name, store["name"], ean, f"rd_product_page ({role})", "GET", page_url, r,
                      html if full_html else html[:HTML_LIMIT], ext="html")
-        return [f"  - product page ({role}, sku {product.get('sku')}): HTTP {r.status_code}, no __NEXT_DATA__; ld+json prices {ld}"]
+        return [f"  - product page ({role}, sku {product.get('sku')}): HTTP {r.status_code}, no __NEXT_DATA__; ld+json prices {ld}"], \
+            {"value_to": None, "value_from": None, "live": None, "best": None, "best_type": None, "ld_json": ld[0] if ld else None}
     capture.save(name, store["name"], ean, f"rd_product_page ({role})", "GET", page_url, r, state)
+    prices = rd_page_prices(state, html)
+    if not verbose:
+        return [], prices
     paths = "; ".join(f"{p}={v}" for p, v in price_paths(state))
     return [f"  - product page ({role}, sku {product.get('sku')}): HTTP {r.status_code}; ld+json prices {ld}; "
-            f"price-like fields: `{paths[:2500] or 'none'}`"]
+            f"price-like fields: `{paths[:2500] or 'none'}`"], prices
+
+
+def comparison_table(rows):
+    """Markdown table of search priceService vs product-page prices, plus a tally of how they relate."""
+    def fmt(v):
+        return "" if v is None else str(v)
+
+    lines = ["| store | ean | sku | sponsored | search priceService | page value_to | page value_from | ld+json | best (type) | search vs page |",
+             "|---|---|---|---|---|---|---|---|---|---|"]
+    tally = {"equal": 0, "search lower": 0, "search higher": 0, "no search price": 0, "no page price": 0}
+    for r in rows:
+        search, page = r.get("search"), r.get("value_to")
+        if search is None:
+            relation = "no search price"
+        elif page is None:
+            relation = "no page price"
+        elif abs(float(search) - float(page)) < 0.005:
+            relation = "equal"
+        else:
+            relation = "search lower" if float(search) < float(page) else "search higher"
+        tally[relation] += 1
+        diff = f"{(float(search) - float(page)) / float(page):+.1%}" if search is not None and page else relation
+        best = f"{fmt(r.get('best'))} ({r.get('best_type')})" if r.get("best") is not None else ""
+        lines.append(f"| {r['store']} | {r['ean']} | {r.get('sku')} | {'yes' if r['sponsored'] else ''} | {fmt(search)} | "
+                     f"{fmt(page)} | {fmt(r.get('value_from'))} | {fmt(r.get('ld_json'))} | {best} | {diff} |")
+    return lines + ["", "Tally: " + ", ".join(f"{k}: {v}" for k, v in tally.items() if v), ""]
 
 
 def find_path(data, target, path="$"):
@@ -183,7 +230,7 @@ def pick_rd_eans(results_file, rd_names, products, limit=5, controls=2):
     return multipacks[:limit] + singles[:controls], "products.csv (multipacks + single-pack controls)"
 
 
-def diagnose_rd(store, eans, capture, session, delay, full_html, desc_by_ean):
+def diagnose_rd(store, eans, capture, session, delay, full_html, desc_by_ean, all_pages=False, comparison=None):
     lines = [f"### {store['name']} (RD_NEXTJS)", ""]
     platform = RdNextJs()
     control_needed = True  # fetch one priced product page per store to confirm which field holds the price
@@ -214,12 +261,18 @@ def diagnose_rd(store, eans, capture, session, delay, full_html, desc_by_ean):
             lines.append(f"- product[{i}]{marker}: `{json.dumps(scalar_fields(p), ensure_ascii=False)[:1500]}`")
         if chosen is not None:
             lines.append(f"- all keys of the picked product: `{', '.join(sorted(chosen.keys()))[:1500]}`")
+            prices = None
             if chosen.get("priceService") is None and chosen.get("url"):
-                lines += diagnose_product_page(store, ean, chosen, "picked, no price", capture, session, delay, full_html)
-            elif control_needed and chosen.get("priceService") is not None and chosen.get("url"):
-                lines += diagnose_product_page(store, ean, chosen, f"control, search price {chosen.get('priceService')}",
-                                               capture, session, delay, full_html)
+                more, prices = diagnose_product_page(store, ean, chosen, "picked, no price", capture, session, delay, full_html)
+                lines += more
+            elif chosen.get("url") and (control_needed or all_pages):
+                more, prices = diagnose_product_page(store, ean, chosen, f"control, search price {chosen.get('priceService')}",
+                                                     capture, session, delay, full_html, verbose=control_needed)
+                lines += more
                 control_needed = False
+            if comparison is not None and prices is not None:
+                comparison.append({"store": store["name"], "ean": ean, "sku": chosen.get("sku"),
+                                   "sponsored": bool(chosen.get("isSponsored")), "search": chosen.get("priceService"), **prices})
         lines.append("")
     return lines
 
@@ -342,7 +395,9 @@ def diagnose_vtex(store, eans, ceps, scs, capture, session, delay, max_sellers=5
 
 def main(argv=None, session_factory=make_session):
     parser = argparse.ArgumentParser(description="Capture raw store responses for diagnosis.")
-    parser.add_argument("--rd-eans", help="comma-separated EANs for the RD check (default: from results.csv)")
+    parser.add_argument("--rd-eans", help='comma-separated EANs for the RD check, or "all" (default: from results.csv)')
+    parser.add_argument("--rd-pages", choices=["sponsored", "all"], default="sponsored",
+                        help="product pages to fetch: only sponsored ones plus one control (default), or all, with a price comparison table")
     parser.add_argument("--results", default="results.csv", help="results file used to pick NO_PRICE EANs")
     parser.add_argument("--vtex-stores", help=f"comma-separated store_ids (default: {', '.join(DEFAULT_VTEX_STORES)})")
     parser.add_argument("--vtex-eans", help=f"comma-separated EANs (default: {', '.join(DEFAULT_VTEX_EANS)})")
@@ -367,14 +422,20 @@ def main(argv=None, session_factory=make_session):
 
     if not args.skip_rd:
         rd_stores = [s for s in stores if s["type"] == "RD_NEXTJS"]
-        if args.rd_eans:
+        if args.rd_eans == "all":
+            eans, source = [p["ean"] for p in products], "products.csv (all)"
+        elif args.rd_eans:
             eans, source = [e.strip() for e in args.rd_eans.split(",") if e.strip()], "--rd-eans"
         else:
             eans, source = pick_rd_eans(args.results, {s["name"] for s in rd_stores}, products)
         summary += ["## RD search pages", f"EANs from {source}: {', '.join(eans)}", ""]
+        comparison = []
         for store in rd_stores:
             print(f"RD: {store['name']} ({len(eans)} EANs)...")
-            summary += diagnose_rd(store, eans, capture, session_factory(store), args.delay, args.full_html, desc_by_ean)
+            summary += diagnose_rd(store, eans, capture, session_factory(store), args.delay, args.full_html, desc_by_ean,
+                                   all_pages=args.rd_pages == "all", comparison=comparison)
+        if comparison:
+            summary += ["## RD price comparison: search vs product page", ""] + comparison_table(comparison)
 
     if not args.skip_vtex:
         names = [s.strip() for s in (args.vtex_stores.split(",") if args.vtex_stores else DEFAULT_VTEX_STORES)]
