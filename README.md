@@ -87,19 +87,20 @@ Columns, in order (defined once in `price_capture/schema.py`):
 | 4 | `status` | STRING | `Success`, `Not Found` or `Error` |
 | 5 | `price_brl` | DECIMAL | Selling price. Only set when `status = Success` |
 | 6 | `found_name` | STRING | Product name as the store lists it |
-| 7 | `fetched_at` | DATETIME | Brasília time, `YYYY-MM-DD HH:MM:SS` |
+| 7 | `fetched_at` | DATETIME | UTC, `YYYY-MM-DD HH:MM:SS`. Domo converts it to the company time zone for display |
 | 8 | `message` | STRING | Reason code and detail for non-successes |
 | 9 | `list_price` | DOUBLE | Store's list ("from") price, when reported |
 | 10 | `available` | STRING | `true` / `false`, empty when the store does not say |
 | 11 | `seller` | STRING | Seller name |
 | 12 | `url` | STRING | Product page |
 | 13 | `run_id` | STRING | Same value for every row of one scraper run |
+| 14 | `fetched_at_brt` | STRING | Brasília clock time of the same moment, as text, so Domo shows it unchanged |
 
 Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` stores. They are empty for `RD_NEXTJS` and `VTEX_IO_HTML` stores, because those payload fields have not been mapped yet. They are also filled on `OUT_OF_STOCK` and `ZERO_PRICE` rows, since they describe the product, while `price_brl` stays empty.
 
 - The Domo import is **positional (no header row)**, so this order must match the Domo dataset. The uploader refuses to upload if `results.csv` doesn't match `schema.py`, or if the Domo dataset has a different number of columns.
 - The upload uses **APPEND**. Every run adds rows, so running the workflow twice in a day (for example a manual dispatch on top of the schedule) duplicates that day's rows. Deduplicate downstream on `(ean, store, date(fetched_at))` if that matters.
-- `fetched_at` is in **Brasília time** (`America/Sao_Paulo`), formatted `YYYY-MM-DD HH:MM:SS`.
+- **Time zones:** `fetched_at` is the real moment in **UTC**. Domo treats DATETIME values as UTC and displays them in the company time zone, so it is not shown as Brasília time. Use `fetched_at` for sorting and time maths, and `fetched_at_brt` (text, Brasília time) when you want to see the local clock time.
 - **Every attempted request produces a row**, including failures. `status` is one of `Success`, `Not Found` or `Error`, and `price_brl` is empty unless it is `Success`.
 
   `message` starts with a reason code (`CODE: detail`) for every non-success:

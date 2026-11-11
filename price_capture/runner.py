@@ -5,7 +5,7 @@ import os
 import sys
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
+from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 from price_capture.config import ConfigError, load_products, load_stores
@@ -32,8 +32,12 @@ def process_task(args):
     store_name = store["name"]
     ean = product["ean"]
 
-    # Timestamp in Brasilia time (YYYY-MM-DD HH:MM:SS), regardless of the runner's timezone
-    fetched_at = datetime.now(BRT).strftime("%Y-%m-%d %H:%M:%S")
+    # fetched_at is the real UTC instant: Domo reads DATETIME values as UTC and converts them to the
+    # company time zone for display. fetched_at_brt is the Brasilia clock time as plain text, which
+    # Domo shows as-is.
+    now = datetime.now(timezone.utc)
+    fetched_at = now.strftime("%Y-%m-%d %H:%M:%S")
+    fetched_at_brt = now.astimezone(BRT).strftime("%Y-%m-%d %H:%M:%S")
 
     record = {
         "fetched_at": fetched_at,
@@ -49,6 +53,7 @@ def process_task(args):
         "seller": res.get("seller"),
         "url": res.get("url"),
         "run_id": run_id,
+        "fetched_at_brt": fetched_at_brt,
     }
 
     # Thread-safe console log

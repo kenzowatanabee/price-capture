@@ -96,3 +96,22 @@ def test_every_row_of_a_run_shares_one_run_id_and_csv_has_all_columns(tmp_path, 
         assert reader.fieldnames == CSV_COLUMNS
     assert {r["run_id"] for r in rows} == {"test-run"}
     assert rows[0]["list_price"] == "12.0" and rows[0]["url"] == "https://x.test/p"
+
+
+def test_fetched_at_is_utc_for_domo_and_fetched_at_brt_is_brasilia_clock(monkeypatch):
+    # Domo reads DATETIME values as UTC and converts them to the company time zone for display,
+    # so fetched_at must be the real UTC instant; fetched_at_brt is plain text Domo leaves alone.
+    from datetime import datetime as real_datetime, timezone
+
+    class FrozenDatetime(real_datetime):
+        @classmethod
+        def now(cls, tz=None):
+            moment = real_datetime(2026, 11, 11, 11, 45, 0, tzinfo=timezone.utc)
+            return moment.astimezone(tz) if tz else moment.replace(tzinfo=None)
+
+    monkeypatch.setattr(runner, "datetime", FrozenDatetime)
+    monkeypatch.setattr(runner, "scrape_store_product", lambda s, p: {"status": "Success", "price_brl": 1.0})
+    store = {"name": "S", "type": "B2C_REST", "domain": "https://s.test"}
+    rec = runner.process_task((store, {"ean": "1", "desc_sku": "d"}, "r"))
+    assert rec["fetched_at"] == "2026-11-11 11:45:00"
+    assert rec["fetched_at_brt"] == "2026-11-11 08:45:00"
