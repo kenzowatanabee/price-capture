@@ -1,3 +1,4 @@
+import re
 from urllib.parse import urlsplit, urlunsplit
 
 from price_capture.platforms.base import Platform, build_result, to_price
@@ -46,6 +47,14 @@ class RdNextJs(Platform):
         page_sku, search_sku = str(data.get("sku") or ""), str(first.get("search_sku") or "")
         if page_sku and search_sku and page_sku != search_sku:
             return error("PARSE_ERROR", f"product page sku {page_sku} does not match search sku {search_sku}")
+
+        # The search page carries no EAN, the product page does: make sure it is the product we asked for.
+        page_ean = re.sub(r"\D", "", str(data.get("productEan") or ""))
+        if page_ean and page_ean.lstrip("0") != str(product["ean"]).lstrip("0"):
+            result = not_found("EAN_MISMATCH", f"product page EAN {page_ean} is not {product['ean']}")
+            if data.get("name"):
+                result["product_name"] = data["name"]
+            return result
 
         aux = data.get("price_aux") or {}
         live = ((data.get("liveComposition") or {}).get("livePrice")) or {}
