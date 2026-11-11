@@ -137,6 +137,21 @@ python region_check.py --eans 7891024132005 --ceps "SP=01310-100,PE=50030-230"
 
 It writes `region_check.csv` (git-ignored) with one row per store, SKU and CEP. A `catalog` row shows the price the scraper records, for comparison. It then prints per store how many SKUs had more than one price across CEPs. The default CEPs are city centres in SP, RJ, MG, PR, RS, BA, PE and DF; pass your own with `--ceps`. RD stores are not covered yet.
 
+## Diagnostics capture
+
+`diagnose.py` saves raw store responses so problems can be investigated offline. It never stores cookies.
+
+- **RD:** the search page for EANs that came back `NO_PRICE` in `results.csv`, plus a couple that succeed as a control. For each product on the page it lists every price, stock and identity field, and marks the one the parser picks.
+- **VTEX:** the catalog search, the regional sellers and cart simulations for several CEPs and sales channels. By default it covers Venancio, Indiana and Drogaria São Paulo, to explain "available in the catalog, out of stock in the cart".
+
+```bash
+python diagnose.py                     # both checks, ~110 requests, 1-2 minutes
+python diagnose.py --skip-vtex         # only RD
+python diagnose.py --rd-eans 7891024035504 --vtex-stores "Drogal" --sc 1,2
+```
+
+Output goes to `diagnostics/<timestamp>/` (git-ignored). `summary.md` is the short part to share, `index.json` lists every request, and the raw responses sit next to them. A zip of the folder is written too.
+
 ## Automation
 
 `.github/workflows/scraper.yml` runs the test suite, then the scraper and the Domo upload, daily at 15:00 UTC (12:00 Brasília) and on manual dispatch. If the run looks broken (error rate above `MAX_ERROR_RATE`, or success rate below `MIN_SUCCESS_RATE`), the scraper step fails and the upload is skipped. A store with no successful prices at all shows up as a warning annotation on the run. `results.csv` and `results.json` are kept as a build artifact for 7 days.
