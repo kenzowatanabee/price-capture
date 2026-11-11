@@ -14,7 +14,14 @@ class Platform:
         raise NotImplementedError
 
     def parse(self, response, product):
-        """Returns a result dict ({"status": ..., ...}). May raise; the caller reports parsing errors."""
+        """
+        Returns a result dict ({"status": ..., ...}). May raise; the caller reports parsing errors.
+        A platform that needs a second page returns {"follow_path": <path or url>, ...} instead; the
+        caller fetches it and passes the response to parse_follow_up together with this dict.
+        """
+        raise NotImplementedError
+
+    def parse_follow_up(self, response, product, first):
         raise NotImplementedError
 
 
