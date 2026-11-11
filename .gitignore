@@ -12,3 +12,4 @@ initial_dataset.csv
 __pycache__/
 .pytest_cache/
 domo_schema_backup_*.json
+region_check.csv
