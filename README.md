@@ -28,11 +28,12 @@ python upload_to_domo.py   # appends results.csv to the Domo dataset
 |---|---|---|---|
 | `PRODUCTS_FILE` | scraper | `data/products.csv` | Product list |
 | `STORES_FILE` | scraper | `data/stores.csv` | Store list |
-| `MAX_WORKERS` | scraper | `10` | Concurrent requests |
+| `MAX_WORKERS` | scraper | `10` | Max requests in flight across all stores |
 | `MIN_SUCCESS_RATE` | scraper | `0.2` | The run exits non-zero (so nothing is uploaded) if fewer than this share of requests return a price. Catches a silently broken parser |
 | `MAX_ERROR_RATE` | scraper | `0.5` | ...or if more than this share are `Error` (blocked, timeouts, parse failures). `Not Found` does not count as an error |
 | `VERIFY_SSL` | scraper | `true` | Global kill switch: `false` disables TLS verification for **every** store. Prefer the per-store `verify_ssl` column in `stores.csv` |
-| `PER_STORE_CONCURRENCY` | scraper | `2` | Max simultaneous requests to the same store |
+| `PER_STORE_CONCURRENCY` | scraper | `2` | Max simultaneous requests to the same store. Each store runs in its own small pool, so a slow store cannot hold up the others |
+| `STORE_FAILURE_LIMIT` | scraper | `5` | After this many consecutive timeouts or network errors from one store, its remaining requests are skipped (`SKIPPED`). `0` disables this |
 | `REQUEST_JITTER` | scraper | `0.3` | Random delay (0 to N seconds) before each request |
 | `IMPERSONATE` | scraper | `chrome142` | Browser fingerprint curl_cffi impersonates; its User-Agent and `sec-ch-ua` headers come with it |
 | `RUN_ID` | scraper | | Overrides the generated `run_id` (default: `gh-<run>-<attempt>` on GitHub Actions, else `local-<timestamp>`) |
@@ -51,7 +52,7 @@ update_domo_schema.py       local script that updates the Domo dataset schema (s
 price_capture/
   runner.py                 task matrix, threading, output files, success-rate gate
   scrape.py                 one (store, product) request
-  http.py                   sessions, browser impersonation, per-store limits, retries (incl. 429/503)
+  http.py                   sessions, browser impersonation, per-store limits, retries (429/503, timeouts, connection resets)
   results.py                result dicts with reason codes
   config.py                 CSV loaders
   schema.py                 output columns, order and Domo types (single source of truth)
@@ -108,7 +109,7 @@ Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` sto
   | `status` | Codes |
   |---|---|
   | `Not Found` | `NOT_LISTED` (store returned no product), `OUT_OF_STOCK`, `ZERO_PRICE` (store reports a price of 0), `NO_PRICE`, `NO_STATE` (page had no embedded product data, which may mean the layout changed) |
-  | `Error` | `TIMEOUT`, `NETWORK`, `HTTP_ERROR` (e.g. `HTTP_ERROR: 403`), `BLOCKED`, `PARSE_ERROR`, `CONFIG` |
+  | `Error` | `TIMEOUT`, `NETWORK`, `HTTP_ERROR` (e.g. `HTTP_ERROR: 403`), `BLOCKED`, `PARSE_ERROR`, `CONFIG`, `SKIPPED` (store unreachable: see `STORE_FAILURE_LIMIT`) |
 
   Filter on `status = 'Success'` for price analysis. The other rows are useful for tracking store coverage and blocking.
 
@@ -138,7 +139,7 @@ It writes `region_check.csv` (git-ignored) with one row per store, SKU and CEP. 
 
 ## Automation
 
-`.github/workflows/scraper.yml` runs the scraper and the Domo upload daily at 15:00 UTC (12:00 Brasília) and on manual dispatch. If the run looks broken (error rate above `MAX_ERROR_RATE`, or success rate below `MIN_SUCCESS_RATE`), the scraper step fails and the upload is skipped. A store with no successful prices at all shows up as a warning annotation on the run. `results.csv` and `results.json` are kept as a build artifact for 7 days.
+`.github/workflows/scraper.yml` runs the test suite, then the scraper and the Domo upload, daily at 15:00 UTC (12:00 Brasília) and on manual dispatch. If the run looks broken (error rate above `MAX_ERROR_RATE`, or success rate below `MIN_SUCCESS_RATE`), the scraper step fails and the upload is skipped. A store with no successful prices at all shows up as a warning annotation on the run. `results.csv` and `results.json` are kept as a build artifact for 7 days.
 
 Required repository secrets: `DOMO_CLIENT_ID`, `DOMO_CLIENT_SECRET`, `DOMO_DATASET_ID`.
 
