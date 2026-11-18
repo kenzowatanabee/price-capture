@@ -22,8 +22,13 @@ def load_products(file_path):
         print(f"Error: Product file '{file_path}' not found.")
         return products
 
-    with open(file_path, mode='r', encoding='utf-8') as f:
+    with open(file_path, mode='r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f)
+        if 'ean' not in (reader.fieldnames or []):
+            raise ConfigError(
+                f"Product file '{file_path}' has no 'ean' column (found {reader.fieldnames}). "
+                "Expected a comma-separated header: ean,desc_sku"
+            )
         for row in reader:
             ean = clean_ean(row.get('ean', ''))
             desc = row.get('desc_sku', '').strip()
@@ -39,7 +44,7 @@ def load_stores(file_path):
         print(f"Error: Store file '{file_path}' not found.")
         return stores
 
-    with open(file_path, mode='r', encoding='utf-8') as f:
+    with open(file_path, mode='r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f)
         for row in reader:
             store_id = row.get('store_id', '').strip()

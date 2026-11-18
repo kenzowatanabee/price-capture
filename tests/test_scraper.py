@@ -804,3 +804,24 @@ def test_rd_ean_check_ignores_leading_zeros_and_missing_field(monkeypatch):
     assert scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)["status"] == "Success"
     rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("1", "Creme", 9.9, ean=None)})
     assert scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)["status"] == "Success"
+
+
+# ---------- CSVs saved by Excel (UTF-8 with BOM) ----------
+
+def test_products_csv_with_a_bom_is_read(tmp_path):
+    f = tmp_path / "products.csv"
+    f.write_bytes("﻿ean,desc_sku\n7509546060781,CREME A\n".encode("utf-8"))
+    assert config.load_products(str(f)) == [{"ean": "7509546060781", "desc_sku": "CREME A"}]
+
+
+def test_stores_csv_with_a_bom_is_read(tmp_path):
+    f = tmp_path / "stores.csv"
+    f.write_bytes("﻿store_id,type,domain\nA,B2C_REST,https://a.test\n".encode("utf-8"))
+    assert [s["name"] for s in config.load_stores(str(f))] == ["A"]
+
+
+def test_products_csv_without_an_ean_column_fails_loudly(tmp_path):
+    f = tmp_path / "products.csv"
+    f.write_text("codigo;descricao\n7509546060781;CREME A\n", encoding="utf-8")  # e.g. saved with ; as separator
+    with pytest.raises(config.ConfigError, match="ean"):
+        config.load_products(str(f))
