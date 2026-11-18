@@ -2,7 +2,8 @@
 
 The top-level `status` stays one of Success / Not Found / Error. Codes:
 
-  Not Found: NOT_LISTED (store returned no product), NO_PRICE, OUT_OF_STOCK, ZERO_PRICE, NO_STATE
+  Not Found: NOT_LISTED (store returned no product), NO_PRICE, OUT_OF_STOCK, ZERO_PRICE, NO_STATE,
+             EAN_MISMATCH (the matched product page is for another EAN)
   Error:     TIMEOUT, NETWORK, HTTP_ERROR, BLOCKED, PARSE_ERROR, CONFIG, SKIPPED (store unreachable)
 """
 

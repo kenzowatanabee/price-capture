@@ -110,7 +110,7 @@ Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` sto
 
   | `status` | Codes |
   |---|---|
-  | `Not Found` | `NOT_LISTED` (store returned no product), `OUT_OF_STOCK`, `ZERO_PRICE` (store reports a price of 0), `NO_PRICE`, `NO_STATE` (page had no embedded product data, which may mean the layout changed) |
+  | `Not Found` | `EAN_MISMATCH` (RD: the matched product page is for another EAN), `NOT_LISTED` (store returned no product), `OUT_OF_STOCK`, `ZERO_PRICE` (store reports a price of 0), `NO_PRICE`, `NO_STATE` (page had no embedded product data, which may mean the layout changed) |
   | `Error` | `TIMEOUT`, `NETWORK`, `HTTP_ERROR` (e.g. `HTTP_ERROR: 403`), `BLOCKED`, `PARSE_ERROR`, `CONFIG`, `SKIPPED` (store unreachable: see `STORE_FAILURE_LIMIT`) |
 
   A `Success` row can still carry a message: `NOT_PURCHASABLE: <reason> for CEP <cep>` when the store lists a price but the cart check says it cannot be bought there (`available = false`), or `AVAILABILITY_UNCHECKED: <error>` when the cart check itself failed (price kept, `available` from the catalog).
@@ -161,6 +161,7 @@ Only the main seller is simulated. The regional-seller lookup returns physical s
 python diagnose.py                     # both checks, ~110 requests, 1-2 minutes
 python diagnose.py --skip-vtex         # only RD
 python diagnose.py --skip-vtex --rd-eans all --rd-pages all   # every RD SKU: search price vs product-page price table
+python diagnose.py --skip-vtex --rd-eans all --rd-partners 10   # partner listings: EAN check, price, seller fields
 python diagnose.py --rd-eans 7891024035504 --vtex-stores "Drogal" --sc 1,2 --max-sellers 20
 ```
 

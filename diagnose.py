@@ -230,7 +230,8 @@ def pick_rd_eans(results_file, rd_names, products, limit=5, controls=2):
     return multipacks[:limit] + singles[:controls], "products.csv (multipacks + single-pack controls)"
 
 
-def diagnose_rd(store, eans, capture, session, delay, full_html, desc_by_ean, all_pages=False, comparison=None):
+def diagnose_rd(store, eans, capture, session, delay, full_html, desc_by_ean, all_pages=False, comparison=None,
+                partners_limit=0, partner_rows=None):
     lines = [f"### {store['name']} (RD_NEXTJS)", ""]
     platform = RdNextJs()
     control_needed = True  # fetch one priced product page per store to confirm which field holds the price
@@ -273,8 +274,78 @@ def diagnose_rd(store, eans, capture, session, delay, full_html, desc_by_ean, al
             if comparison is not None and prices is not None:
                 comparison.append({"store": store["name"], "ean": ean, "sku": chosen.get("sku"),
                                    "sponsored": bool(chosen.get("isSponsored")), "search": chosen.get("priceService"), **prices})
+        if partners_limit and partner_rows is not None:
+            listings = [p for p in products if p is not chosen and p.get("is1P") is not True and p.get("url")]
+            for listing in listings[:partners_limit]:
+                partner_rows.append(diagnose_partner_page(store, ean, listing, capture, session, delay))
+            if listings:
+                lines.append(f"- partner listings: {len(listings)} (pages fetched: {min(len(listings), partners_limit)})")
         lines.append("")
     return lines
+
+
+SELLER_KEY = re.compile(r"seller|vendor|vendedor|partner|parceir|lojista|merchant|marketplace|third|loja", re.I)
+
+
+def seller_fields(state, limit=12):
+    """Scalars under seller-like keys anywhere in a product page (to find where the partner's name lives)."""
+    found = []
+
+    def walk(obj, path, under):
+        if len(found) >= limit:
+            return
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                p = f"{path}.{k}"
+                hit = under or bool(SELLER_KEY.search(str(k)))
+                if isinstance(v, (str, int, float, bool)) or v is None:
+                    if hit and v not in (None, "", False):
+                        found.append(f"{p}={str(v)[:60]}")
+                elif "mcp" not in str(k):  # skip recommendation carousels
+                    walk(v, p, hit)
+        elif isinstance(obj, list):
+            for i, v in enumerate(obj[:20]):
+                walk(v, f"{path}[{i}]", under)
+
+    walk(state, "$", False)
+    return found
+
+
+def diagnose_partner_page(store, ean, listing, capture, session, delay):
+    """A partner listing's product page: does its EAN match ours, what price, and who sells it."""
+    page_url = urljoin(store["domain"], listing["url"])
+    name = f"rd_{slug(store['name'])}_{ean}_partner_{listing.get('sku')}"
+    row = {"store": store["name"], "ean": ean, "sku": listing.get("sku"), "name": (listing.get("name") or "")[:60],
+           "search_price": listing.get("priceService"), "page_ean": None, "value_to": None, "value_from": None,
+           "seller_fields": "", "note": ""}
+    time.sleep(delay)
+    try:
+        r = session.get(page_url)
+    except Exception as e:
+        capture.save(name, store["name"], ean, "rd_partner_page", "GET", page_url, error=e)
+        return row | {"note": f"request failed: {str(e)[:80]}"}
+    state, kind = extract_state_from_html(r.text or "")
+    if kind != "NEXT_JS":
+        capture.save(name, store["name"], ean, "rd_partner_page", "GET", page_url, r, (r.text or "")[:HTML_LIMIT], ext="html")
+        return row | {"note": f"HTTP {r.status_code}, no __NEXT_DATA__"}
+    capture.save(name, store["name"], ean, "rd_partner_page", "GET", page_url, r, state)
+    prices = rd_page_prices(state, r.text)
+    data = ((state.get("props") or {}).get("pageProps") or {}).get("productData") or {}
+    return row | {"page_ean": data.get("productEan"), "value_to": prices["value_to"], "value_from": prices["value_from"],
+                  "seller_fields": "; ".join(seller_fields(data))[:400], "note": f"HTTP {r.status_code}"}
+
+
+def partner_table(rows):
+    lines = ["| store | ean | partner sku | listing name | search price | page EAN | EAN match | page value_to | page value_from | seller-like fields | note |",
+             "|---|---|---|---|---|---|---|---|---|---|---|"]
+    matched = 0
+    for r in rows:
+        match = "" if not r["page_ean"] else ("yes" if str(r["page_ean"]).lstrip("0") == r["ean"].lstrip("0") else "NO")
+        matched += match == "yes"
+        cells = [r["store"], r["ean"], r["sku"], r["name"], r["search_price"], r["page_ean"], match,
+                 r["value_to"], r["value_from"], f"`{r['seller_fields']}`" if r["seller_fields"] else "", r["note"]]
+        lines.append("| " + " | ".join("" if c is None else str(c) for c in cells) + " |")
+    return lines + ["", f"Partner pages with the searched EAN: {matched} of {len(rows)}", ""]
 
 
 def offer_facts(seller):
@@ -398,6 +469,8 @@ def main(argv=None, session_factory=make_session):
     parser.add_argument("--rd-eans", help='comma-separated EANs for the RD check, or "all" (default: from results.csv)')
     parser.add_argument("--rd-pages", choices=["sponsored", "all"], default="sponsored",
                         help="product pages to fetch: only sponsored ones plus one control (default), or all, with a price comparison table")
+    parser.add_argument("--rd-partners", type=int, default=0,
+                        help="also fetch up to N partner (marketplace) listing pages per search, to check their EAN, price and seller")
     parser.add_argument("--results", default="results.csv", help="results file used to pick NO_PRICE EANs")
     parser.add_argument("--vtex-stores", help=f"comma-separated store_ids (default: {', '.join(DEFAULT_VTEX_STORES)})")
     parser.add_argument("--vtex-eans", help=f"comma-separated EANs (default: {', '.join(DEFAULT_VTEX_EANS)})")
@@ -429,13 +502,16 @@ def main(argv=None, session_factory=make_session):
         else:
             eans, source = pick_rd_eans(args.results, {s["name"] for s in rd_stores}, products)
         summary += ["## RD search pages", f"EANs from {source}: {', '.join(eans)}", ""]
-        comparison = []
+        comparison, partner_rows = [], []
         for store in rd_stores:
             print(f"RD: {store['name']} ({len(eans)} EANs)...")
             summary += diagnose_rd(store, eans, capture, session_factory(store), args.delay, args.full_html, desc_by_ean,
-                                   all_pages=args.rd_pages == "all", comparison=comparison)
+                                   all_pages=args.rd_pages == "all", comparison=comparison,
+                                   partners_limit=args.rd_partners, partner_rows=partner_rows)
         if comparison:
             summary += ["## RD price comparison: search vs product page", ""] + comparison_table(comparison)
+        if partner_rows:
+            summary += ["## RD partner listings", ""] + partner_table(partner_rows)
 
     if not args.skip_vtex:
         names = [s.strip() for s in (args.vtex_stores.split(",") if args.vtex_stores else DEFAULT_VTEX_STORES)]

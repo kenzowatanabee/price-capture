@@ -41,9 +41,9 @@ def rd_product(sku, name, is1P=True, **extra):
     return {"sku": sku, "name": name, "is1P": is1P, "url": f"/{name.lower().replace(' ', '-')}-{sku}.html?origin=search", **extra}
 
 
-def rd_page(sku, name, value_to, value_from=None):
+def rd_page(sku, name, value_to, value_from=None, ean="7509546060781"):
     state = {"props": {"pageProps": {"productData": {
-        "sku": sku, "name": name, "price": 0, "price_aux": {"value_to": value_to, "value_from": value_from},
+        "sku": sku, "name": name, "price": 0, "productEan": ean, "price_aux": {"value_to": value_to, "value_from": value_from},
         "liveComposition": {"livePrice": {"valueTo": value_to}},
     }}}}
     return '<script id="__NEXT_DATA__" type="application/json">' + json.dumps(state) + "</script>"
@@ -784,3 +784,23 @@ def test_cart_check_also_runs_for_intelligent_search_stores(monkeypatch, cart_ch
     vtex_store(monkeypatch, {"products": vtex_catalog_payload()}, {"items": [{"availability": "cannotBeDelivered"}]})
     res = scrape.scrape_store_product(make_store("CARREFOUR_INTELLIGENT_SEARCH"), PRODUCT)
     assert (res["status"], res["available"]) == ("Success", "false")
+
+
+
+# ---------- RD: the product page EAN must be the one we searched for ----------
+
+def test_rd_product_page_for_another_ean_is_not_stored_as_our_price(monkeypatch):
+    # e.g. the search matched a 2-pack whose page carries a different EAN
+    rd_site(monkeypatch, [rd_product("1", "Creme 70g 2 unidades")],
+            {"1": rd_page("1", "Creme 70g 2 unidades", 61.9, ean="7891024999999")})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], message_code(res)) == ("Not Found", "EAN_MISMATCH")
+    assert "price_brl" not in res and res["product_name"] == "Creme 70g 2 unidades"
+    assert "7891024999999" in res["message"]
+
+
+def test_rd_ean_check_ignores_leading_zeros_and_missing_field(monkeypatch):
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("1", "Creme", 9.9, ean="07509546060781")})
+    assert scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)["status"] == "Success"
+    rd_site(monkeypatch, [rd_product("1", "Creme")], {"1": rd_page("1", "Creme", 9.9, ean=None)})
+    assert scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)["status"] == "Success"
