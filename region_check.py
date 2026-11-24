@@ -11,7 +11,7 @@ Only the main seller is simulated. The diagnostics showed this is the reliable s
 regional-seller lookup returns physical stores (up to 1,428 per CEP for Drogaria Sao Paulo, and
 VTEX simulates at most 20 sellers at once), while the main seller is what the site sells online.
 
-    python region_check.py                       # 3 single-pack SKUs, default CEPs, all B2C_REST stores
+    python region_check.py                       # 3 SKUs spread through the list, default CEPs, all B2C_REST stores
     python region_check.py --limit 10 --stores "Drogal,Pague Menos"
     python region_check.py --eans 7891024132005,7891024035504 --ceps "SP=01310-100,PE=50030-230"
 
@@ -165,6 +165,28 @@ def coverage_lines(table, regions):
     return lines
 
 
+def spread_sample(products, limit):
+    """
+    `limit` products taken at even steps through the whole list, so the sample covers every part
+    of the catalogue instead of only its first rows. The same list always gives the same sample.
+    """
+    if limit <= 0:
+        return []
+    if limit >= len(products):
+        return list(products)
+    return [products[i * len(products) // limit] for i in range(limit)]
+
+
+def listed_counts(rows):
+    """{store: (SKUs the store lists, SKUs asked for)}, from the catalog rows."""
+    counts = {}
+    for r in rows:
+        if str(r.get("region", "")).startswith("catalog"):
+            listed, asked = counts.get(r["store"], (0, 0))
+            counts[r["store"]] = (listed + (r.get("note") is None), asked + 1)
+    return counts
+
+
 def parse_ceps(text):
     ceps = {}
     for part in filter(None, (p.strip() for p in text.split(","))):
@@ -176,7 +198,7 @@ def parse_ceps(text):
 def main(argv=None, session_factory=make_session):
     parser = argparse.ArgumentParser(description="Compare SKU prices across Brazilian CEPs for the VTEX stores.")
     parser.add_argument("--stores", help="comma-separated store_id filter (default: every enabled B2C_REST store)")
-    parser.add_argument("--eans", help="comma-separated EANs (default: the first --limit single-pack products)")
+    parser.add_argument("--eans", help="comma-separated EANs (default: --limit products spread evenly through the products file)")
     parser.add_argument("--limit", type=int, default=3, help="how many products when --eans is not given (default 3)")
     parser.add_argument("--ceps", help='e.g. "SP=01310-100,PE=50030-230" (default: one city-centre CEP per region)')
     parser.add_argument("--sc", default="1", help="VTEX sales channel (default 1)")
@@ -191,7 +213,7 @@ def main(argv=None, session_factory=make_session):
         wanted = {e.strip() for e in args.eans.split(",")}
         products = [p for p in products if p["ean"] in wanted]
     else:
-        products = [p for p in products if p["desc_sku"].upper().endswith("SINGLE")][: args.limit]
+        products = spread_sample(products, args.limit)
     ceps = parse_ceps(args.ceps) if args.ceps else DEFAULT_CEPS
 
     stores = load_stores(args.stores_file)
@@ -218,7 +240,11 @@ def main(argv=None, session_factory=make_session):
         writer.writeheader()
         writer.writerows(all_rows)
 
-    print(f"\nWrote {len(all_rows)} rows to {args.out}\n\nPrice differences between CEPs (available offers, main seller):")
+    print(f"\nWrote {len(all_rows)} rows to {args.out}\n\nSKUs listed by each store (of the {len(products)} asked for):")
+    for store, (listed, asked) in sorted(listed_counts(all_rows).items()):
+        print(f"  {store.ljust(22)}: {listed}/{asked}")
+
+    print("\nPrice differences between CEPs (available offers, main seller):")
     variation = price_variation(all_rows)
     for store in sorted({s["name"] for s in stores}):
         varies, total = variation.get(store, (0, 0))

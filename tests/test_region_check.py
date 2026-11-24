@@ -108,6 +108,23 @@ def test_parse_simulation_converts_cents_and_reports_missing_items():
     assert empty["price"] is None and empty["availability"] == "not_returned" and "indispon" in empty["note"]
 
 
+def test_spread_sample_covers_the_whole_list_evenly():
+    products = [{"ean": str(i)} for i in range(10)]
+    assert [p["ean"] for p in region_check.spread_sample(products, 5)] == ["0", "2", "4", "6", "8"]
+    assert region_check.spread_sample(products, 30) == products  # asking for more than there is
+    assert region_check.spread_sample(products, 0) == []
+
+
+def test_listed_counts_separates_listed_from_not_listed_and_errors():
+    rows = [
+        {"store": "A", "region": "catalog (what the scraper records)", "price": 9.9},
+        {"store": "A", "region": "catalog", "note": "not listed"},
+        {"store": "A", "region": "catalog", "note": "error: HTTP 403"},
+        {"store": "A", "region": "SP", "cep": "01310-100"},
+    ]
+    assert region_check.listed_counts(rows) == {"A": (1, 3)}
+
+
 def test_parse_ceps():
     assert region_check.parse_ceps("SP=01310-100, PE=50030-230") == {"SP": "01310-100", "PE": "50030-230"}
     assert region_check.parse_ceps("01310-100") == {"01310-100": "01310-100"}
@@ -128,6 +145,7 @@ def test_main_end_to_end_prints_prices_and_coverage(tmp_path, capsys):
     printed = capsys.readouterr().out
     assert code == 0
     assert "RD: RD_NEXTJS is not supported" in printed
+    assert "Loja                  : 1/1" in printed  # listed by the store
     assert "Loja                  : 0/1 SKUs vary  -> same price everywhere checked" in printed
     assert "Delivery coverage" in printed and "Loja   1/1    0/1    0/1" in printed
     with open(out, encoding="utf-8") as f:
