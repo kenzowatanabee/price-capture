@@ -25,6 +25,26 @@ class Platform:
     def parse_follow_up(self, response, product, first):
         raise NotImplementedError
 
+    def parse_offer_page(self, response, product, page_url):
+        """
+        For platforms that list each seller on its own page (their first result carries
+        "offer_paths"): the offer on one such page, or None when it is not a priced offer of
+        this product. See make_offer for the shape.
+        """
+        raise NotImplementedError
+
+
+def make_offer(price, **fields):
+    """
+    One seller's priced offer of a product on a store's site, or None without a positive price.
+    Fields: seller, seller_id, seller_type, seller_cnpj, list_price, available, product_name, url,
+    image_url (the same names the main result uses).
+    """
+    price = to_price(price)
+    if price is None or price <= 0:
+        return None
+    return {"price_brl": price} | {k: v for k, v in fields.items() if v not in (None, "")}
+
 
 def to_price(value):
     """
@@ -134,6 +154,39 @@ def vtex_seller(sellers):
     return next((s for s in sellers if s.get("sellerDefault") is True), sellers[0])
 
 
+def vtex_availability(offer):
+    """True / False when the seller's offer says so, None when it does not."""
+    flag, quantity = offer.get("IsAvailable"), offer.get("AvailableQuantity")
+    if flag is False or (quantity is not None and quantity <= 0):
+        return False
+    if flag is True or (quantity is not None and quantity > 0):
+        return True
+    return None
+
+
+def vtex_all_offers(item, found_name=None, url=None):
+    """Every seller's priced offer of one variant: the store's own and each marketplace partner's."""
+    offers = []
+    for s in item.get("sellers") or []:
+        offer = s.get("commertialOffer") or {}
+        seller_id = None if s.get("sellerId") in (None, "") else str(s["sellerId"])
+        available = vtex_availability(offer)
+        list_price = offer.get("ListPrice")
+        made = make_offer(
+            offer.get("Price"),
+            seller=s.get("sellerName"),
+            seller_id=seller_id,
+            seller_type=None if seller_id is None else ("store" if seller_id == VTEX_STORE_SELLER else "partner"),
+            list_price=list_price if isinstance(list_price, (int, float)) and list_price > 0 else None,
+            available=None if available is None else str(available).lower(),
+            product_name=found_name,
+            url=url,
+        )
+        if made:
+            offers.append(made)
+    return offers
+
+
 def vtex_offer(vtex_product, base_url="", ean=None):
     """
     The offer to record from a VTEX product payload: the variant with the searched EAN (see
@@ -150,14 +203,7 @@ def vtex_offer(vtex_product, base_url="", ean=None):
     seller_id = chosen.get("sellerId")
     seller_id = None if seller_id in (None, "") else str(seller_id)
 
-    flag = offer.get("IsAvailable")
-    quantity = offer.get("AvailableQuantity")
-    if flag is False or (quantity is not None and quantity <= 0):
-        available = False
-    elif flag is True or (quantity is not None and quantity > 0):
-        available = True
-    else:
-        available = None
+    available = vtex_availability(offer)
 
     list_price = offer.get("ListPrice")
     link = vtex_product.get("link")
@@ -171,6 +217,9 @@ def vtex_offer(vtex_product, base_url="", ean=None):
         # Unknown (left empty) when the payload carries no seller id at all.
         "seller_type": None if seller_id is None else ("store" if seller_id == VTEX_STORE_SELLER else "partner"),
     }
+    all_offers = vtex_all_offers(item, vtex_product.get("productName"), extra["url"])
+    if all_offers:
+        extra["offers"] = all_offers  # every seller of this variant; the runner writes the others as extra rows
     return VtexOffer(offer.get("Price"), available, {k: v for k, v in extra.items() if v is not None},
                      items[0].get("itemId"), seller_id)
 

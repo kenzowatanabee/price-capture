@@ -101,6 +101,13 @@ Columns, in order (defined once in `price_capture/schema.py`):
 | 15 | `image_url` | STRING | Main product picture on the store's own site (first picture of the listing) |
 | 16 | `seller_id` | STRING | The store's id for the seller of this offer (`1` is the store itself on VTEX) |
 | 17 | `seller_type` | STRING | `store` = sold by the store itself, `partner` = a marketplace seller on the store's site. Empty when the store does not say |
+| 18 | `main_offer` | STRING | `true` = the row that is compared and counted for this store and product. `false` = another seller of the same product on the store's site. Empty on rows written before this column existed (all of them main rows) |
+| 19 | `seller_cnpj` | STRING | The seller's company registration, when the store publishes it (RD partners) |
+
+**One store and product can have several rows per run.** The main row is the store's own offer (or, when the store does not sell the product itself, the seller it shows by default). Every other seller with a price on the store's site gets a row of its own with `main_offer = false`. Anything that counts or compares prices must filter on `main_offer <> 'false'`, or partner offers are counted as store prices.
+
+- VTEX stores list every seller in the same response, so these rows cost no extra requests.
+- RD stores list each seller on its own page: up to `RD_PARTNER_PAGES` pages (default 5) are fetched per product, one request each, and only pages with the searched EAN are kept. Set it to `0` to turn this off.
 
 Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` stores. `RD_NEXTJS` stores fill `list_price` and `url`. `image_url` is filled for those same three types. The columns are empty for `VTEX_IO_HTML` stores, because those payload fields have not been mapped yet. They are also filled on `OUT_OF_STOCK` and `ZERO_PRICE` rows, since they describe the product, while `price_brl` stays empty.
 

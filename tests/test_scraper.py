@@ -167,6 +167,7 @@ def vtex_payload(price, name="Produto X"):
 def test_b2c_rest_success(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=vtex_payload(12.9)))
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res.pop("offers") == [{"price_brl": 12.9, "product_name": "Produto X"}]
     assert res == {"status": "Success", "product_name": "Produto X", "price_brl": 12.9}
 
 
@@ -252,7 +253,8 @@ def test_process_task_record_shape_and_timestamp(monkeypatch):
     )
     rec = runner.process_task((make_store("B2C_REST", "Loja"), PRODUCT, "run-1"))
     assert rec["run_id"] == "run-1"
-    assert set(rec) == set(CSV_COLUMNS)
+    assert rec.pop("other_offers") == []
+    assert set(rec) == set(CSV_COLUMNS) and rec["main_offer"] == "true"
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", rec["fetched_at"])
 
 
@@ -346,6 +348,85 @@ def test_vtex_store_offer_out_of_stock_is_not_replaced_by_a_partner_price(monkey
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
     assert (res["status"], res["seller_type"]) == ("Not Found", "store") and "price_brl" not in res
+
+
+# ---------- every seller of a product becomes a row ----------
+
+def test_vtex_lists_every_priced_seller_as_an_offer(monkeypatch):
+    payload = vtex_sellers_payload(
+        named("1", "Drogaria Teste", 15.0, ListPrice=18.0, AvailableQuantity=3),
+        named("duda", "Duda Makeup", 19.9, default=True),
+        named("semestoque", "Sem Preco", 0),
+    )
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    offers = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)["offers"]
+    assert [(o["seller"], o["seller_type"], o["price_brl"]) for o in offers] == [
+        ("Drogaria Teste", "store", 15.0), ("Duda Makeup", "partner", 19.9)]
+    assert offers[0]["list_price"] == 18.0 and offers[0]["available"] == "true"
+
+
+def test_process_task_writes_the_other_sellers_as_extra_rows(monkeypatch):
+    result = {
+        "status": "Success", "product_name": "X", "price_brl": 15.0, "seller": "Loja", "seller_id": "1", "seller_type": "store",
+        "url": "https://loja.test/x/p",
+        "offers": [
+            {"price_brl": 15.0, "seller": "Loja", "seller_id": "1", "seller_type": "store"},
+            {"price_brl": 19.9, "seller": "Duda Makeup", "seller_id": "duda", "seller_type": "partner", "seller_cnpj": "36672762000181"},
+        ],
+    }
+    monkeypatch.setattr(runner, "scrape_store_product", lambda store, product: dict(result))
+    rec = runner.process_task((make_store("B2C_REST", "Loja"), PRODUCT, "run-1"))
+    others = rec.pop("other_offers")
+    assert len(others) == 1  # the store's own offer is the main row, not repeated
+    extra = others[0]
+    assert set(extra) == set(CSV_COLUMNS)
+    assert (extra["main_offer"], extra["seller"], extra["seller_type"], extra["price_brl"], extra["seller_cnpj"]) == (
+        "false", "Duda Makeup", "partner", 19.9, "36672762000181")
+    assert (extra["ean"], extra["store"], extra["run_id"], extra["url"]) == (PRODUCT["ean"], "Loja", "run-1", "https://loja.test/x/p")
+
+
+def test_partner_offers_are_kept_when_the_store_itself_is_out_of_stock(monkeypatch):
+    result = {"status": "Not Found", "message": "OUT_OF_STOCK: x", "seller_id": "1", "seller_type": "store",
+              "offers": [{"price_brl": 19.9, "seller": "Duda Makeup", "seller_id": "duda", "seller_type": "partner"}]}
+    monkeypatch.setattr(runner, "scrape_store_product", lambda store, product: dict(result))
+    rec = runner.process_task((make_store("B2C_REST", "Loja"), PRODUCT, "run-1"))
+    assert (rec["status"], rec["main_offer"]) == ("Not Found", "true")
+    assert [(o["status"], o["price_brl"], o["main_offer"], o["message"]) for o in rec["other_offers"]] == [("Success", 19.9, "false", None)]
+
+
+def rd_partner_page(sku, name, price, ean, partner):
+    return rd_page(sku, name, price, ean=ean).replace(
+        '"price": 0,', '"price": 0, "is3p": true, "seller": ' + json.dumps(partner) + ",")
+
+
+def test_rd_fetches_the_other_sellers_pages_and_keeps_only_this_product(monkeypatch):
+    # Shape from real Droga Raia pages: the store sells it, two partners sell it too, and a third
+    # listing in the same search is a different product (another EAN).
+    sense = {"id": "sensefarma", "storeName": "Sense", "cnpj": "36.672.762/0001-81"}
+    viver = {"id": "farmaviver", "storeName": "Viver Bem", "cnpj": "25355906000150"}
+    own = rd_page("61045", "Escova Slim Soft", 18.59, ean=PRODUCT["ean"]).replace('"price": 0,', '"price": 0, "is3p": false, "seller": null,')
+    requested = rd_site(
+        monkeypatch,
+        [rd_product("61045", "Escova Slim Soft"), rd_product("1460239", "Escova Slim Soft A", is1P=False),
+         rd_product("1474157", "Escova Slim Soft B", is1P=False), rd_product("651531", "Kit Outro", is1P=False)],
+        {"61045": own,
+         "1460239": rd_partner_page("1460239", "Escova Slim Soft A", 25.5, PRODUCT["ean"], sense),
+         "1474157": rd_partner_page("1474157", "Escova Slim Soft B", 20.5, PRODUCT["ean"], viver),
+         "651531": rd_partner_page("651531", "Kit Outro", 33.53, "7500000000001", sense)},
+    )
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], res["price_brl"], res["seller_type"]) == ("Success", 18.59, "store")
+    assert [(o["seller"], o["price_brl"], o["seller_type"], o["seller_cnpj"]) for o in res["offers"]] == [
+        ("Sense", 25.5, "partner", "36672762000181"), ("Viver Bem", 20.5, "partner", "25355906000150")]
+    assert all("origin=search" not in o["url"] for o in res["offers"])
+    assert len(requested) == 5  # search, the store's page, three other listings
+
+
+def test_rd_other_seller_page_that_fails_is_left_out(monkeypatch):
+    own = rd_page("61045", "Escova Slim Soft", 18.59, ean=PRODUCT["ean"])
+    rd_site(monkeypatch, [rd_product("61045", "Escova Slim Soft"), rd_product("999", "Sumiu", is1P=False)], {"61045": own})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert res["status"] == "Success" and "offers" not in res
 
 
 def test_vtex_seller_type_is_left_out_when_the_payload_has_no_seller_id(monkeypatch):
@@ -500,6 +581,7 @@ def rich_payload(**offer_extra):
 def test_vtex_success_includes_list_price_seller_url_and_availability(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=rich_payload(AvailableQuantity=7)))
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert len(res.pop("offers")) == 1
     assert res == {
         "status": "Success",
         "product_name": "Produto X",
