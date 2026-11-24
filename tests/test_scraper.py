@@ -322,6 +322,55 @@ def test_vtex_falls_back_to_first_seller_without_default_flag(monkeypatch):
     assert res["price_brl"] == 20.0
 
 
+def named(seller_id, name, price, default=None, **offer_extra):
+    return seller(price, default, **offer_extra) | {"sellerId": seller_id, "sellerName": name}
+
+
+def test_vtex_records_the_stores_own_offer_even_when_a_partner_is_the_default(monkeypatch):
+    # The real case: the site shows a marketplace partner first, but the store sells it too.
+    payload = vtex_sellers_payload(named("dudamakeup", "Duda Makeup", 19.9, default=True), named("1", "Drogaria Teste", 15.0))
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["price_brl"], res["seller"], res["seller_id"], res["seller_type"]) == (15.0, "Drogaria Teste", "1", "store")
+
+
+def test_vtex_partner_only_offer_is_recorded_and_marked_as_partner(monkeypatch):
+    payload = vtex_sellers_payload(named("dudamakeup", "Duda Makeup", 19.9, default=True))
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["status"], res["price_brl"], res["seller"], res["seller_type"]) == ("Success", 19.9, "Duda Makeup", "partner")
+
+
+def test_vtex_store_offer_out_of_stock_is_not_replaced_by_a_partner_price(monkeypatch):
+    payload = vtex_sellers_payload(named("1", "Drogaria Teste", 15.0, AvailableQuantity=0), named("p", "Parceiro", 19.9, default=True))
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["status"], res["seller_type"]) == ("Not Found", "store") and "price_brl" not in res
+
+
+def test_vtex_seller_type_is_left_out_when_the_payload_has_no_seller_id(monkeypatch):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=vtex_sellers_payload(seller(15.0, default=True))))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["status"] == "Success" and "seller_type" not in res and "seller_id" not in res
+
+
+def test_vtex_prices_the_variant_with_the_searched_ean_not_the_first_one(monkeypatch):
+    # One product, two variants: the searched EAN belongs to the second (leading zero on the store side).
+    other = {"ean": "7500000000001", "sellers": [named("1", "Loja", 9.9)]}
+    wanted = {"ean": "0" + PRODUCT["ean"], "itemId": "22", "sellers": [named("1", "Loja", 21.99)],
+              "images": [{"imageUrl": "https://loja.test/wanted.jpg"}]}
+    payload = [{"productName": "Produto X", "items": [other, wanted]}]
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert (res["price_brl"], res["image_url"]) == (21.99, "https://loja.test/wanted.jpg")
+
+
+def test_vtex_falls_back_to_the_first_variant_when_none_carries_the_ean(monkeypatch):
+    payload = [{"productName": "Produto X", "items": [{"sellers": [named("1", "Loja", 9.9)]}, {"sellers": [named("1", "Loja", 21.99)]}]}]
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=payload))
+    assert scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)["price_brl"] == 9.9
+
+
 @pytest.mark.parametrize("extra", [{"AvailableQuantity": 0}, {"IsAvailable": False}])
 def test_vtex_out_of_stock_offer_is_not_a_success(monkeypatch, extra):
     payload = vtex_sellers_payload(seller(15.0, default=True, **extra))
@@ -675,6 +724,23 @@ def test_rd_image_url_is_the_first_enabled_picture_of_the_gallery(monkeypatch):
     rd_site(monkeypatch, [rd_product("62451", "Gel Dental Colgate Baby 50g")], {"62451": page})
     res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
     assert (res["status"], res["image_url"]) == ("Success", "https://product-data.test/images/1.webp")
+
+
+def test_rd_first_party_offer_is_marked_as_the_store(monkeypatch):
+    page = rd_page("62451", "Gel Dental Colgate Baby 50g", 21.99).replace('"price": 0,', '"price": 0, "is3p": false, "seller": null,')
+    rd_site(monkeypatch, [rd_product("62451", "Gel Dental Colgate Baby 50g")], {"62451": page})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert res["seller_type"] == "store" and "seller" not in res and "seller_id" not in res
+
+
+def test_rd_partner_offer_carries_the_partners_name_and_id(monkeypatch):
+    # Shape taken from a real Droga Raia partner page.
+    partner = {"id": "sensefarma", "storeName": "Sense", "corporateName": "Sense Farma LTDA"}
+    page = rd_page("1460239", "Escova Colgate Slim Soft", 25.5).replace(
+        '"price": 0,', '"price": 0, "is3p": true, "seller": ' + json.dumps(partner) + ",")
+    rd_site(monkeypatch, [rd_product("1460239", "Escova Colgate Slim Soft", is1P=False)], {"1460239": page})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["price_brl"], res["seller"], res["seller_id"], res["seller_type"]) == (25.5, "Sense", "sensefarma", "partner")
 
 
 def test_rd_sponsored_result_without_search_price_gets_the_page_price(monkeypatch):

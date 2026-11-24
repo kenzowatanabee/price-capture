@@ -98,7 +98,7 @@ def test_every_row_of_a_run_shares_one_run_id_and_csv_has_all_columns(tmp_path, 
         assert reader.fieldnames == CSV_COLUMNS
     assert {r["run_id"] for r in rows} == {"test-run"}
     assert rows[0]["list_price"] == "12.0" and rows[0]["url"] == "https://x.test/p"
-    assert rows[0]["image_url"] == "https://x.test/p.jpg" and CSV_COLUMNS[-1] == "image_url"
+    assert rows[0]["image_url"] == "https://x.test/p.jpg" and "image_url" in CSV_COLUMNS
 
 
 def test_fetched_at_is_utc_for_domo_and_fetched_at_brt_is_brasilia_clock(monkeypatch):

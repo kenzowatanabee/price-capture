@@ -67,6 +67,15 @@ class RdNextJs(Platform):
         if first.get("page_url"):
             parts = urlsplit(first["page_url"])
             extra["url"] = urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))  # without ?origin=search
+        # Who sells it: RD itself (1P) or a marketplace partner (3P), whose name and id the page carries.
+        if isinstance(data.get("is3p"), bool):
+            extra["seller_type"] = "partner" if data["is3p"] else "store"
+        partner = data.get("seller")
+        if isinstance(partner, dict):
+            if partner.get("storeName") or partner.get("corporateName"):
+                extra["seller"] = partner.get("storeName") or partner.get("corporateName")
+            if partner.get("id"):
+                extra["seller_id"] = str(partner["id"])
         gallery = data.get("mediaGallery")
         pictures = [m for m in gallery if isinstance(m, dict) and m.get("media_type") == "image"
                     and not m.get("disabled")] if isinstance(gallery, list) else []

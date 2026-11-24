@@ -28,7 +28,7 @@ from curl_cffi import requests
 
 from price_capture.config import load_products, load_stores
 from price_capture.http import HEADERS, IMPERSONATE, TIMEOUT, VERIFY_SSL
-from price_capture.platforms.base import vtex_offer
+from price_capture.platforms.base import vtex_item, vtex_offer, vtex_seller
 
 # City-centre CEPs, one per region of interest. Replace with the CEPs that matter to you via --ceps.
 DEFAULT_CEPS = {
@@ -76,17 +76,17 @@ def parse_simulation(payload):
 
 
 def find_sku(session, domain, ean):
-    """(sku_id, default seller id, catalog price) via the catalog search, or None if not listed."""
+    """(sku_id, main seller id, catalog price) via the catalog search, or None if not listed."""
     r = session.get(f"{domain}/api/catalog_system/pub/products/search?fq=alternateIds_Ean:{ean}")
     if r.status_code != 200:
         raise RuntimeError(f"catalog search HTTP {r.status_code}")
     data = r.json()
     if not data or not data[0].get("items"):
         return None
-    item = data[0]["items"][0]
+    item = vtex_item(data[0], ean)
     sellers = item.get("sellers") or []
-    default = next((s for s in sellers if s.get("sellerDefault") is True), sellers[0] if sellers else {})
-    return item.get("itemId"), default.get("sellerId") or "1", vtex_offer(data[0]).price
+    main = vtex_seller(sellers) if sellers else {}  # the store's own seller when it sells the item
+    return item.get("itemId"), main.get("sellerId") or "1", vtex_offer(data[0], ean=ean).price
 
 
 def simulate(session, domain, sku_id, seller, cep, sc):
