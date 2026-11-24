@@ -462,6 +462,26 @@ def test_vtex_success_includes_list_price_seller_url_and_availability(monkeypatc
     }
 
 
+def with_images(images):
+    payload = rich_payload()
+    payload[0]["items"][0]["images"] = images
+    return payload
+
+
+def test_vtex_image_url_is_the_first_picture_of_the_item(monkeypatch):
+    images = [{"imageUrl": "https://loja.vteximg.test/arquivos/ids/1/a.jpg"}, {"imageUrl": "https://loja.vteximg.test/arquivos/ids/2/b.jpg"}]
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=with_images(images)))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["image_url"] == "https://loja.vteximg.test/arquivos/ids/1/a.jpg"
+
+
+@pytest.mark.parametrize("images", [None, [], "x.jpg", [{"imageUrl": None}, {"imageUrl": "/relative.jpg"}, "junk"]])
+def test_vtex_image_url_is_left_out_when_there_is_no_usable_picture(monkeypatch, images):
+    patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=with_images(images)))
+    res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
+    assert res["status"] == "Success" and "image_url" not in res
+
+
 def test_vtex_availability_is_left_empty_when_the_payload_does_not_say(monkeypatch):
     patch_get(monkeypatch, lambda *a, **k: FakeResponse(payload=rich_payload()))
     res = scrape.scrape_store_product(make_store("B2C_REST"), PRODUCT)
@@ -641,6 +661,20 @@ def test_rd_uses_the_product_page_price_not_the_search_index_price(monkeypatch):
         "list_price": 23.69, "url": "https://example.test/gel-dental-colgate-baby-50g-62451.html",
     }
     assert len(requested) == 2 and "/search?w=" in requested[0] and requested[1].endswith("-62451.html?origin=search")
+
+
+def test_rd_image_url_is_the_first_enabled_picture_of_the_gallery(monkeypatch):
+    # Shape taken from a real Droga Raia product page: videos and disabled entries are skipped.
+    gallery = [
+        {"file": "https://product-data.test/images/2.webp", "media_type": "image", "position": 1, "disabled": None},
+        {"file": "https://product-data.test/video.mp4", "media_type": "video", "position": 0, "disabled": None},
+        {"file": "https://product-data.test/images/hidden.webp", "media_type": "image", "position": 0, "disabled": True},
+        {"file": "https://product-data.test/images/1.webp", "media_type": "image", "position": 0, "disabled": None},
+    ]
+    page = rd_page("62451", "Gel Dental Colgate Baby 50g", 21.99, 23.69).replace('"price": 0,', '"price": 0, "mediaGallery": ' + json.dumps(gallery) + ",")
+    rd_site(monkeypatch, [rd_product("62451", "Gel Dental Colgate Baby 50g")], {"62451": page})
+    res = scrape.scrape_store_product(make_store("RD_NEXTJS"), PRODUCT)
+    assert (res["status"], res["image_url"]) == ("Success", "https://product-data.test/images/1.webp")
 
 
 def test_rd_sponsored_result_without_search_price_gets_the_page_price(monkeypatch):

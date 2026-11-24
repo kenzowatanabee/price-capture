@@ -49,7 +49,7 @@ def build_result(found_name, price, product, available=None, extra=None):
     """
     Common tail of every parser: an in-stock positive price is a success, otherwise 'Not Found'.
     `available` is True/False when the payload says so and None when unknown (treated as available).
-    `extra` carries the descriptive columns (list_price, available, seller, url); they are kept on
+    `extra` carries the descriptive columns (list_price, available, seller, url, image_url); they are kept on
     every outcome for a product that was found, while price_brl is only set on success. The
     matched product's name is likewise kept on every outcome for a found product.
     """
@@ -80,10 +80,22 @@ CART_CHECK_CEP = re.sub(r"\D", "", os.environ.get("AVAILABILITY_CEP", "01310-100
 CART_CHECK_SC = os.environ.get("AVAILABILITY_SC", "1")
 
 
+def first_image(entries, key):
+    """
+    The first usable image URL in a store's image list (`key` names the URL field), or None.
+    Only absolute http(s) URLs are kept, so the column never holds a relative path or junk.
+    """
+    for entry in entries if isinstance(entries, list) else []:
+        value = entry.get(key) if isinstance(entry, dict) else None
+        if isinstance(value, str) and value.startswith(("http://", "https://")):
+            return value
+    return None
+
+
 class VtexOffer(NamedTuple):
     price: Optional[float]
     available: Optional[bool]  # None when the payload does not say
-    extra: dict  # list_price, available, seller, url (only the ones present)
+    extra: dict  # list_price, available, seller, url, image_url (only the ones present)
     item_id: Optional[str] = None
     seller_id: Optional[str] = None
 
@@ -117,6 +129,7 @@ def vtex_offer(vtex_product, base_url=""):
         "available": None if available is None else str(available).lower(),
         "seller": chosen.get("sellerName"),
         "url": urljoin(base_url, link) if link else None,
+        "image_url": first_image(items[0].get("images"), "imageUrl"),
     }
     return VtexOffer(offer.get("Price"), available, {k: v for k, v in extra.items() if v is not None},
                      items[0].get("itemId"), chosen.get("sellerId"))
