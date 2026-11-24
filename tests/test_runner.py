@@ -82,6 +82,25 @@ def test_make_run_id_prefers_explicit_then_github_then_timestamp(monkeypatch):
     assert runner.make_run_id() == "manual-7"
 
 
+def test_other_sellers_get_their_own_csv_rows_without_changing_the_run_health(tmp_path, monkeypatch, capsys):
+    setup_inputs(tmp_path, monkeypatch, n_products=2)
+    monkeypatch.setattr(
+        runner, "scrape_store_product",
+        lambda store, product: {
+            "status": "Success", "product_name": "X", "price_brl": 9.9, "seller": "Loja", "seller_id": "1", "seller_type": "store",
+            "offers": [{"price_brl": 9.9, "seller": "Loja", "seller_id": "1", "seller_type": "store"},
+                       {"price_brl": 12.0, "seller": "Parceiro", "seller_id": "p", "seller_type": "partner"}],
+        },
+    )
+    runner.main()
+    with open("results.csv", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    assert sorted(r["main_offer"] for r in rows) == ["false", "false", "true", "true"]
+    assert {r["seller"] for r in rows if r["main_offer"] == "false"} == {"Parceiro"}
+    printed = capsys.readouterr().out
+    assert "Overall: 2/2 (100%)" in printed and "Rows for other sellers on the stores' sites: 2" in printed
+
+
 def test_every_row_of_a_run_shares_one_run_id_and_csv_has_all_columns(tmp_path, monkeypatch):
     setup_inputs(tmp_path, monkeypatch, n_products=3)
     monkeypatch.setenv("RUN_ID", "test-run")

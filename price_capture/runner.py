@@ -59,6 +59,15 @@ class StoreBreaker:
                 self._open.add(store_name)
 
 
+def same_offer(offer, result):
+    """Is this offer the one the main row already records? (same seller, by id or else by name)"""
+    if result.get("status") != "Success":
+        return False
+    if offer.get("seller_id") or result.get("seller_id"):
+        return offer.get("seller_id") == result.get("seller_id")
+    return offer.get("seller") == result.get("seller") and offer.get("price_brl") == result.get("price_brl")
+
+
 def process_task(args, breaker=None):
     """Worker function to process a single (store, product) pair in a thread."""
     store, product, run_id = args
@@ -96,7 +105,29 @@ def process_task(args, breaker=None):
         "image_url": res.get("image_url"),
         "seller_id": res.get("seller_id"),
         "seller_type": res.get("seller_type"),
+        "main_offer": "true",
+        "seller_cnpj": res.get("seller_cnpj"),
     }
+    # Every other seller of the product on this store's site becomes its own row, marked as not
+    # the main one. They are kept beside the record (key "other_offers"), not in the CSV columns.
+    record["other_offers"] = [
+        record | {
+            "status": "Success",
+            "message": None,
+            "price_brl": offer["price_brl"],
+            "found_name": offer.get("product_name") or record["found_name"],
+            "list_price": offer.get("list_price"),
+            "available": offer.get("available"),
+            "seller": offer.get("seller"),
+            "url": offer.get("url") or record["url"],
+            "seller_id": offer.get("seller_id"),
+            "seller_type": offer.get("seller_type"),
+            "main_offer": "false",
+            "seller_cnpj": offer.get("seller_cnpj"),
+        }
+        for offer in res.get("offers") or []
+        if not same_offer(offer, res)
+    ]
 
     # Thread-safe console log
     if res["status"] == "Success":
@@ -212,6 +243,7 @@ def main():
     print(f"Starting {len(tasks)} requests across {max_workers} worker threads...\n{'='*60}")
 
     all_results = []
+    extra_rows = 0
 
     # Execute requests concurrently, appending each row to results.csv as soon as it completes
     # so a crash part-way through still leaves the rows scraped so far.
@@ -246,14 +278,18 @@ def main():
                 except Exception as e:
                     print(f"⚠️ Worker error: {e}")
                     continue
-                all_results.append(result)
+                other_offers = result.pop("other_offers", [])
+                all_results.append(result)  # run health counts one result per store and product
                 writer.writerow(result)
+                writer.writerows(other_offers)
+                extra_rows += len(other_offers)
                 csv_file.flush()
 
     with open("results.json", "w", encoding="utf-8") as f:
         json.dump(all_results, f, ensure_ascii=False, indent=2)
 
     print(f"\nScraping complete. Total requests processed: {len(all_results)}")
+    print(f"Rows for other sellers on the stores' sites: {extra_rows}")
 
     # Fail the run (and so skip the Domo upload) if the data looks broken,
     # e.g. when a WAF starts blocking the runner or a parser stops matching.

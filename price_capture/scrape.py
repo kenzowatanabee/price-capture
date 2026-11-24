@@ -34,11 +34,35 @@ def scrape_store_product(store, product):
         if problem:
             return _unchecked(result, problem) if optional else problem
         try:
-            return platform.parse_follow_up(response, product, result | {"page_url": page_url})
+            final = platform.parse_follow_up(response, product, result | {"page_url": page_url})
         except Exception as e:
             problem = error("PARSE_ERROR", str(e)[:60])
             return _unchecked(result, problem) if optional else problem
+        return _with_other_sellers(platform, product, domain, verify, result, final)
     return result
+
+
+def _with_other_sellers(platform, product, domain, verify, first, final):
+    """
+    Adds the offers of the other sellers a platform listed on separate pages ("offer_paths").
+    They are extras: a page that fails, or is not this product, is simply left out.
+    """
+    offers = list(final.get("offers") or [])
+    for path in first.get("offer_paths") or []:
+        page_url = urljoin(domain + "/", path)
+        response, problem = _get(page_url, verify)
+        if problem:
+            continue
+        try:
+            offer = platform.parse_offer_page(response, product, page_url)
+        except Exception:
+            continue
+        if offer:
+            offers.append(offer)
+    if offers:
+        final = dict(final)
+        final["offers"] = offers
+    return final
 
 
 def _unchecked(first, problem):

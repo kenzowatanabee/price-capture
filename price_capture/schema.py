@@ -23,6 +23,12 @@ COLUMNS = [
     ("image_url", "STRING"),  # main product picture on the store's own site, when the payload carries it
     ("seller_id", "STRING"),  # the store's id for the seller of this offer
     ("seller_type", "STRING"),  # "store" = sold by the store itself, "partner" = a marketplace seller on its site
+    # A store and product can have several rows in one run: the main one ("true": the offer that is
+    # compared and counted) plus one per other seller on the store's site ("false"). Rows written
+    # before this column existed are empty and are all main rows.
+    ("main_offer", "STRING"),
+    ("seller_cnpj", "STRING"),  # the seller's company registration, when the store publishes it
 ]
 
 CSV_COLUMNS = [name for name, _ in COLUMNS]
+
