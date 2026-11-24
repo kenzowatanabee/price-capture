@@ -94,6 +94,8 @@ def process_task(args, breaker=None):
         "run_id": run_id,
         "fetched_at_brt": fetched_at_brt,
         "image_url": res.get("image_url"),
+        "seller_id": res.get("seller_id"),
+        "seller_type": res.get("seller_type"),
     }
 
     # Thread-safe console log

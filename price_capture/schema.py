@@ -21,6 +21,8 @@ COLUMNS = [
     ("run_id", "STRING"),  # identifies the scraper run that produced the row
     ("fetched_at_brt", "STRING"),  # Brasilia clock time as text, shown by Domo exactly as written
     ("image_url", "STRING"),  # main product picture on the store's own site, when the payload carries it
+    ("seller_id", "STRING"),  # the store's id for the seller of this offer
+    ("seller_type", "STRING"),  # "store" = sold by the store itself, "partner" = a marketplace seller on its site
 ]
 
 CSV_COLUMNS = [name for name, _ in COLUMNS]

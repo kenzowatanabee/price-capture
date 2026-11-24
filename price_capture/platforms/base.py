@@ -95,23 +95,60 @@ def first_image(entries, key):
 class VtexOffer(NamedTuple):
     price: Optional[float]
     available: Optional[bool]  # None when the payload does not say
-    extra: dict  # list_price, available, seller, url, image_url (only the ones present)
+    extra: dict  # list_price, available, seller, url, image_url, seller_id, seller_type (only the ones present)
     item_id: Optional[str] = None
     seller_id: Optional[str] = None
 
 
-def vtex_offer(vtex_product, base_url=""):
+# On VTEX the store's own offer is always seller "1"; every other seller id is a marketplace partner.
+VTEX_STORE_SELLER = "1"
+
+
+def same_ean(a, b):
+    """EANs compared as digits, ignoring leading zeros (stores pad them differently)."""
+    a, b = re.sub(r"\D", "", str(a or "")), re.sub(r"\D", "", str(b or ""))
+    return bool(a) and a.lstrip("0") == b.lstrip("0")
+
+
+def vtex_item(vtex_product, ean=None):
     """
-    The preferred offer of a VTEX product payload: the first item's default seller, else its
-    first seller. Availability is False when the payload says so (IsAvailable false, or
-    AvailableQuantity not positive), True when it says it is available, otherwise unknown.
+    The variant (item) to price. A product can hold several variants (sizes, flavours), each with
+    its own EAN and price, so the one whose EAN was searched for is picked; when no variant
+    carries that EAN (some stores leave the field empty) the first one is used, as before.
     """
-    items = vtex_product.get("items", [])
-    if not items or not items[0].get("sellers"):
+    items = vtex_product.get("items") or []
+    if not items:
+        return None
+    return next((i for i in items if same_ean(i.get("ean"), ean)), items[0])
+
+
+def vtex_seller(sellers):
+    """
+    The seller whose offer is recorded: the store itself when it sells the item, otherwise the
+    seller the store shows by default (else the first one). A partner's price is only recorded
+    when the store has no offer of its own, and the row says so in seller_type.
+    """
+    own = next((s for s in sellers if str(s.get("sellerId")) == VTEX_STORE_SELLER), None)
+    if own is not None:
+        return own
+    return next((s for s in sellers if s.get("sellerDefault") is True), sellers[0])
+
+
+def vtex_offer(vtex_product, base_url="", ean=None):
+    """
+    The offer to record from a VTEX product payload: the variant with the searched EAN (see
+    vtex_item) and the store's own seller when there is one (see vtex_seller). Availability is
+    False when the payload says so (IsAvailable false, or AvailableQuantity not positive), True
+    when it says it is available, otherwise unknown.
+    """
+    item = vtex_item(vtex_product, ean)
+    if not item or not item.get("sellers"):
         return VtexOffer(None, None, {})
-    sellers = items[0]["sellers"]
-    chosen = next((s for s in sellers if s.get("sellerDefault") is True), sellers[0])
+    items = [item]
+    chosen = vtex_seller(item["sellers"])
     offer = chosen.get("commertialOffer", {})
+    seller_id = chosen.get("sellerId")
+    seller_id = None if seller_id in (None, "") else str(seller_id)
 
     flag = offer.get("IsAvailable")
     quantity = offer.get("AvailableQuantity")
@@ -130,9 +167,12 @@ def vtex_offer(vtex_product, base_url=""):
         "seller": chosen.get("sellerName"),
         "url": urljoin(base_url, link) if link else None,
         "image_url": first_image(items[0].get("images"), "imageUrl"),
+        "seller_id": seller_id,
+        # Unknown (left empty) when the payload carries no seller id at all.
+        "seller_type": None if seller_id is None else ("store" if seller_id == VTEX_STORE_SELLER else "partner"),
     }
     return VtexOffer(offer.get("Price"), available, {k: v for k, v in extra.items() if v is not None},
-                     items[0].get("itemId"), chosen.get("sellerId"))
+                     items[0].get("itemId"), seller_id)
 
 
 def with_cart_check(result, offer):

@@ -99,6 +99,8 @@ Columns, in order (defined once in `price_capture/schema.py`):
 | 13 | `run_id` | STRING | Same value for every row of one scraper run |
 | 14 | `fetched_at_brt` | STRING | Brasília clock time of the same moment, as text, so Domo shows it unchanged |
 | 15 | `image_url` | STRING | Main product picture on the store's own site (first picture of the listing) |
+| 16 | `seller_id` | STRING | The store's id for the seller of this offer (`1` is the store itself on VTEX) |
+| 17 | `seller_type` | STRING | `store` = sold by the store itself, `partner` = a marketplace seller on the store's site. Empty when the store does not say |
 
 Columns 9 to 12 are filled for `B2C_REST` and `CARREFOUR_INTELLIGENT_SEARCH` stores. `RD_NEXTJS` stores fill `list_price` and `url`. `image_url` is filled for those same three types. The columns are empty for `VTEX_IO_HTML` stores, because those payload fields have not been mapped yet. They are also filled on `OUT_OF_STOCK` and `ZERO_PRICE` rows, since they describe the product, while `price_brl` stays empty.
 
