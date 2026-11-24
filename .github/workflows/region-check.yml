@@ -1,0 +1,74 @@
+name: Regional Price Check
+
+# Manual only: compares each VTEX store's price and delivery availability across CEPs.
+# Nothing is uploaded to Domo; the result is the run summary plus a CSV artifact.
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'How many single-pack SKUs to check (ignored when EANs are given)'
+        default: '30'
+      eans:
+        description: 'Comma-separated EANs (optional)'
+        default: ''
+      stores:
+        description: 'Comma-separated store names (optional, default: every VTEX store)'
+        default: ''
+      ceps:
+        description: 'CEPs, e.g. SP=01310-100,PE=50030-230 (optional, default: 8 state capitals)'
+        default: ''
+
+jobs:
+  region-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Regional Check
+        env:
+          # Inputs go through the environment, never straight into the command line.
+          LIMIT: ${{ inputs.limit }}
+          EANS: ${{ inputs.eans }}
+          STORES: ${{ inputs.stores }}
+          CEPS: ${{ inputs.ceps }}
+        run: |
+          args=(--limit "$LIMIT")
+          [ -n "$EANS" ] && args+=(--eans "$EANS")
+          [ -n "$STORES" ] && args+=(--stores "$STORES")
+          [ -n "$CEPS" ] && args+=(--ceps "$CEPS")
+          set -o pipefail
+          python region_check.py "${args[@]}" | tee region_check.log
+
+      - name: Write Run Summary
+        if: always()
+        run: |
+          {
+            echo '## Regional price check'
+            echo '```'
+            # everything from the "Wrote N rows" line on: price differences and delivery coverage
+            sed -n '/^Wrote /,$p' region_check.log 2>/dev/null || echo 'The check did not finish; see the job log.'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Results (Artifact)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: region-check
+          path: |
+            region_check.csv
+            region_check.log
+          retention-days: 14

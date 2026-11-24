@@ -142,6 +142,8 @@ python region_check.py --limit 10 --stores "Drogal,Pague Menos"
 python region_check.py --eans 7891024132005 --ceps "SP=01310-100,PE=50030-230"
 ```
 
+It can also run on GitHub: Actions → **Regional Price Check** → Run workflow (SKU limit, EANs, stores and CEPs are optional inputs). The two summaries appear on the run page and the CSV is attached as the `region-check` artifact. Nothing is uploaded to Domo.
+
 It writes `region_check.csv` (git-ignored) with one row per store, SKU and CEP. Each row has the price, list price, availability (`available`, `cannotBeDelivered`, `withoutStock`, ...) and the store's own message. A `catalog` row shows the price the scraper records, for comparison. It then prints:
 - per store, whether any SKU's price differs between CEPs;
 - a **delivery coverage** table: SKUs available out of those checked, per store and region.
