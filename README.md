@@ -137,7 +137,7 @@ By default existing columns keep their names and types (so existing data and das
 The daily scraper sends no location, so it records each store's **default online price**. `region_check.py` is a separate local analysis that checks whether that holds by CEP. For each VTEX (`B2C_REST`) store it simulates a cart with the store's **main online seller**, first without a CEP and then for each CEP (`/api/checkout/pub/orderForms/simulation`).
 
 ```bash
-python region_check.py                                   # 3 single-pack SKUs x default CEPs x all B2C_REST stores
+python region_check.py                                   # 3 SKUs spread through the list x default CEPs x all B2C_REST stores
 python region_check.py --limit 10 --stores "Drogal,Pague Menos"
 python region_check.py --eans 7891024132005 --ceps "SP=01310-100,PE=50030-230"
 ```

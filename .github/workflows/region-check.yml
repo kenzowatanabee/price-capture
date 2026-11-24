@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       limit:
-        description: 'How many single-pack SKUs to check (ignored when EANs are given)'
+        description: 'How many SKUs to check, spread evenly through the product list (ignored when EANs are given)'
         default: '30'
       eans:
         description: 'Comma-separated EANs (optional)'
