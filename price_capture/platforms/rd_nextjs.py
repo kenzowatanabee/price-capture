@@ -1,7 +1,7 @@
 import re
 from urllib.parse import urlsplit, urlunsplit
 
-from price_capture.platforms.base import Platform, build_result, to_price
+from price_capture.platforms.base import Platform, build_result, first_image, to_price
 from price_capture.platforms.embedded_state import extract_state_from_html, find_true_products_array
 from price_capture.results import error, not_found
 
@@ -67,4 +67,10 @@ class RdNextJs(Platform):
         if first.get("page_url"):
             parts = urlsplit(first["page_url"])
             extra["url"] = urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))  # without ?origin=search
+        gallery = data.get("mediaGallery")
+        pictures = [m for m in gallery if isinstance(m, dict) and m.get("media_type") == "image"
+                    and not m.get("disabled")] if isinstance(gallery, list) else []
+        image_url = first_image(sorted(pictures, key=lambda m: m.get("position") or 0), "file")
+        if image_url:
+            extra["image_url"] = image_url
         return build_result(data.get("name") or first.get("search_name"), price, product, extra=extra)
